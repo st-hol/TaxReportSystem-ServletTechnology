@@ -1,8 +1,8 @@
 package ua.training.model.dao;
 
 
-import ua.training.model.entity.User;
+import ua.training.model.entity.Report;
 
-public interface ReportDao extends GenericDao<User> {
+public interface ReportDao extends GenericDao<Report> {
 
 }

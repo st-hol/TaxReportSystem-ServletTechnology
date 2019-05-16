@@ -18,7 +18,7 @@
 
         <!-- SIDEBAR MENU -->
         <div class="profile-usermenu sidebar-sticky">
-            <h3 class="text-primary">CLIENT:</h3>
+            <h5 class="text-primary">CLIENT:</h5>
             <ul class="nav flex-column">
                 <li class="active nav-item">
                     <a href="#" class="nav-link active">

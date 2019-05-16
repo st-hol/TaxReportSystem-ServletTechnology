@@ -1,7 +1,10 @@
 package ua.training.model.dao.mapper;
 
 
+import ua.training.model.entity.Report;
 import ua.training.model.entity.User;
+import ua.training.model.service.ReportService;
+import ua.training.model.service.UserService;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,30 +12,31 @@ import java.util.Map;
 
 import static ua.training.model.entity.User.ROLE.getRoleById;
 
-public class ReportMapper implements ObjectMapper<User>{
+public class ReportMapper implements ObjectMapper<Report>{
 
-    //new User.Role(rs.getInt("rol_id")
+
     @Override
-    public User extractFromResultSet(ResultSet rs) throws SQLException {
-        User user = new User();
+    public Report extractFromResultSet(ResultSet rs) throws SQLException {
+        Report report = new Report();
 
-        user.setId(rs.getInt("id_student"));
+        UserService userService = new UserService();
 
-        user.setFirstName(rs.getString("first_name"));
-        user.setLastName(rs.getString("last_name"));
+        report.setId(rs.getInt("id_report"));
+        report.setPerson(userService.getStudentById(rs.getLong("id_person")));
+        report.setCompanyName(rs.getString("company_name"));
+        report.setTaxpayerCode(rs.getString("taxpayer_code"));
+        report.setCompletionTime(rs.getTimestamp("completion_time"));
+        report.setTotalAmountOfProperty(rs.getLong("total_amount_of_property"));
+        report.setAcceptedFromInt(rs.getInt("is_accepted"));
+        report.setShouldChangeFromInt(rs.getInt("should_be_changed"));
+        report.setInspectorComment(rs.getString("inspector_comment"));
 
 
-        user.setEmail(rs.getString("email"));
-        user.setPassword(rs.getString("password"));
-        user.setRole(getRoleById(
-                rs.getInt("id_role")));
-
-
-        return user;
+        return report;
     }
 
     @Override
-    public User makeUnique(Map<Long, User> existing, User entity) {
+    public Report makeUnique(Map<Long, Report> existing, Report entity) {
         existing.putIfAbsent(entity.getId(), entity);
 
         return existing.get(entity.getId());

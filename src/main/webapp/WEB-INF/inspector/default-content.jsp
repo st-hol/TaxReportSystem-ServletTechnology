@@ -2,8 +2,8 @@
     <div class="profile-content">
         As Inspector you can:
         <ul class="list-group">
-            <li>Check reports</li>
-            <li>Register property per person</li>
+            <li class="list-group-item">Check reports</li>
+            <li class="list-group-item">Register property per person</li>
         </ul>
     </div>
 </div>

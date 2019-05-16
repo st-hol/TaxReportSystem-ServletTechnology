@@ -4,8 +4,14 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import ua.training.model.dao.ReportDao;
 import ua.training.model.dao.UserDao;
+import ua.training.model.dao.impl.queries.ComplaintSQL;
+import ua.training.model.dao.impl.queries.ReportSQL;
 import ua.training.model.dao.impl.queries.UserSQL;
+import ua.training.model.dao.mapper.ComplaintMapper;
+import ua.training.model.dao.mapper.ReportMapper;
 import ua.training.model.dao.mapper.UserMapper;
+import ua.training.model.entity.Complaint;
+import ua.training.model.entity.Report;
 import ua.training.model.entity.User;
 
 import javax.validation.constraints.NotNull;
@@ -26,22 +32,23 @@ public class JdbcReportDao implements ReportDao {
 
 
     /**
-     * Create User(user/admin) in database.
+     * Create User(report/admin) in database.
      *
-     * @param user for create.
+     * @param report for create.
      */
     @Override
-    public void create(@NotNull final User user) {
+    public void create(@NotNull final Report report) {
 
-        try (PreparedStatement ps = connection.prepareStatement(UserSQL.INSERT.getQUERY())) {
+        try (PreparedStatement ps = connection.prepareStatement(ReportSQL.INSERT.getQUERY())) {
 
-            ps.setString(1, user.getFirstName());
-            ps.setString(2, user.getLastName());
-
-            ps.setString(3, user.getEmail());
-            ps.setString(4, user.getPassword());
-            ps.setInt(5, user.getRole().getRoleID());
-
+            ps.setLong(1, report.getPerson().getId());
+            ps.setString(2, report.getCompanyName());
+            ps.setString(3, report.getTaxpayerCode());
+            ps.setTimestamp(4, report.getCompletionTime());
+            ps.setLong(5, report.getTotalAmountOfProperty());
+            ps.setBoolean(6, report.isAccepted());
+            ps.setBoolean(7, report.isShouldBeChanged());
+            ps.setString(8, report.getInspectorComment());
             ps.execute();
 
         } catch (SQLException e) {
@@ -56,20 +63,20 @@ public class JdbcReportDao implements ReportDao {
      * @param id student id.
      */
     @Override
-    public User findById(long id) {
-        UserMapper userMapper = new UserMapper();
+    public Report findById(long id) {
+        ReportMapper complaintMapper = new ReportMapper();
 
-        User result = new User();
+        Report result = new Report();
         result.setId(-1);
 
-        try (PreparedStatement ps = connection.prepareStatement(UserSQL.READ_ONE.getQUERY())) {
+        try (PreparedStatement ps = connection.prepareStatement(ReportSQL.READ_ONE.getQUERY())) {
 
             ps.setLong(1, id);
 
             final ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                result = userMapper.extractFromResultSet(rs);
+                result = complaintMapper.extractFromResultSet(rs);
             }
         } catch (SQLException e) {
             logger.fatal("Caught SQLException exception", e);
@@ -83,24 +90,24 @@ public class JdbcReportDao implements ReportDao {
      *
      */
     @Override
-    public List<User> findAll() {
-        Map<Long, User> users = new HashMap<>();
+    public List<Report> findAll() {
+        Map<Long, Report> reports = new HashMap<>();
 
-        final String query = UserSQL.READ_ALL.getQUERY();
+        final String query = ReportSQL.READ_ALL.getQUERY();
 
         try (Statement st = connection.createStatement()) {
 
             ResultSet rs = st.executeQuery(query);
-            UserMapper userMapper = new UserMapper();
+            ReportMapper reportMapper = new ReportMapper();
 
             while (rs.next()) {
-                User user = userMapper.extractFromResultSet(rs);
-                user = userMapper.makeUnique(users, user);
+                Report report = reportMapper.extractFromResultSet(rs);
+                report = reportMapper.makeUnique(reports, report);
             }
-//            for (User u: users.values()) {
+//            for (User u: reports.values()) {
 //                System.out.println(u.getEmail());
 //            }
-            return new ArrayList<>(users.values());
+            return new ArrayList<>(reports.values());
         } catch (SQLException e) {
             logger.fatal("Caught SQLException exception", e);
             e.printStackTrace();
@@ -110,7 +117,7 @@ public class JdbcReportDao implements ReportDao {
     }
 
     @Override
-    public void update(User user) {
+    public void update(Report report) {
         throw new UnsupportedOperationException ("This action has not yet been developed.");
     }
 

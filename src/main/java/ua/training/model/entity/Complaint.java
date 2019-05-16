@@ -1,6 +1,5 @@
 package ua.training.model.entity;
 
-import java.time.LocalDate;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -9,13 +8,17 @@ public class Complaint {
     private long id;
     private User user;
     private String content;
-    private Date completion_time;
+    private Timestamp completionTime;
 
-    public Complaint(long id, User user, String content, Date completion_time) {
+
+    public Complaint() {
+    }
+
+    public Complaint(long id, User user, String content, Timestamp completionTime) {
         this.id = id;
         this.user = user;
         this.content = content;
-        this.completion_time = completion_time;
+        this.completionTime = completionTime;
     }
 
     public long getId() {
@@ -42,11 +45,11 @@ public class Complaint {
         this.content = content;
     }
 
-    public Date getCompletion_time() {
-        return completion_time;
+    public Timestamp getCompletionTime() {
+        return completionTime;
     }
 
-    public void setCompletion_time(Date completion_time) {
-        this.completion_time = completion_time;
+    public void setCompletionTime(Timestamp completionTime) {
+        this.completionTime = completionTime;
     }
 }

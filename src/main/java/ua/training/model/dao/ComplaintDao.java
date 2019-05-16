@@ -1,8 +1,8 @@
 package ua.training.model.dao;
 
 
-import ua.training.model.entity.User;
+import ua.training.model.entity.Complaint;
 
-public interface ComplaintDao extends GenericDao<User> {
+public interface ComplaintDao extends GenericDao<Complaint> {
 
 }

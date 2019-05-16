@@ -4,7 +4,40 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 public class Report {
+
     private long id;
+
+    private String companyName;
+    private String taxpayerCode;
+    private Timestamp completionTime;
+    private long totalAmountOfProperty;
+    private User person;
+    private boolean isAccepted;
+    private boolean shouldBeChanged;
+    private String inspectorComment;
+
+    public Report() {
+    }
+
+    public Report(long id, String companyName, String taxpayerCode, Timestamp completionTime, long totalAmountOfProperty, User person, boolean isAccepted, boolean shouldBeChanged, String inspectorComment) {
+        this.id = id;
+        this.companyName = companyName;
+        this.taxpayerCode = taxpayerCode;
+        this.completionTime = completionTime;
+        this.totalAmountOfProperty = totalAmountOfProperty;
+        this.person = person;
+        this.isAccepted = isAccepted;
+        this.shouldBeChanged = shouldBeChanged;
+        this.inspectorComment = inspectorComment;
+    }
+
+    public User getPerson() {
+        return person;
+    }
+
+    public void setPerson(User person) {
+        this.person = person;
+    }
 
     public Timestamp getCompletionTime() {
         return completionTime;
@@ -13,29 +46,6 @@ public class Report {
     public void setCompletionTime(Timestamp completionTime) {
         this.completionTime = completionTime;
     }
-
-    public Report(long id, String companyName, String taxpayerCode, Timestamp completionTime, long totalAmountOfProperty, long idPerson, boolean isAccepted, boolean shouldBeChanged, String inspectorComment) {
-        this.id = id;
-        this.companyName = companyName;
-        this.taxpayerCode = taxpayerCode;
-        this.completionTime = completionTime;
-        this.totalAmountOfProperty = totalAmountOfProperty;
-        this.idPerson = idPerson;
-        this.isAccepted = isAccepted;
-        this.shouldBeChanged = shouldBeChanged;
-        this.inspectorComment = inspectorComment;
-    }
-
-    private String companyName;
-    private String taxpayerCode;
-    private Timestamp completionTime;
-    private long totalAmountOfProperty;
-    private long idPerson;
-    private boolean isAccepted;
-    private boolean shouldBeChanged;
-    private String inspectorComment;
-
-
 
     public long getId() {
         return id;
@@ -70,12 +80,14 @@ public class Report {
         this.totalAmountOfProperty = totalAmountOfProperty;
     }
 
-    public long getIdPerson() {
-        return idPerson;
+    public void setAcceptedFromInt(int iIsAccepted) {
+        boolean bIsAccepted = (iIsAccepted != 0);
+        isAccepted = bIsAccepted;
     }
 
-    public void setIdPerson(long idPerson) {
-        this.idPerson = idPerson;
+    public void setShouldChangeFromInt(int iShouldChange) {
+        boolean bShouldChange = (iShouldChange != 0);
+        isAccepted = bShouldChange;
     }
 
     public boolean isAccepted() {

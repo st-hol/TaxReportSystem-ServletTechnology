@@ -3,10 +3,9 @@ package ua.training.model.dao.impl;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import ua.training.model.dao.ComplaintDao;
-import ua.training.model.dao.UserDao;
-import ua.training.model.dao.impl.queries.UserSQL;
-import ua.training.model.dao.mapper.UserMapper;
-import ua.training.model.entity.User;
+import ua.training.model.dao.impl.queries.ComplaintSQL;
+import ua.training.model.dao.mapper.ComplaintMapper;
+import ua.training.model.entity.Complaint;
 
 import javax.validation.constraints.NotNull;
 import java.sql.*;
@@ -26,21 +25,18 @@ public class JdbcComplaintDao implements ComplaintDao {
 
 
     /**
-     * Create User(user/admin) in database.
+     * Create User(complaint/admin) in database.
      *
-     * @param user for create.
+     * @param complaint for create.
      */
     @Override
-    public void create(@NotNull final User user) {
+    public void create(@NotNull final Complaint complaint) {
 
-        try (PreparedStatement ps = connection.prepareStatement(UserSQL.INSERT.getQUERY())) {
+        try (PreparedStatement ps = connection.prepareStatement(ComplaintSQL.INSERT.getQUERY())) {
 
-            ps.setString(1, user.getFirstName());
-            ps.setString(2, user.getLastName());
-
-            ps.setString(3, user.getEmail());
-            ps.setString(4, user.getPassword());
-            ps.setInt(5, user.getRole().getRoleID());
+            ps.setLong(1, complaint.getUser().getId());
+            ps.setString(2, complaint.getContent());
+            ps.setTimestamp(3, complaint.getCompletionTime());
 
             ps.execute();
 
@@ -56,20 +52,20 @@ public class JdbcComplaintDao implements ComplaintDao {
      * @param id student id.
      */
     @Override
-    public User findById(long id) {
-        UserMapper userMapper = new UserMapper();
+    public Complaint findById(long id) {
+        ComplaintMapper complaintMapper = new ComplaintMapper();
 
-        User result = new User();
+        Complaint result = new Complaint();
         result.setId(-1);
 
-        try (PreparedStatement ps = connection.prepareStatement(UserSQL.READ_ONE.getQUERY())) {
+        try (PreparedStatement ps = connection.prepareStatement(ComplaintSQL.READ_ONE.getQUERY())) {
 
             ps.setLong(1, id);
 
             final ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                result = userMapper.extractFromResultSet(rs);
+                result = complaintMapper.extractFromResultSet(rs);
             }
         } catch (SQLException e) {
             logger.fatal("Caught SQLException exception", e);
@@ -83,24 +79,24 @@ public class JdbcComplaintDao implements ComplaintDao {
      *
      */
     @Override
-    public List<User> findAll() {
-        Map<Long, User> users = new HashMap<>();
+    public List<Complaint> findAll() {
+        Map<Long, Complaint> complaints = new HashMap<>();
 
-        final String query = UserSQL.READ_ALL.getQUERY();
+        final String query = ComplaintSQL.READ_ALL.getQUERY();
 
         try (Statement st = connection.createStatement()) {
 
             ResultSet rs = st.executeQuery(query);
-            UserMapper userMapper = new UserMapper();
+            ComplaintMapper complaintMapper = new ComplaintMapper();
 
             while (rs.next()) {
-                User user = userMapper.extractFromResultSet(rs);
-                user = userMapper.makeUnique(users, user);
+                Complaint complaint = complaintMapper.extractFromResultSet(rs);
+                complaint = complaintMapper.makeUnique(complaints, complaint);
             }
-//            for (User u: users.values()) {
+//            for (User u: complaints.values()) {
 //                System.out.println(u.getEmail());
 //            }
-            return new ArrayList<>(users.values());
+            return new ArrayList<>(complaints.values());
         } catch (SQLException e) {
             logger.fatal("Caught SQLException exception", e);
             e.printStackTrace();
@@ -110,7 +106,7 @@ public class JdbcComplaintDao implements ComplaintDao {
     }
 
     @Override
-    public void update(User user) {
+    public void update(Complaint complaint) {
         throw new UnsupportedOperationException ("This action has not yet been developed.");
     }
 

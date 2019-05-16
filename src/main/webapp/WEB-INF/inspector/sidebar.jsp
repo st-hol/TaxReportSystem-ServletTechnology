@@ -1,6 +1,6 @@
 <div class="col-md-3">
     <div class="profile-sidebar position-fixed">
-        <h3 class="text-primary">INSPECTOR:</h3>
+        <h5 class="text-primary">INSPECTOR:</h5>
         <!-- SIDEBAR MENU -->
         <div class="profile-usermenu sidebar-sticky">
             <ul class="nav flex-column">
