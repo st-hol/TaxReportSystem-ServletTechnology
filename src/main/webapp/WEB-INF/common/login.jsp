@@ -22,12 +22,15 @@
 
 <body>
 <div class="form">
+
     <c:if test="${param.dataInvalid == true}">
         <p style="color: orange"><fmt:message key="label.invalid.input" /></p>
     </c:if>
+
     <c:if test="${param.userExist == false}">
         <p style="color: darkred"><fmt:message key="label.no.exist" /></p>
     </c:if>
+
     <form class="form-horizontal" role="form" method="POST" action="${pageContext.request.contextPath}/app/login">
         <div class="form-group">
             <div class="form-group">

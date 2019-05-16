@@ -37,10 +37,6 @@ public class RegistrationCommand implements Command {
         final String firstName = request.getParameter("firstName");
         final String lastName = request.getParameter("lastName");
 
-        System.out.println(password);
-
-        System.out.println(confirmPassword);
-
         if ( ! password.equals(confirmPassword)) {
             logger.info("User [" + email + "]" + " password and its confirmation is not equal.");
             return "/WEB-INF/common/registration.jsp?passwordsDifferent=true";

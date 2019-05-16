@@ -1,10 +1,11 @@
-package ua.training.model.dao;
+package ua.training.model.dao.mapper;
 
 
+import ua.training.model.dao.GenericDao;
 import ua.training.model.dao.impl.JdbcUserDao;
 import ua.training.model.entity.User;
 
-public interface UserDao extends GenericDao<User> {
+public interface ReportDao extends GenericDao<User> {
 
 
    User.ROLE getRoleByEmailPassword(final String email, final String password);

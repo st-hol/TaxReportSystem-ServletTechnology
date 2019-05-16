@@ -4,6 +4,7 @@
     background-attachment: fixed;
     background-size: cover;
     background-position: center;
+    height: 100%;
 }
 
 .overlay{
@@ -23,7 +24,7 @@
 }
 
 .description h1, span{
-    color:#F97300 ;
+    color: darkblue ;
 }
 .description p{
     color:#666;
@@ -32,8 +33,8 @@
     line-height: 1.5;
 }
 .description button{
-    border:1px  solid #F97300;
-    background:#F97300;
+    border:1px  solid darkslategrey;
+    background: #8EC0E4;
     color:#fff;
 }
 

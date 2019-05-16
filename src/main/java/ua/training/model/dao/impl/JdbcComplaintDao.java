@@ -1,0 +1,137 @@
+package ua.training.model.dao.impl;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import ua.training.model.dao.ComplaintDao;
+import ua.training.model.dao.UserDao;
+import ua.training.model.dao.impl.queries.UserSQL;
+import ua.training.model.dao.mapper.UserMapper;
+import ua.training.model.entity.User;
+
+import javax.validation.constraints.NotNull;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class JdbcComplaintDao implements ComplaintDao {
+
+    private Connection connection;
+    private static final Logger logger = LogManager.getLogger(JdbcComplaintDao.class);
+
+    public JdbcComplaintDao(Connection connection) {
+        this.connection = connection;
+    }
+
+
+    /**
+     * Create User(user/admin) in database.
+     *
+     * @param user for create.
+     */
+    @Override
+    public void create(@NotNull final User user) {
+
+        try (PreparedStatement ps = connection.prepareStatement(UserSQL.INSERT.getQUERY())) {
+
+            ps.setString(1, user.getFirstName());
+            ps.setString(2, user.getLastName());
+
+            ps.setString(3, user.getEmail());
+            ps.setString(4, user.getPassword());
+            ps.setInt(5, user.getRole().getRoleID());
+
+            ps.execute();
+
+        } catch (SQLException e) {
+            logger.fatal("Caught SQLException exception", e);
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * finds User in database.
+     *
+     * @param id student id.
+     */
+    @Override
+    public User findById(long id) {
+        UserMapper userMapper = new UserMapper();
+
+        User result = new User();
+        result.setId(-1);
+
+        try (PreparedStatement ps = connection.prepareStatement(UserSQL.READ_ONE.getQUERY())) {
+
+            ps.setLong(1, id);
+
+            final ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                result = userMapper.extractFromResultSet(rs);
+            }
+        } catch (SQLException e) {
+            logger.fatal("Caught SQLException exception", e);
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    /**
+     * obtains all Students from database.
+     *
+     */
+    @Override
+    public List<User> findAll() {
+        Map<Long, User> users = new HashMap<>();
+
+        final String query = UserSQL.READ_ALL.getQUERY();
+
+        try (Statement st = connection.createStatement()) {
+
+            ResultSet rs = st.executeQuery(query);
+            UserMapper userMapper = new UserMapper();
+
+            while (rs.next()) {
+                User user = userMapper.extractFromResultSet(rs);
+                user = userMapper.makeUnique(users, user);
+            }
+//            for (User u: users.values()) {
+//                System.out.println(u.getEmail());
+//            }
+            return new ArrayList<>(users.values());
+        } catch (SQLException e) {
+            logger.fatal("Caught SQLException exception", e);
+            e.printStackTrace();
+            return null;
+            //todo optional
+        }
+    }
+
+    @Override
+    public void update(User user) {
+        throw new UnsupportedOperationException ("This action has not yet been developed.");
+    }
+
+    @Override
+    public void delete(long id) {
+        throw new UnsupportedOperationException ("This action has not yet been developed.");
+    }
+
+
+    @Override
+    public void close() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+
+}
+
+

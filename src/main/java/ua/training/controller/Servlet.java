@@ -5,6 +5,7 @@ package ua.training.controller;
 import ua.training.controller.command.Command;
 import ua.training.controller.command.account.LoginCommand;
 import ua.training.controller.command.account.LogoutCommand;
+import ua.training.controller.command.account.PersonalCabinetCommand;
 import ua.training.controller.command.account.RegistrationCommand;
 import ua.training.controller.command.directions.HomeCommand;
 import ua.training.controller.command.directions.LogMeCommand;
@@ -54,6 +55,8 @@ public class Servlet extends HttpServlet {
                 new LoginCommand(new UserService()));
         commands.put("logout",
                 new LogoutCommand());
+        commands.put("personal-cabinet",
+                new PersonalCabinetCommand());
 
         commands.put("home",
                 new HomeCommand());

@@ -29,10 +29,10 @@
 </head>
 <body>
 
-<jsp:include page="navbar.jsp"/>
+<jsp:include page="../common/navbar-cabinet.jsp"/>
 
 
-<jsp:include page="sidebar.jsp"/>
+<jsp:include page="../client/sidebar.jsp"/>
 
 
 

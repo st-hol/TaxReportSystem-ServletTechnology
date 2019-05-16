@@ -3,7 +3,7 @@ package ua.training.model.service;
 
 import ua.training.model.dao.DaoFactory;
 import ua.training.model.dao.UserDao;
-import ua.training.model.dao.impl.JDBCUserDao;
+import ua.training.model.dao.impl.JdbcUserDao;
 import ua.training.model.entity.User;
 import ua.training.model.exception.AlreadyExistingDBRecordException;
 
@@ -18,8 +18,6 @@ import java.util.*;
  * @author Stanislav Holovachuk
  */
 public class UserService {
-
-    final private static int IS_ENROLLED = 1;
 
     private DaoFactory daoFactory = DaoFactory.getInstance();
 
@@ -105,7 +103,7 @@ public class UserService {
     /**
      * obtains List of certain quantity of enrolled students.
      */
-    public JDBCUserDao.PaginationResult getAllEnrolledStudentsByPagination(int lowerBound, int upperBound) {
+    public JdbcUserDao.PaginationResult getAllEnrolledStudentsByPagination(int lowerBound, int upperBound) {
         try (UserDao dao = daoFactory.createUserDao()) {
             return dao.findByPagination(lowerBound, upperBound);
         }

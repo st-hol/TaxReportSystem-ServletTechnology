@@ -50,6 +50,9 @@ public class LoginCommand implements Command {
             }
 
             final User.ROLE role = userService.getRoleByEmailAndPass(email, password);
+
+
+            //todo in service and logout too
             request.getSession().setAttribute("password", password);
             request.getSession().setAttribute("email", email);
             request.getSession().setAttribute("role", role);
@@ -60,9 +63,9 @@ public class LoginCommand implements Command {
             request.getSession().setAttribute("role", User.ROLE.UNKNOWN);
         }
 
-        return "/WEB-INF/common/login.jsp?dataaa=true";
-//        Command personalCabinet = new PersonalCabinetCommand();
-//        return personalCabinet.execute(request, response);
+//  return "/WEB-INF/common/login.jsp?dataaa=true";
+        Command personalCabinet = new PersonalCabinetCommand();
+        return personalCabinet.execute(request, response);
     }
 
 

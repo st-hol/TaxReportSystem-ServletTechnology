@@ -13,12 +13,12 @@ import javax.validation.constraints.NotNull;
 import java.sql.*;
 import java.util.*;
 
-public class JDBCUserDao implements UserDao {
+public class JdbcUserDao implements UserDao {
 
     private Connection connection;
-    private static final Logger logger = LogManager.getLogger(JDBCUserDao.class);
+    private static final Logger logger = LogManager.getLogger(JdbcUserDao.class);
 
-    public JDBCUserDao(Connection connection) {
+    public JdbcUserDao(Connection connection) {
         this.connection = connection;
     }
 

@@ -22,29 +22,20 @@
 </head>
 <body>
 
-<c:choose>
-    <c:when test="${sessionScope.role == 'ADMIN'}">
-        <jsp:include page="../WEB-INF/admin/navbar.jsp"/>
-    </c:when>
-    <c:when test="${sessionScope.role == 'USER'}">
-        <jsp:include page="../WEB-INF/user/navbar.jsp"/>
-    </c:when>
-    <c:otherwise>
-        <jsp:include page="../guest/navbar.jsp"/>
-    </c:otherwise>
-</c:choose>
+
+<jsp:include page="navbar-landing.jsp"/>
 
 
 <header class="header">
     <div class="overlay"></div>
     <div class="container offset-1">
         <div class="description text-left">
-            <h3><span>
-                ▍ Tax report system
+            <h3>
+                <span> ▍ Tax report system</span>
                 <p>
                     Hello guest! You can sign in if you already have account or sign up if you are new here.</p>
-                <button class="btn btn-outline-secondary">See more</button>
-            </span></h3>
+                <%--<button class="btn btn-outline-secondary">See more</button>--%>
+            </h3>
         </div>
 
     </div>

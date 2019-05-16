@@ -59,6 +59,7 @@
       <version>17.0.0</version>
       <scope>compile</scope>
     </dependency>
+
     <!--JQuery-->
     <dependency>
       <groupId>org.webjars</groupId>
@@ -71,12 +72,14 @@
       <artifactId>bootstrap</artifactId>
       <version>4.3.1</version>
     </dependency>
-    <!--        Popper.js-->
+
+    <!-- https://mvnrepository.com/artifact/org.webjars.bower/tether -->
     <dependency>
-      <groupId>org.webjars.bower</groupId>
-      <artifactId>popper.js</artifactId>
-      <version>1.14.6</version>
+      <groupId>org.webjars</groupId>
+      <artifactId>tether</artifactId>
+      <version>1.4.0</version>
     </dependency>
+
     <!--        Apache db connection pool-->
     <dependency>
       <groupId>org.apache.commons</groupId>

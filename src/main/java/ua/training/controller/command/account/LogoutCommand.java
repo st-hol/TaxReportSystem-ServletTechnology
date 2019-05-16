@@ -29,7 +29,10 @@ public class LogoutCommand implements Command {
         logger.info("User [" + email + "] " + "logged out." );
 
         String path = request.getServletContext().getContextPath();
-        return "redirect@" + path ;
+//        return "redirect@" + path ;
+//        return "redirect@" + path + "/WEB-INF/common/welcome.jsp";
+//        return "redirect@" + "/app/home";
+        return "redirect@" + path + "/";
     }
 }
 
