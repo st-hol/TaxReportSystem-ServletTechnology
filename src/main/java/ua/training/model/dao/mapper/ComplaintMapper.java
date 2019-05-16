@@ -13,7 +13,6 @@ import static ua.training.model.entity.User.ROLE.getRoleById;
 
 public class ComplaintMapper implements ObjectMapper<Complaint>{
 
-    //new User.Role(rs.getInt("rol_id")
     @Override
     public Complaint extractFromResultSet(ResultSet rs) throws SQLException {
         UserService userService = new UserService();
@@ -22,6 +21,7 @@ public class ComplaintMapper implements ObjectMapper<Complaint>{
 
         complaint.setId(rs.getInt("id_complaint"));
         complaint.setUser(userService.getStudentById(rs.getLong("id_person")));
+        complaint.setContent(rs.getString("content"));
         complaint.setCompletionTime(rs.getTimestamp("completion_time"));
 
 
