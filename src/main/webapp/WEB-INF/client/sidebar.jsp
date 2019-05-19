@@ -20,18 +20,18 @@
         <div class="profile-usermenu sidebar-sticky">
             <h5 class="text-primary">CLIENT:</h5>
             <ul class="nav flex-column">
-                <li class="active nav-item">
-                    <a href="#" class="nav-link active">
+                <li class="nav-item">
+                    <a href="${pageContext.request.contextPath}/app/make-report" class="nav-link">
                         <i class="fa fa-home"></i>
                         Submit a report </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="https://codepen.io/jasondavis/pen/jVRwaG?editors=1000">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/app/show-reports">
                         <i class="fa fa-user"></i>
-                        See my reports </a>
+                        Show my reports </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" target="_blank">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/app/make-complaint">
                         <i class="fa fa-check"></i>
                         Make a complaint </a>
                 </li>

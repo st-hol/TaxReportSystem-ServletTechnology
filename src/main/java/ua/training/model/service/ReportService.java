@@ -2,6 +2,13 @@ package ua.training.model.service;
 
 
 import ua.training.model.dao.DaoFactory;
+import ua.training.model.dao.ReportDao;
+import ua.training.model.dao.UserDao;
+import ua.training.model.dao.impl.JdbcReportDao;
+import ua.training.model.dao.impl.JdbcUserDao;
+import ua.training.model.entity.Report;
+
+import java.util.List;
 
 
 /**
@@ -12,11 +19,41 @@ import ua.training.model.dao.DaoFactory;
  */
 public class ReportService {
 
-    final private static int IS_ENROLLED = 1;
-
     private DaoFactory daoFactory = DaoFactory.getInstance();
 
 
+    /**
+     * Submits user's report.
+     *
+     * @param report Report.
+     */
+    public void submitReportAction(Report report)  {
+        try (ReportDao reportDao  = daoFactory.createReportDao()) {
+            reportDao.create(report);
+        }
+    }
+
+
+    /**
+     * obtains List of all reports.
+     */
+    public List<Report> getAllReports() {
+        try (ReportDao dao = daoFactory.createReportDao()) {
+            return dao.findAll();
+        }
+    }
+
+
+
+
+    /**
+     * obtains List of certain quantity of enrolled students.
+     */
+    public JdbcReportDao.PaginationResult getReportsByPagination(int lowerBound, int upperBound, long idUser) {
+        try (ReportDao dao = daoFactory.createReportDao()) {
+            return dao.findByPagination(lowerBound, upperBound, idUser);
+        }
+    }
 
 
 }

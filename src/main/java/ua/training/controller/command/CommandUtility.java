@@ -86,7 +86,7 @@ public class CommandUtility {
         String email = session.getAttribute("email").toString();
 
         UserService userService = new UserService();
-        return userService.getStudentByEmail(email);
+        return userService.getUserByEmail(email);
     }
 
 

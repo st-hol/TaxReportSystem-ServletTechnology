@@ -2,15 +2,11 @@ package ua.training.model.dao.mapper;
 
 
 import ua.training.model.entity.Report;
-import ua.training.model.entity.User;
-import ua.training.model.service.ReportService;
 import ua.training.model.service.UserService;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
-
-import static ua.training.model.entity.User.ROLE.getRoleById;
 
 public class ReportMapper implements ObjectMapper<Report>{
 
@@ -22,7 +18,7 @@ public class ReportMapper implements ObjectMapper<Report>{
         UserService userService = new UserService();
 
         report.setId(rs.getInt("id_report"));
-        report.setPerson(userService.getStudentById(rs.getLong("id_person")));
+        report.setPerson(userService.getUserById(rs.getLong("id_person")));
         report.setCompanyName(rs.getString("company_name"));
         report.setTaxpayerCode(rs.getString("taxpayer_code"));
         report.setCompletionTime(rs.getTimestamp("completion_time"));

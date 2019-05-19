@@ -3,16 +3,10 @@ package ua.training.model.dao.impl;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import ua.training.model.dao.ReportDao;
-import ua.training.model.dao.UserDao;
-import ua.training.model.dao.impl.queries.ComplaintSQL;
 import ua.training.model.dao.impl.queries.ReportSQL;
-import ua.training.model.dao.impl.queries.UserSQL;
-import ua.training.model.dao.mapper.ComplaintMapper;
+import ua.training.model.dao.impl.queries.TaxableItemSQL;
 import ua.training.model.dao.mapper.ReportMapper;
-import ua.training.model.dao.mapper.UserMapper;
-import ua.training.model.entity.Complaint;
 import ua.training.model.entity.Report;
-import ua.training.model.entity.User;
 
 import javax.validation.constraints.NotNull;
 import java.sql.*;
@@ -38,20 +32,32 @@ public class JdbcReportDao implements ReportDao {
      */
     @Override
     public void create(@NotNull final Report report) {
+        //todo transaction
 
         try (PreparedStatement ps = connection.prepareStatement(ReportSQL.INSERT.getQUERY())) {
+
+            connection.setAutoCommit(false);
 
             ps.setLong(1, report.getPerson().getId());
             ps.setString(2, report.getCompanyName());
             ps.setString(3, report.getTaxpayerCode());
             ps.setTimestamp(4, report.getCompletionTime());
-            ps.setLong(5, report.getTotalAmountOfProperty());
-            ps.setBoolean(6, report.isAccepted());
-            ps.setBoolean(7, report.isShouldBeChanged());
+            //ps.setLong(5, report.getTotalAmountOfProperty());
+            ps.setBoolean(6, report.getIsAccepted());
+            ps.setBoolean(7, report.getShouldBeChanged());
             ps.setString(8, report.getInspectorComment());
+
+            ResultSet rs = ps.executeQuery(TaxableItemSQL.GET_TOTAL_AMOUNT_OF_PROPERTY_FOR_CERTAIN_PERSON.getQUERY());
+            if (rs.next()){
+                long totalAmountOfProperty = rs.getLong("total_amount");
+                ps.setLong(5, totalAmountOfProperty);
+            }
+
             ps.execute();
 
+            connection.commit();
         } catch (SQLException e) {
+            //connection.rollback();
             logger.fatal("Caught SQLException exception", e);
             e.printStackTrace();
         }
@@ -133,6 +139,80 @@ public class JdbcReportDao implements ReportDao {
             connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+
+    /**
+     * SQL query obtains all Reports limited by lower and upper bounds ordered by descent according to time
+     * and quantity of all records got from database.
+     *
+     * @param lowerBound integer value.
+     * @param upperBound integer value.
+     * @return object of user-defined class PaginationResult. Which contains of two fields:
+     * 1)the List of obtained Reports.
+     * 2)number of records was read.
+     */
+    @Override
+    public PaginationResult findByPagination(int lowerBound, int upperBound, long idUser) {
+
+        PaginationResult paginationResult = new PaginationResult();
+
+//        String query = "SELECT SQL_CALC_FOUND_ROWS * FROM reports " +
+//                " where id_person=" + idUser +
+//                " order by completion_time DESC " +
+//                " limit "
+//                + lowerBound + ", " + upperBound;
+
+        Map<Long, Report> reports = new HashMap<>();
+        ReportMapper reportMapper = new ReportMapper();
+
+        try (PreparedStatement ps = connection.prepareStatement(ReportSQL.GET_REPORTS_BY_PAGINATION.getQUERY())) {
+            ps.setLong(1, idUser);
+            ps.setInt(2, lowerBound);
+            ps.setInt(3, upperBound);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Report report = reportMapper.extractFromResultSet(rs);
+                report = reportMapper.makeUnique(reports, report);
+            }
+            rs.close();
+
+            rs = ps.executeQuery("SELECT FOUND_ROWS()");
+            if (rs.next()) {
+                paginationResult.setNoOfRecords(rs.getInt(1));
+            }
+            rs.close();
+        } catch (SQLException e) {
+            logger.fatal("Caught SQLException exception", e);
+            e.printStackTrace();
+        }
+        paginationResult.setResultList(new ArrayList<>(reports.values()));
+        return paginationResult;
+    }
+
+    /**
+     * It is user-defined class just for returning result from findByPagination() method.
+     */
+    public class PaginationResult {
+        private int noOfRecords;
+        private List<Report> resultList;
+
+        public int getNoOfRecords() {
+            return noOfRecords;
+        }
+
+        public void setNoOfRecords(int noOfRecords) {
+            this.noOfRecords = noOfRecords;
+        }
+
+        public List<Report> getResultList() {
+            return resultList;
+        }
+
+        public void setResultList(List<Report> resultList) {
+            this.resultList = resultList;
         }
     }
 

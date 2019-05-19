@@ -8,13 +8,10 @@ public abstract class DaoFactory {
     private static DaoFactory daoFactory;
 
 
-
-
-
     public abstract UserDao createUserDao();
-
-
-
+    public abstract ReportDao createReportDao();
+    public abstract ComplaintDao createComplaintDao();
+    public abstract TaxableItemDao createTaxableItemDao();
 
 
     public static DaoFactory getInstance() {

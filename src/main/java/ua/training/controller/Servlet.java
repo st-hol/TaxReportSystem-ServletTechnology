@@ -7,9 +7,12 @@ import ua.training.controller.command.account.LoginCommand;
 import ua.training.controller.command.account.LogoutCommand;
 import ua.training.controller.command.account.PersonalCabinetCommand;
 import ua.training.controller.command.account.RegistrationCommand;
-import ua.training.controller.command.directions.HomeCommand;
-import ua.training.controller.command.directions.LogMeCommand;
-import ua.training.controller.command.directions.RegMeCommand;
+import ua.training.controller.command.actions.ShowReportsCommand;
+import ua.training.controller.command.actions.SubmitComplaintCommand;
+import ua.training.controller.command.actions.SubmitReportCommand;
+import ua.training.controller.command.directions.*;
+import ua.training.model.service.ComplaintService;
+import ua.training.model.service.ReportService;
 import ua.training.model.service.UserService;
 
 import javax.servlet.ServletConfig;
@@ -34,7 +37,7 @@ import java.util.Map;
  *     received after three months of training.</i>
  * </p>
  *
- * <strong>Variant №6)Introductory Campaign </strong>
+ * <strong>Variant №5)Tax Report System </strong>
  *
  * @author  Stanislav Holovachuk
  * @version 1.0
@@ -49,6 +52,7 @@ public class Servlet extends HttpServlet {
 
     public void init(ServletConfig servletConfig){
 
+        //account
         commands.put("registration",
                 new RegistrationCommand(new UserService()));
         commands.put("login",
@@ -58,13 +62,30 @@ public class Servlet extends HttpServlet {
         commands.put("personal-cabinet",
                 new PersonalCabinetCommand());
 
+
+        //directions
         commands.put("home",
                 new HomeCommand());
         commands.put("reg-me",
                 new RegMeCommand());
         commands.put("log-me",
                 new LogMeCommand());
+        commands.put("make-complaint",
+                new MakeComplaintCommand());
+        commands.put("make-report",
+                new MakeReportCommand());
+
+
+        //actions
+        commands.put("submit-report",
+                new SubmitReportCommand(new ReportService(), new UserService()));
+        commands.put("submit-complaint",
+                new SubmitComplaintCommand(new ComplaintService(), new UserService()));
+        commands.put("show-reports",
+                new ShowReportsCommand(new ReportService()));
+
     }
+
 
 
     public void doGet(HttpServletRequest request,
@@ -85,8 +106,8 @@ public class Servlet extends HttpServlet {
      * If path contains "redirect@" it truncates it at send redirect
      * else it makes forward.
      *
-     * @param request
-     * @param response
+     * @param request HttpServletRequest
+     * @param response HttpServletResponse
      * @return Nothing.
      */
     private void processRequest(HttpServletRequest request,
@@ -106,9 +127,3 @@ public class Servlet extends HttpServlet {
         }
     }
 }
-
-
-
-//todo disable autocommit and make double transaction / for example for update two tables
-//todo pagination
-//todo many-to-many

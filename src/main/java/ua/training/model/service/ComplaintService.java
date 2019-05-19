@@ -1,7 +1,9 @@
 package ua.training.model.service;
 
 
+import ua.training.model.dao.ComplaintDao;
 import ua.training.model.dao.DaoFactory;
+import ua.training.model.entity.Complaint;
 
 
 /**
@@ -12,11 +14,18 @@ import ua.training.model.dao.DaoFactory;
  */
 public class ComplaintService {
 
-    final private static int IS_ENROLLED = 1;
-
     private DaoFactory daoFactory = DaoFactory.getInstance();
 
-
+    /**
+     * Makes user's complaint.
+     *
+     * @param complaint Complaint.
+     */
+    public void makeComplaintAction(Complaint complaint)  {
+        try (ComplaintDao complaintDao  = daoFactory.createComplaintDao()) {
+            complaintDao.create(complaint);
+        }
+    }
 
 }
 

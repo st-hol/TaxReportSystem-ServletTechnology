@@ -94,6 +94,11 @@
                         </div>
                     </div>
                 </form>
+
+
+                <a class="" href="${pageContext.request.contextPath}/app/home">go home</a>
+
+
             </div>
         </div>
     </div>

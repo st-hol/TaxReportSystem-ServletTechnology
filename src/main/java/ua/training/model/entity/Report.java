@@ -90,7 +90,7 @@ public class Report {
         isAccepted = bShouldChange;
     }
 
-    public boolean isAccepted() {
+    public boolean getIsAccepted() {
         return isAccepted;
     }
 
@@ -98,7 +98,7 @@ public class Report {
         isAccepted = accepted;
     }
 
-    public boolean isShouldBeChanged() {
+    public boolean getShouldBeChanged() {
         return shouldBeChanged;
     }
 

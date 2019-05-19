@@ -16,12 +16,16 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Processes registration.
+ *
  * @author Stanislav Holovachuk
  */
+
+//todo fix hangs on reg client
 public class RegistrationCommand implements Command {
     private static final Logger logger = LogManager.getLogger(RegistrationCommand.class);
 
     private UserService userService;
+
 
     public RegistrationCommand(UserService studentService) {
         this.userService = studentService;
@@ -37,22 +41,25 @@ public class RegistrationCommand implements Command {
         final String firstName = request.getParameter("firstName");
         final String lastName = request.getParameter("lastName");
 
-        if ( ! password.equals(confirmPassword)) {
+        if (!password.equals(confirmPassword)) {
             logger.info("User [" + email + "]" + " password and its confirmation is not equal.");
             return "/WEB-INF/common/registration.jsp?passwordsDifferent=true";
         }
 
-        if ( ! (UserValidator.validateEmail(email) && UserValidator.validatePassword(password))) {
+        if (!(UserValidator.validateEmail(email) && UserValidator.validatePassword(password))) {
             logger.info("User [" + email + "]" + " entered wrong data.");
             return "/WEB-INF/common/registration.jsp?dataInvalid=true";
         }
 
+        User.ROLE userRole = User.ROLE.valueOf(role);
+
         final User user = new User();
-        user.setRole(User.ROLE.valueOf(role));
+        user.setRole(userRole);
         user.setPassword(password);
         user.setEmail(email);
         user.setFirstName(firstName);
         user.setLastName(lastName);
+//        user.setAssignedInspector(noInspector);
 
         try {
             userService.registerUserAccount(user);
@@ -62,23 +69,14 @@ public class RegistrationCommand implements Command {
             return "/WEB-INF/common/registration.jsp?success=false";
         }
 
-        logger.info("User [" + email + "]" + " role[" + role + "]" +" successfully registered.");
+        if (userRole.equals(User.ROLE.CLIENT)) {
+            userService.assignRandomInspectorToClient(user);
+        }
+
+        logger.info("User [" + email + "]" + " role[" + role + "]" + " successfully registered.");
         return "/WEB-INF/common/registration.jsp?success=true";
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //            return "redirect@" + path + "/jsp/registration.jsp?dataInvalid=true";

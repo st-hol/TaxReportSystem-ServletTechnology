@@ -9,32 +9,52 @@ public class User {
     private String email;
     private String password;
     private ROLE role;
+    private User assignedInspector;
+    //todo optional
 
+    private static User noInspector;
+    static {
+        noInspector = new User(0);
+    }
 
-
+//    default constructor
     public User() {
     }
 
-
-    public User(long id, String email, String password, ROLE role) {
-        this.id = id;
-
-        this.firstName = "Unknown";
-        this.lastName = "Unknown";
-
-        this.email = email;
-        this.password = password;
-        this.role = role;
-    }
-
+    // no inspector contr
+    //todo optional
     public User(long id, String firstName, String lastName, String email, String password, ROLE role) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-
         this.email = email;
         this.password = password;
         this.role = role;
+        this.assignedInspector = noInspector;
+    }
+
+
+//    full args constructor
+    public User(long id, String firstName, String lastName, String email, String password, ROLE role, User assignedInspector) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.assignedInspector = assignedInspector;
+    }
+
+    public User(long id) {
+        this.id = id;
+    }
+
+    public User getAssignedInspector() {
+        return assignedInspector;
+    }
+
+    public void setAssignedInspector(User assignedInspector) {
+        this.assignedInspector = assignedInspector;
     }
 
     public long getId() {

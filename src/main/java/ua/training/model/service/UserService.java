@@ -22,6 +22,8 @@ public class UserService {
     private DaoFactory daoFactory = DaoFactory.getInstance();
 
 
+
+
     /**
      * Registers user's account if such not exist yet.
      *
@@ -45,7 +47,7 @@ public class UserService {
      *
      * @param email String.
      */
-    public User getStudentByEmail(String email) {
+    public User getUserByEmail(String email) {
 
         List<User> users = getAllUsers();
 
@@ -84,7 +86,7 @@ public class UserService {
      *
      * @param id long.
      */
-    public User getStudentById(long id){
+    public User getUserById(long id){
         try (UserDao dao = daoFactory.createUserDao()) {
             return dao.findById(id);
         }
@@ -100,15 +102,28 @@ public class UserService {
     }
 
 
-    /**
-     * obtains List of certain quantity of enrolled students.
-     */
-    public JdbcUserDao.PaginationResult getAllEnrolledStudentsByPagination(int lowerBound, int upperBound) {
-        try (UserDao dao = daoFactory.createUserDao()) {
-            return dao.findByPagination(lowerBound, upperBound);
+
+
+
+
+    public void assignRandomInspectorToClient(User client){
+        try(UserDao userDao = daoFactory.createUserDao()) {
+            List<User> allInspectors = userDao.findAllInspectors();
+
+
+            for (User u:allInspectors
+                 ) {
+                System.out.println(u.getId());
+            }
+
+            Random random = new Random();
+            int randomInspectorIndex = random.nextInt(allInspectors.size());
+            User inspector = allInspectors.get(randomInspectorIndex);
+
+            client = getUserByEmail(client.getEmail());
+            userDao.assignInspector(client, inspector);
         }
     }
-
 
 }
 

@@ -2,6 +2,7 @@ package ua.training.model.dao.mapper;
 
 
 import ua.training.model.entity.User;
+import ua.training.model.service.UserService;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,8 +16,9 @@ public class UserMapper implements ObjectMapper<User>{
     @Override
     public User extractFromResultSet(ResultSet rs) throws SQLException {
         User user = new User();
+        UserService userService = new UserService();
 
-        user.setId(rs.getInt("id_student"));
+        user.setId(rs.getInt("id_person"));
 
         user.setFirstName(rs.getString("first_name"));
         user.setLastName(rs.getString("last_name"));
@@ -27,6 +29,11 @@ public class UserMapper implements ObjectMapper<User>{
         user.setRole(getRoleById(
                 rs.getInt("id_role")));
 
+        if (rs.getInt("id_person") == rs.getLong("id_inspector")){
+            user.setAssignedInspector(user);
+        }else {
+            user.setAssignedInspector(userService.getUserById(rs.getLong("id_inspector")));
+        }
 
         return user;
     }

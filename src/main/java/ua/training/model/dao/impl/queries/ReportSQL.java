@@ -13,8 +13,12 @@ public enum ReportSQL {
             "VALUES ((?),(?),(?),(?),(?), (?), (?), (?))"),
 
     DELETE(""),
-    UPDATE("");
+    UPDATE("UPDATE reports SET total_amount_of_property=(?) WHERE id_report=(?);"),
 
+    GET_REPORTS_BY_PAGINATION("SELECT SQL_CALC_FOUND_ROWS * FROM reports " +
+            " where id_person=(?) " +
+            " order by completion_time DESC " +
+            " limit ?, ?;");
 
     String QUERY;
 

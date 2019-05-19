@@ -39,6 +39,7 @@ public class JdbcUserDao implements UserDao {
             ps.setString(3, user.getEmail());
             ps.setString(4, user.getPassword());
             ps.setInt(5, user.getRole().getRoleID());
+//            ps.setLong(6, user.getAssignedInspector().getId());
 
             ps.execute();
 
@@ -95,15 +96,52 @@ public class JdbcUserDao implements UserDao {
                 User user = userMapper.extractFromResultSet(rs);
                 user = userMapper.makeUnique(users, user);
             }
-//            for (User u: users.values()) {
-//                System.out.println(u.getEmail());
-//            }
             return new ArrayList<>(users.values());
         } catch (SQLException e) {
             logger.fatal("Caught SQLException exception", e);
             e.printStackTrace();
             return null;
             //todo optional
+        }
+    }
+
+    @Override
+    public List<User> findAllInspectors() {
+        Map<Long, User> users = new HashMap<>();
+
+        final String query = UserSQL.READ_ALL_INSPECTORS.getQUERY();
+
+        try (Statement st = connection.createStatement()) {
+
+            ResultSet rs = st.executeQuery(query);
+            UserMapper userMapper = new UserMapper();
+
+            while (rs.next()) {
+                User user = userMapper.extractFromResultSet(rs);
+                user = userMapper.makeUnique(users, user);
+            }
+            return new ArrayList<>(users.values());
+        } catch (SQLException e) {
+            logger.fatal("Caught SQLException exception", e);
+            e.printStackTrace();
+            return null;
+            //todo optional
+        }
+    }
+
+
+    @Override
+    public void assignInspector(User client, User inspector){
+        try (PreparedStatement ps = connection.prepareStatement(UserSQL.ASSIGN_INSPECTOR_TO_CLIENT.getQUERY())) {
+
+            ps.setLong(1, inspector.getId());
+            ps.setLong(2, client.getId());
+
+            ps.execute();
+
+        } catch (SQLException e) {
+            logger.fatal("Caught SQLException exception", e);
+            e.printStackTrace();
         }
     }
 
@@ -208,78 +246,6 @@ public class JdbcUserDao implements UserDao {
         }
         return false;
     }
-
-
-    /**
-     * SQL query obtains all Students limited by lower and upper bounds ordered by descent according to rating
-     * and quantity of all records got from database.
-     *
-     * @param lowerBound integer value.
-     * @param upperBound integer value.
-     * @return object of user-defined class PaginationResult. Which contains of two fields:
-     * 1)the List of obtained Students.
-     * 2)number of records was read.
-     */
-    @Override
-    public PaginationResult findByPagination(int lowerBound, int upperBound) {
-
-        PaginationResult paginationResult = new PaginationResult();
-
-        String query = "SELECT SQL_CALC_FOUND_ROWS * FROM application_for_admission as app " +
-                "left join students as st on app.id_student = st.id_student " +
-                "where app.is_enrolled = 1 order by st.rating DESC " +
-                "limit  "
-                + lowerBound + ", " + upperBound;
-
-        Map<Long, User> users = new HashMap<>();
-        UserMapper userMapper = new UserMapper();
-
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                User user = userMapper.extractFromResultSet(rs);
-                user = userMapper.makeUnique(users, user);
-            }
-            rs.close();
-
-            rs = ps.executeQuery("SELECT FOUND_ROWS()");
-            if (rs.next()) {
-                paginationResult.setNoOfRecords(rs.getInt(1));
-            }
-            rs.close();
-        } catch (SQLException e) {
-            logger.fatal("Caught SQLException exception", e);
-            e.printStackTrace();
-        }
-        paginationResult.setResultList(new ArrayList<>(users.values()));
-        return paginationResult;
-    }
-
-    /**
-     * It is user-defined class just for returning result from findByPagination() method.
-     */
-    public class PaginationResult {
-        private int noOfRecords;
-        private List<User> resultList;
-
-        public int getNoOfRecords() {
-            return noOfRecords;
-        }
-
-        public void setNoOfRecords(int noOfRecords) {
-            this.noOfRecords = noOfRecords;
-        }
-
-        public List<User> getResultList() {
-            return resultList;
-        }
-
-        public void setResultList(List<User> resultList) {
-            this.resultList = resultList;
-        }
-    }
-
-
 }
 
 

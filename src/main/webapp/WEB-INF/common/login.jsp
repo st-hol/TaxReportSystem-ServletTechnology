@@ -24,11 +24,11 @@
 <div class="form">
 
     <c:if test="${param.dataInvalid == true}">
-        <p style="color: orange"><fmt:message key="label.invalid.input" /></p>
+        <p style="color: orange"><fmt:message key="label.invalid.input"/></p>
     </c:if>
 
     <c:if test="${param.userExist == false}">
-        <p style="color: darkred"><fmt:message key="label.no.exist" /></p>
+        <p style="color: darkred"><fmt:message key="label.not.exist"/></p>
     </c:if>
 
     <form class="form-horizontal" role="form" method="POST" action="${pageContext.request.contextPath}/app/login">
@@ -47,54 +47,19 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-default btn-sm">Войти</button>
+                    <button type="submit" class="btn btn-primary btn-sm">Войти</button>
                 </div>
             </div>
         </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <a class="" href="${pageContext.request.contextPath}/app/home">go home</a>
+            </div>
+        </div>
     </form>
-</div><!-- form  -->
 
-<!-- SCRIPTS -->
+</div>
+
+
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-<%--<html>--%>
-<%--<head>--%>
-    <%--<title>email page</title>--%>
-
-<%--</head>--%>
-<%--<body>--%>
-
-<%--<h1>email</h1>--%>
-<%--<br/>--%>
-
-
-<%--<c:if test="${param.dataInvalid == true}">--%>
-    <%--<p>Invalid input. Check your input data is correct, please.</p>--%>
-<%--</c:if>--%>
-<%--<c:if test="${param.userExist == false}">--%>
-    <%--<p>No such user exist in database.</p>--%>
-<%--</c:if>--%>
-
-
-
-<%--<form method="post" action="${pageContext.request.contextPath}/introductory-campaign/login">--%>
-
-    <%--<input type="text" name="email"><br/>--%>
-    <%--<input type="password" name="password"><br/><br/>--%>
-    <%--<input class="button" type="submit" value="Войти">--%>
-
-<%--</form>--%>
-<%--<br/>--%>
-<%--<a href="${pageContext.request.contextPath}/introductory-campaign/home">На головну</a>--%>
-
-<%--</body>--%>
-<%--</html>--%>

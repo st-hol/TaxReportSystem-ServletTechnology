@@ -10,14 +10,19 @@ public enum UserSQL {
 
     INSERT("INSERT INTO persons " +
             "(first_name, last_name, email, password, id_role) " +
-            "VALUES ((?),(?),(?),(?), (?))"),
+            "VALUES ((?),(?),(?),(?),(?))"),
 
     DELETE(""),
     UPDATE(""),
 
     READ_BY_EMAIL("SELECT * FROM persons where email=(?);"),
 
-    READ_BY_EMAIL_PASSWORD("SELECT * FROM persons where email=(?) and password=(?);");
+    READ_BY_EMAIL_PASSWORD("SELECT * FROM persons where email=(?) and password=(?);"),
+
+
+    READ_ALL_INSPECTORS("select * from persons where id_role=1"),
+
+    ASSIGN_INSPECTOR_TO_CLIENT("UPDATE persons SET id_inspector=(?) WHERE id_person=(?);");
 
     String QUERY;
 
