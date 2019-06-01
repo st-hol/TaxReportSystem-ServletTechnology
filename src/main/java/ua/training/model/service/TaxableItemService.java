@@ -44,8 +44,21 @@ public class TaxableItemService {
         }
     }
 
+    public void setTaxableItemsPerPerson(TaxableItem taxableItem){
+        try (TaxableItemDao dao  = daoFactory.createTaxableItemDao()) {
+            if (alreadyExist(taxableItem)) {
+                dao.update(taxableItem);
+            }else {
+                dao.regTaxableToPerson(taxableItem);
+            }
+        }
+    }
+
+
+    public boolean alreadyExist(TaxableItem taxableItem){
+        try (TaxableItemDao dao = daoFactory.createTaxableItemDao()) {
+            return dao.isAlreadyExisting(taxableItem);
+        }
+    }
 
 }
-
-
-//todo Optional

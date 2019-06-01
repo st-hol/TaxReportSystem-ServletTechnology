@@ -102,6 +102,12 @@ public class UserService {
     }
 
 
+    public List<User> getAllAssignedToInspector(long idInspector){
+        try (UserDao dao = daoFactory.createUserDao()) {
+            return dao.findAssignedByInspector(idInspector);
+        }
+    }
+
 
 
 
@@ -109,12 +115,6 @@ public class UserService {
     public void assignRandomInspectorToClient(User client){
         try(UserDao userDao = daoFactory.createUserDao()) {
             List<User> allInspectors = userDao.findAllInspectors();
-
-
-            for (User u:allInspectors
-                 ) {
-                System.out.println(u.getId());
-            }
 
             Random random = new Random();
             int randomInspectorIndex = random.nextInt(allInspectors.size());

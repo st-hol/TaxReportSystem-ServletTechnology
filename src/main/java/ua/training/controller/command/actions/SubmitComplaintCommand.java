@@ -26,21 +26,16 @@ public class SubmitComplaintCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger(SubmitComplaintCommand.class);
 
-    UserService userService;
-    ComplaintService complaintService;
+    private ComplaintService complaintService;
 
-    public SubmitComplaintCommand(ComplaintService complaintService, UserService userService) {
+    public SubmitComplaintCommand(ComplaintService complaintService) {
         this.complaintService = complaintService;
-        this.userService = userService;
     }
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         Complaint complaint = new Complaint();
-
-        //todo validation
-        //long idChargedInspector = Long.parseLong(request.getParameter("idChargedInspector"));
 
         final User currentSessionUser = CommandUtility.getCurrentSessionUser(request);
         final User inspector = currentSessionUser.getAssignedInspector();
@@ -51,7 +46,7 @@ public class SubmitComplaintCommand implements Command {
         complaint.setContent(content);
 
         complaintService.makeComplaintAction(complaint);
-        logger.info("Complaint was charged on inspector " + inspector.getId());
+        logger.info("Complaint was charged on inspector #" + inspector.getId());
 
         return "/WEB-INF/client/submit-complaint.jsp";
     }

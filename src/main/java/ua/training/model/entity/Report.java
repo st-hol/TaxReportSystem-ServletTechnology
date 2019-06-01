@@ -87,7 +87,7 @@ public class Report {
 
     public void setShouldChangeFromInt(int iShouldChange) {
         boolean bShouldChange = (iShouldChange != 0);
-        isAccepted = bShouldChange;
+        shouldBeChanged = bShouldChange;
     }
 
     public boolean getIsAccepted() {

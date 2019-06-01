@@ -25,16 +25,26 @@
                         <i class="fa fa-home"></i>
                         Submit a report </a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/app/edit-report">
+                        <i class="fa fa-check"></i>
+                        Edit report </a>
+                </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/app/show-reports">
                         <i class="fa fa-user"></i>
                         Show my reports </a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/app/make-complaint">
                         <i class="fa fa-check"></i>
                         Make a complaint </a>
                 </li>
+
+
             </ul>
         </div>
         <!-- END MENU -->

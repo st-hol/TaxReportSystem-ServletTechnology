@@ -10,6 +10,8 @@ public interface UserDao extends GenericDao<User> {
 
     List<User> findAllInspectors();
 
+    List<User> findAssignedByInspector(final long idInspector);
+
     void assignInspector(User client, User inspector);
 
     User.ROLE getRoleByEmailPassword(final String email, final String password);

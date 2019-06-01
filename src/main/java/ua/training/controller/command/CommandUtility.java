@@ -1,6 +1,10 @@
 package ua.training.controller.command;
 
+import ua.training.model.entity.Report;
+import ua.training.model.entity.TaxableItem;
 import ua.training.model.entity.User;
+import ua.training.model.service.ReportService;
+import ua.training.model.service.TaxableItemService;
 import ua.training.model.service.UserService;
 
 import javax.servlet.ServletException;
@@ -21,10 +25,14 @@ import java.util.List;
 public class CommandUtility {
 
     private static UserService userService;
+    private static ReportService reportService;
+    private static TaxableItemService taxableItemService;
 
     static
     {
         userService = new UserService();
+        reportService = new ReportService();
+        taxableItemService = new TaxableItemService();
     }
 
 
@@ -118,19 +126,68 @@ public class CommandUtility {
     }
 
 
+//    /**
+//     * Uses to set attribute on certain command.
+//     *
+//     * @param request HttpServletRequest.
+//     */
+//    public static void defineUsersAttribute(HttpServletRequest request) {
+//        List<User> users = userService.getAllUsers();
+//        request.setAttribute("persons", users);
+//    }
+
+
+
     /**
-     * Uses to set attribute on certain command.
+     * Sets attribute to inspector:CheckReportsCommand.
+     * Get all reports made by users who are assigned to this inspector.
      *
      * @param request HttpServletRequest.
      */
-    public static void defineUsersAttribute(HttpServletRequest request) {
-        List<User> users = userService.getAllUsers();
-        request.setAttribute("users", users);
+    public static void defineAssignedReportsAttribute(HttpServletRequest request) {
+        final User inspector = getCurrentSessionUser(request);
+        List<Report> reports = reportService.getAllReports(inspector);
+        request.setAttribute("reports", reports);
+    }
+
+    /**
+     * Uses to set attribute on client:EditReportCommand.
+     * Get all (made by this person) reports that marked as should be changed.
+     *
+     * @param request HttpServletRequest.
+     */
+    public static void defineReportToEditAttribute(HttpServletRequest request){
+        final User client = getCurrentSessionUser(request);
+        List<Report> reports = reportService.getReportsToChange(client);
+        request.setAttribute("reportsToChange", reports);
+    }
+
+    /**
+     * Uses to set attribute on inspector:SetTaxableCommand.
+     * Get all taxable items.
+     *
+     * @param request HttpServletRequest.
+     */
+    public static void defineTaxableItemsAttribute(HttpServletRequest request) {
+        List<TaxableItem> items = taxableItemService.getAllTaxableItems();
+        request.setAttribute("items", items);
     }
 
 
+    /**
+     * Uses to set attribute on inspector:SetTaxableCommand.
+     * Get all users who are assigned to this inspector.
+     *
+     * @param request HttpServletRequest.
+     */
+    public static void defineUsersAssignedToInspectorAttribute(HttpServletRequest request) {
 
+        final User currentSessionUser = CommandUtility.getCurrentSessionUser(request);
+        final long currentInspector = currentSessionUser.getId();
 
+        List<User> users = userService.getAllAssignedToInspector(currentInspector);
+        request.setAttribute("persons", users);
+    }
 
 }
 

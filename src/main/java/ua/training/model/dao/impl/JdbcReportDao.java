@@ -7,6 +7,7 @@ import ua.training.model.dao.impl.queries.ReportSQL;
 import ua.training.model.dao.impl.queries.TaxableItemSQL;
 import ua.training.model.dao.mapper.ReportMapper;
 import ua.training.model.entity.Report;
+import ua.training.model.entity.User;
 
 import javax.validation.constraints.NotNull;
 import java.sql.*;
@@ -32,8 +33,7 @@ public class JdbcReportDao implements ReportDao {
      */
     @Override
     public void create(@NotNull final Report report) {
-        //todo transaction
-
+        //transaction
         try (PreparedStatement ps = connection.prepareStatement(ReportSQL.INSERT.getQUERY())) {
 
             connection.setAutoCommit(false);
@@ -54,10 +54,14 @@ public class JdbcReportDao implements ReportDao {
             }
 
             ps.execute();
-
             connection.commit();
         } catch (SQLException e) {
-            //connection.rollback();
+            try {
+                connection.rollback();
+            } catch (SQLException ex){
+                logger.fatal("Caught SQLException exception while doing rollback", e);
+                e.printStackTrace();
+            }
             logger.fatal("Caught SQLException exception", e);
             e.printStackTrace();
         }
@@ -110,9 +114,31 @@ public class JdbcReportDao implements ReportDao {
                 Report report = reportMapper.extractFromResultSet(rs);
                 report = reportMapper.makeUnique(reports, report);
             }
-//            for (User u: reports.values()) {
-//                System.out.println(u.getEmail());
-//            }
+            return new ArrayList<>(reports.values());
+        } catch (SQLException e) {
+            logger.fatal("Caught SQLException exception", e);
+            e.printStackTrace();
+            return null;
+            //todo optional
+        }
+    }
+
+
+    @Override
+    public List<Report> findAllAssignedClients(User inspector) {
+        Map<Long, Report> reports = new HashMap<>();
+
+        try (PreparedStatement ps = connection.prepareStatement(ReportSQL.READ_ALL_REPORTS_MADE_BY_ASSIGNED_CLIENTS.getQUERY())) {
+
+            ps.setLong(1, inspector.getId());
+
+            ResultSet rs = ps.executeQuery();
+            ReportMapper reportMapper = new ReportMapper();
+
+            while (rs.next()) {
+                Report report = reportMapper.extractFromResultSet(rs);
+                report = reportMapper.makeUnique(reports, report);
+            }
             return new ArrayList<>(reports.values());
         } catch (SQLException e) {
             logger.fatal("Caught SQLException exception", e);
@@ -123,8 +149,61 @@ public class JdbcReportDao implements ReportDao {
     }
 
     @Override
+    public List<Report> findReportsToChange(User client) {
+        Map<Long, Report> reports = new HashMap<>();
+
+        try (PreparedStatement ps = connection.prepareStatement(ReportSQL.READ_ALL_REPORTS_TO_CHANGE_BY_ID_CLIENT.getQUERY())) {
+
+            ps.setLong(1, client.getId());
+
+            ResultSet rs = ps.executeQuery();
+            ReportMapper reportMapper = new ReportMapper();
+
+            while (rs.next()) {
+                Report report = reportMapper.extractFromResultSet(rs);
+                report = reportMapper.makeUnique(reports, report);
+            }
+            return new ArrayList<>(reports.values());
+        } catch (SQLException e) {
+            logger.fatal("Caught SQLException exception", e);
+            e.printStackTrace();
+            return null;
+            //todo optional
+        }
+    }
+
+    @Override
+    public void editReport(Report report) {
+        try (PreparedStatement ps = connection.prepareStatement(ReportSQL.EDIT_REPORT.getQUERY())) {
+
+            ps.setString(1, report.getCompanyName());
+            ps.setString(2, report.getTaxpayerCode());
+            ps.setInt(3, report.getShouldBeChanged() ? 1 : 0);
+            ps.setLong(4, report.getId());
+
+            ps.execute();
+
+        } catch (SQLException e) {
+            logger.fatal("Caught SQLException exception", e);
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public void update(Report report) {
-        throw new UnsupportedOperationException ("This action has not yet been developed.");
+        try (PreparedStatement ps = connection.prepareStatement(ReportSQL.UPDATE.getQUERY())) {
+
+            ps.setInt(1, report.getIsAccepted() ? 1 : 0);
+            ps.setInt(2, report.getShouldBeChanged()  ? 1 : 0);
+            ps.setString(3, report.getInspectorComment());
+            ps.setLong(4, report.getId());
+
+            ps.execute();
+
+        } catch (SQLException e) {
+            logger.fatal("Caught SQLException exception", e);
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -157,12 +236,6 @@ public class JdbcReportDao implements ReportDao {
     public PaginationResult findByPagination(int lowerBound, int upperBound, long idUser) {
 
         PaginationResult paginationResult = new PaginationResult();
-
-//        String query = "SELECT SQL_CALC_FOUND_ROWS * FROM reports " +
-//                " where id_person=" + idUser +
-//                " order by completion_time DESC " +
-//                " limit "
-//                + lowerBound + ", " + upperBound;
 
         Map<Long, Report> reports = new HashMap<>();
         ReportMapper reportMapper = new ReportMapper();

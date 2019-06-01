@@ -22,7 +22,10 @@ public enum UserSQL {
 
     READ_ALL_INSPECTORS("select * from persons where id_role=1"),
 
+    READ_ALL_BY_INSPECTOR_ID("SELECT * FROM persons where id_inspector=(?);"),
+
     ASSIGN_INSPECTOR_TO_CLIENT("UPDATE persons SET id_inspector=(?) WHERE id_person=(?);");
+
 
     String QUERY;
 

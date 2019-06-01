@@ -80,7 +80,6 @@ public class JdbcTaxableItemDao implements TaxableItemDao {
 
     /**
      * obtains all Students from database.
-     *
      */
     @Override
     public List<TaxableItem> findAll() {
@@ -109,12 +108,58 @@ public class JdbcTaxableItemDao implements TaxableItemDao {
 
     @Override
     public void update(TaxableItem taxableItem) {
-        throw new UnsupportedOperationException ("This action has not yet been developed.");
+        try (PreparedStatement ps = connection.prepareStatement(TaxableItemSQL.CHANGE_TAXABLE_FOR_PERSON.getQUERY())) {
+
+            ps.setInt(1, taxableItem.getQuantity());
+            ps.setLong(2, taxableItem.getIdPerson());
+            ps.setLong(3, taxableItem.getId());
+
+            ps.execute();
+
+        } catch (SQLException e) {
+            logger.fatal("Caught SQLException exception", e);
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void regTaxableToPerson(TaxableItem taxableItem) {
+        try (PreparedStatement ps = connection.prepareStatement(TaxableItemSQL.REG_TAXABLE_PER_PERSON.getQUERY())) {
+
+            ps.setLong(1, taxableItem.getIdPerson());
+            ps.setLong(2, taxableItem.getId());
+            ps.setInt(3, taxableItem.getQuantity());
+
+            ps.execute();
+
+        } catch (SQLException e) {
+            logger.fatal("Caught SQLException exception", e);
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public boolean isAlreadyExisting(TaxableItem taxableItem) {
+        try (PreparedStatement ps = connection.prepareStatement(TaxableItemSQL.ALREADY_EXISTING_TAXABLE.getQUERY())) {
+
+            ps.setLong(1, taxableItem.getIdPerson());
+            ps.setLong(2, taxableItem.getId());
+
+            final ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            logger.fatal("Caught SQLException exception", e);
+            e.printStackTrace();
+        }
+        return false;
     }
 
     @Override
     public void delete(long id) {
-        throw new UnsupportedOperationException ("This action has not yet been developed.");
+        throw new UnsupportedOperationException("This action has not yet been developed.");
     }
 
 
@@ -126,8 +171,6 @@ public class JdbcTaxableItemDao implements TaxableItemDao {
             throw new RuntimeException(e);
         }
     }
-
-
 
 
 }

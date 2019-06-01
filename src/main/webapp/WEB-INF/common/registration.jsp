@@ -3,11 +3,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
 
-<fmt:setLocale value="${cookie['lang'].value}"/>
+<fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="messages"/>
 
-
-<html>
+<html lang="${sessionScope.lang}">
 <head>
     <title><fmt:message key="label.reg"/></title>
 
@@ -35,16 +34,16 @@
                 </div>
 
                 <c:if test="${param.passwordsDifferent == true}">
-                    <p style="color: orange"><fmt:message key="label.passwords.diff"/></p>
+                    <p style="color: orange"><fmt:message key="passwords.diff"/></p>
                 </c:if>
                 <c:if test="${param.dataInvalid == true}">
-                    <p style="color: orange"><fmt:message key="label.invalid.input"/></p>
+                    <p style="color: orange"><fmt:message key="invalid.input"/></p>
                 </c:if>
                 <c:if test="${param.success == true}">
-                    <p style="color: green"><fmt:message key="label.reg.success"/></p>
+                    <p style="color: green"><fmt:message key="reg.success"/></p>
                 </c:if>
                 <c:if test="${param.success == false}">
-                    <p style="color: darkred"><fmt:message key="label.reg.failed"/></p>
+                    <p style="color: darkred"><fmt:message key="reg.failed"/></p>
                 </c:if>
 
                 <form method="post" action="${pageContext.request.contextPath}/app/registration">
@@ -75,7 +74,7 @@
 
                     <div class="row align-items-center mt-4">
                         <select class="soflow-color" name="role" required>
-                            <option value=""><fmt:message key="label.choose.role" /></option>
+                            <option value=""><fmt:message key="placeholder.choose.role" /></option>
                             <option value="INSPECTOR"><fmt:message key="label.inspector" /></option>
                             <option value="CLIENT"><fmt:message key="label.client" /></option>
                         </select>
@@ -86,7 +85,7 @@
                             <div class="form-check">
                                 <label class="form-check-label">
                                     <input type="checkbox" class="form-check-input">
-                                    I Read and Accept <a href="https://www.google.com">Terms and Conditions</a>
+                                    I Read and Accept Terms and Conditions
                                 </label>
                             </div>
 

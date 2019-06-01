@@ -4,10 +4,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
 
-<fmt:setLocale value="${cookie['lang'].value}"/>
+<fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="messages"/>
 
-<html>
+<html lang="${sessionScope.lang}">
 <head>
     <title>Index</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

@@ -1,14 +1,14 @@
-//package ua.training.controller.filters;
-//
-//import javax.servlet.*;
-//import javax.servlet.http.Cookie;
-//import javax.servlet.http.HttpServletRequest;
-//import javax.servlet.annotation.WebFilter;
-//import javax.servlet.http.HttpServletResponse;
-//import java.io.IOException;
-//import java.util.Locale;
-//
-//
+package ua.training.controller.filters;
+
+import javax.servlet.*;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Locale;
+
+
 //public class CookieLocaleFilter implements Filter {
 //
 //    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -28,17 +28,8 @@
 //    public void init(FilterConfig arg0) throws ServletException {}
 //
 //}
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
+
 //
 //
 //

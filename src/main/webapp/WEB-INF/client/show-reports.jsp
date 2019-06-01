@@ -4,11 +4,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
 
-<fmt:setLocale value="${cookie['lang'].value}"/>
+
+<fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="messages"/>
 
-
-<html>
+<html lang="${sessionScope.lang}">
 <head>
     <title><fmt:message key="label.reports.list"/></title>
 
@@ -92,7 +92,7 @@
 
     <br>
     <div class="home">
-        <a class="" href="${pageContext.request.contextPath}/app/home">go home</a>
+        <a class="" href="${pageContext.request.contextPath}/app/personal-cabinet">back to cabinet</a>
     </div>
 </div>
 

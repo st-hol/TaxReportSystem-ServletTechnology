@@ -1,11 +1,6 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Stas
-  Date: 17/05/19
-  Time: 15:10
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
 
@@ -14,7 +9,7 @@
 
 <html lang="${sessionScope.lang}">
 <head>
-    <title>subm</title>
+    <title>edit</title>
 
     <meta name="viewport" content="width=device-width"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -36,13 +31,28 @@
 
             <div class="panel-heading clearfix">
                 <i class="icon-calendar"></i>
-                <h3 class="panel-title">Submit report</h3>
+                <h3 class="panel-title">edit report</h3>
             </div>
 
-            <form method="POST" class="" action="${pageContext.request.contextPath}/app/submit-report">
+            <form method="POST" class="" action="${pageContext.request.contextPath}/app/submit-edit-report">
 
                 <div class="panel-body">
                     <div class="row">
+
+
+                        <div class="col-md-3 col-sm-3">
+                            <div class="input-group">
+                             <span class="input-group-addon">
+                                 <select class="soflow-color" name="idReportToChange" required>
+                                     <option value=""><fmt:message key="placeholder.choose.report"/></option>
+                                     <c:forEach var="report" items="${reportsToChange}">
+                                         <option value="${report.id}">id: ${report.id} | company: ${report.companyName}
+                                         </option>
+                                     </c:forEach>
+                                </select>
+                             </span>
+                            </div>
+                        </div>
 
                         <div class="col-md-3 col-sm-3">
                             <div class="input-group">

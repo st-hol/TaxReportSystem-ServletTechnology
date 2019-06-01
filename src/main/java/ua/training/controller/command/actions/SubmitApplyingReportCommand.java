@@ -23,16 +23,16 @@ import java.time.Instant;
  *
  * @author Stanislav Holovachuk
  */
-public class SubmitReportCommand implements Command {
+public class SubmitApplyingReportCommand implements Command {
 
-    private static final Logger logger = LogManager.getLogger(SubmitReportCommand.class);
+    private static final Logger logger = LogManager.getLogger(SubmitApplyingReportCommand.class);
 
 
     private ReportService reportService;
     private UserService userService;
 
 
-    public SubmitReportCommand(ReportService reportService, UserService userService) {
+    public SubmitApplyingReportCommand(ReportService reportService, UserService userService) {
         this.reportService = reportService;
         this.userService = userService;
     }

@@ -7,7 +7,11 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="messages"/>
+
+<html lang="${sessionScope.lang}">
 <head>
     <title>subm</title>
 
@@ -58,7 +62,7 @@
                 </div>
             </form>
 
-            <a class="" href="${pageContext.request.contextPath}/app/home">go home</a>
+            <a class="" href="${pageContext.request.contextPath}/app/personal-cabinet">back to cabinet</a>
         </div>
     </div>
 </div>
@@ -68,24 +72,3 @@
 
 
 
-
-
-
-<%--<div class="col-md-3 col-sm-3">--%>
-<%--<div class="input-group">--%>
-<%--<select class="soflow-color" name="idChargedInspector" required>--%>
-<%--<option value=""><fmt:message key="label.choose.inspector" /></option>--%>
-<%--<c:forEach var="exam" items="${inspectors}">--%>
-<%--<option value="${exam.id}">${exam.examName}</option>--%>
-<%--</c:forEach>--%>
-<%--</select>--%>
-<%--</div>--%>
-<%--</div>--%>
-
-<%--<div class="col-md-3 col-sm-3">--%>
-<%--<div class="input-group">--%>
-<%--<span class="input-group-addon">--%>
-<%--<input name="idChargedInspector" type="number" placeholder="id inspector">--%>
-<%--</span>--%>
-<%--</div>--%>
-<%--</div>--%>

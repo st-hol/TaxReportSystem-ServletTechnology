@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServletResponse;
  * @author Stanislav Holovachuk
  */
 
-//todo fix hangs on reg client
 public class RegistrationCommand implements Command {
     private static final Logger logger = LogManager.getLogger(RegistrationCommand.class);
 

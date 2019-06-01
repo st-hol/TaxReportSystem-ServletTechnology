@@ -10,7 +10,7 @@
                         Check the report</a>
                 </li>
                 <li class="nav-item">
-                    <a href="${pageContext.request.contextPath}/app/reg-taxable" class="nav-link active">
+                    <a href="${pageContext.request.contextPath}/app/set-taxable" class="nav-link active">
                         <i class="fa fa-home"></i>
                         Register taxable items per person</a>
                 </li>

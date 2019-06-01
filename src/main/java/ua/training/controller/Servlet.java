@@ -7,12 +7,11 @@ import ua.training.controller.command.account.LoginCommand;
 import ua.training.controller.command.account.LogoutCommand;
 import ua.training.controller.command.account.PersonalCabinetCommand;
 import ua.training.controller.command.account.RegistrationCommand;
-import ua.training.controller.command.actions.ShowReportsCommand;
-import ua.training.controller.command.actions.SubmitComplaintCommand;
-import ua.training.controller.command.actions.SubmitReportCommand;
+import ua.training.controller.command.actions.*;
 import ua.training.controller.command.directions.*;
 import ua.training.model.service.ComplaintService;
 import ua.training.model.service.ReportService;
+import ua.training.model.service.TaxableItemService;
 import ua.training.model.service.UserService;
 
 import javax.servlet.ServletConfig;
@@ -74,16 +73,29 @@ public class Servlet extends HttpServlet {
                 new MakeComplaintCommand());
         commands.put("make-report",
                 new MakeReportCommand());
+        commands.put("check-report",
+                new CheckReportCommand());
+        commands.put("set-taxable",
+                new SetTaxableCommand());
+        commands.put("edit-report",
+                new EditReportCommand());
 
 
         //actions
         commands.put("submit-report",
-                new SubmitReportCommand(new ReportService(), new UserService()));
+                new SubmitApplyingReportCommand(new ReportService(), new UserService()));
         commands.put("submit-complaint",
-                new SubmitComplaintCommand(new ComplaintService(), new UserService()));
+                new SubmitComplaintCommand(new ComplaintService()));
         commands.put("show-reports",
                 new ShowReportsCommand(new ReportService()));
+        commands.put("submit-edit-report",
+                new SubmitEditReportCommand(new ReportService()));
 
+
+        commands.put("submit-checking-report",
+                new SubmitCheckingReportCommand(new ReportService()));
+        commands.put("submit-set-taxable",
+                new SubmitSetTaxableCommand(new TaxableItemService()));
     }
 
 
@@ -117,7 +129,7 @@ public class Servlet extends HttpServlet {
         String path = request.getRequestURI();
         path = path.replaceAll(".*/app/" , "");
 
-        Command command = commands.getOrDefault(path , (req, resp)->"/welcome.jsp");
+        Command command = commands.getOrDefault(path, (req, resp)->"/welcome.jsp");
         String page = command.execute(request, response);
 
         if (page.contains("redirect")) {

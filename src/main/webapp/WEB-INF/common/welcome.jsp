@@ -3,10 +3,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
 
-<fmt:setLocale value="${cookie['lang'].value}"/>
+<fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="messages"/>
 
-<html lang="${cookie['lang'].value}">
+<html lang="${sessionScope.lang}">
 
 <head>
     <title>Index</title>
@@ -42,6 +42,7 @@
 </header>
 
 
+<script src="${pageContext.request.contextPath}/js/script.js"></script>
 </body>
 
 </html>

@@ -33,16 +33,15 @@ public class ShowReportsCommand implements Command {
 
     /**
      * Here pagination is provided.
-     *
+     * <p>
      * Has hardcoded quantity of displayed records(recordsPerPage).
      * Operates by getting page-number from request and delegates it to service
      * which returns certain records.
      *
-     *
      * @author Stanislav Holovachuk
      */
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response ) throws IOException, ServletException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
 
         final User currentSessionUser = CommandUtility.getCurrentSessionUser(request);
@@ -54,12 +53,11 @@ public class ShowReportsCommand implements Command {
 
         int page = 1;
         int recordsPerPage = 3;
-        if(request.getParameter("page") != null)
+        if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
+        }
 
 
-
-        //todo in service
         JdbcReportDao.PaginationResult paginationResult =
                 reportService.getReportsByPagination(
                         (page - 1) * recordsPerPage, recordsPerPage, currentUserId);
@@ -69,7 +67,7 @@ public class ShowReportsCommand implements Command {
         int noOfRecords = paginationResult.getNoOfRecords();
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
 
-        request.setAttribute("reports", reports );
+        request.setAttribute("reports", reports);
         request.setAttribute("noOfPages", noOfPages);
         request.setAttribute("currentPage", page);
 
@@ -80,7 +78,6 @@ public class ShowReportsCommand implements Command {
 }
 
 
-
 //
 //        StudentDao dao = studentService.getDaoFactory();
 //        List<Student> list = dao.findByPagination((page-1)*recordsPerPage,
@@ -88,14 +85,9 @@ public class ShowReportsCommand implements Command {
 //        dao.close();
 
 
-
 //        System.out.println("records:" + noOfRecords);
 //        System.out.println("pages:" + noOfPages);
 //        System.out.println("cur:" + page);
-
-
-
-
 
 
 //     return "/WEB-INF/common/enrolledlist.jsp";

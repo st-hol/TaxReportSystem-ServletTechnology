@@ -28,7 +28,7 @@ public class PersonalCabinetCommand implements Command {
 
 
         if ( session.getAttribute("role") != User.ROLE.UNKNOWN) {
-            //to prevent user coming back to cached pages after logout
+            //to prevent user coming back to cached pages after logout by clicking "back arrow" in browser
             CommandUtility.disallowBackToCached(request, response);
         }
 

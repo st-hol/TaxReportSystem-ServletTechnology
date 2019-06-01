@@ -89,8 +89,8 @@ public class JdbcUserDao implements UserDao {
 
         try (Statement st = connection.createStatement()) {
 
-            ResultSet rs = st.executeQuery(query);
-            UserMapper userMapper = new UserMapper();
+            final ResultSet rs = st.executeQuery(query);
+            final UserMapper userMapper = new UserMapper();
 
             while (rs.next()) {
                 User user = userMapper.extractFromResultSet(rs);
@@ -113,8 +113,8 @@ public class JdbcUserDao implements UserDao {
 
         try (Statement st = connection.createStatement()) {
 
-            ResultSet rs = st.executeQuery(query);
-            UserMapper userMapper = new UserMapper();
+            final ResultSet rs = st.executeQuery(query);
+            final UserMapper userMapper = new UserMapper();
 
             while (rs.next()) {
                 User user = userMapper.extractFromResultSet(rs);
@@ -125,10 +125,32 @@ public class JdbcUserDao implements UserDao {
             logger.fatal("Caught SQLException exception", e);
             e.printStackTrace();
             return null;
-            //todo optional
         }
     }
 
+
+    @Override
+    public List<User> findAssignedByInspector(final long idInspector) {
+        Map<Long, User> users = new HashMap<>();
+
+
+        try (PreparedStatement ps = connection.prepareStatement(UserSQL.READ_ALL_BY_INSPECTOR_ID.getQUERY())) {
+
+            ps.setLong(1, idInspector);
+            final ResultSet rs = ps.executeQuery();
+
+            final UserMapper userMapper = new UserMapper();
+            while (rs.next()) {
+                User user = userMapper.extractFromResultSet(rs);
+                user = userMapper.makeUnique(users, user);
+            }
+            return new ArrayList<>(users.values());
+        } catch (SQLException e) {
+            logger.fatal("Caught SQLException exception", e);
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     @Override
     public void assignInspector(User client, User inspector){
