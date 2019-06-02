@@ -44,8 +44,8 @@
                 <c:if test="${param.success == true}">
                     <p style="color: green"><fmt:message key="reg.success"/></p>
                 </c:if>
-                <c:if test="${param.success == false}">
-                    <p style="color: darkred"><fmt:message key="reg.failed"/></p>
+                <c:if test="${param.alreadyExist == true}">
+                    <p style="color: darkred"><fmt:message key="user.exist"/></p>
                 </c:if>
 
                 <form method="post" action="${pageContext.request.contextPath}/app/registration">

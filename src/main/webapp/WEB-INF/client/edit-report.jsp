@@ -26,77 +26,57 @@
 
 <!-- Row start -->
 <div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="panel panel-default">
+    <div class="container col-lg-3 offset-5">
+
+        <div class="panel-heading clearfix">
+            <h3 class="panel-title">
+                <fmt:message key="edit.report"/>
+            </h3>
+        </div>
+
+        <form method="POST" class="" action="${pageContext.request.contextPath}/app/submit-edit-report">
+
+            <div class="form-group">
+                <div class="">
+                    <select class="soflow-color" name="idReportToChange" required>
+                        <option value=""><fmt:message key="placeholder.choose.report"/></option>
+                        <c:forEach var="report" items="${reportsToChange}">
+                            <option value="${report.id}">id: ${report.id} | company: ${report.companyName}
+                            </option>
+                        </c:forEach>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div>
+                    <input maxlength="45" minlength="1" name="companyName" type="text"
+                           placeholder="<fmt:message key="placeholder.company.name"/>" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="">
+                    <input maxlength="45" minlength="1" name="taxpayerCode" type="number"
+                           placeholder="<fmt:message key="placeholder.taxpayer.code"/>" required>
+                </div>
+            </div>
 
             <br>
 
-            <div class="panel-heading clearfix">
-                <i class="icon-calendar"></i>
-                <h3 class="panel-title">
-                    <fmt:message key="edit.report"/>
-                </h3>
-            </div>
-
-            <form method="POST" class="" action="${pageContext.request.contextPath}/app/submit-edit-report">
-
-                <div class="panel-body">
-                    <div class="row">
-
-                        <div class="col-md-3 col-sm-3">
-                            <div class="input-group">
-                             <span class="input-group-addon">
-                                 <select class="soflow-color" name="idReportToChange" required>
-                                     <option value=""><fmt:message key="placeholder.choose.report"/></option>
-                                     <c:forEach var="report" items="${reportsToChange}">
-                                         <option value="${report.id}">id: ${report.id} | company: ${report.companyName}
-                                         </option>
-                                     </c:forEach>
-                                </select>
-                             </span>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-sm-3">
-                            <div class="input-group">
-                             <span class="input-group-addon">
-                                <input maxlength="45" minlength="1" name="companyName" type="text"
-                                       placeholder="<fmt:message key="placeholder.company.name"/>" required>
-                             </span>
-                            </div>
-                        </div>
-
-                        <br>
-
-                        <div class="col-md-3 col-sm-3">
-                            <div class="input-group">
-                             <span class="input-group-addon">
-                                <input maxlength="45" minlength="1" name="taxpayerCode" type="number"
-                                       placeholder="<fmt:message key="placeholder.taxpayer.code"/>" required>
-                             </span>
-                            </div>
-                        </div>
-
-                        <br>
-
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-primary btn-sm">
-                                    <fmt:message key="label.submit"/>
-                                </button>
-                            </div>
-                        </div>
-
-                    </div>
+            <div class="form-group">
+                <div class="">
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        <fmt:message key="label.submit"/>
+                    </button>
                 </div>
-            </form>
-            <a class="" href="${pageContext.request.contextPath}/app/personal-cabinet">
-                <fmt:message key="back.to.cabinet"/>
-            </a>
-        </div>
+            </div>
+        </form>
+        <a class="" href="${pageContext.request.contextPath}/app/personal-cabinet">
+            <fmt:message key="back.to.cabinet"/>
+        </a>
     </div>
 </div>
-
 <!-- Row end -->
 </body>
 </html>

@@ -18,14 +18,14 @@ import java.io.IOException;
  *
  * @author Stanislav Holovachuk
  */
-public class SubmitEditReportCommand implements Command {
+public class SubmitEditReport implements Command {
 
-    private static final Logger logger = LogManager.getLogger(SubmitEditReportCommand.class);
+    private static final Logger logger = LogManager.getLogger(SubmitEditReport.class);
 
 
     private ReportService reportService;
 
-    public SubmitEditReportCommand(ReportService reportService) {
+    public SubmitEditReport(ReportService reportService) {
         this.reportService = reportService;
     }
 

@@ -17,14 +17,15 @@ import java.io.IOException;
 
 /**
  * Processes logging in.
+ *
  * @author Stanislav Holovachuk
  */
-public class LoginCommand implements Command {
+public class Login implements Command {
 
-    private static final Logger logger = LogManager.getLogger(LoginCommand.class);
+    private static final Logger logger = LogManager.getLogger(Login.class);
     private UserService userService;
 
-    public LoginCommand(UserService studentService) {
+    public Login(UserService studentService) {
         this.userService = studentService;
     }
 
@@ -35,7 +36,7 @@ public class LoginCommand implements Command {
         final String email = request.getParameter("email");
         final String password = request.getParameter("password");
 
-        if ( ! (UserValidator.validateEmail(email) && UserValidator.validatePassword(password))) {
+        if (!(UserValidator.validateEmail(email) && UserValidator.validatePassword(password))) {
             logger.info("User [" + email + "]" + " entered wrong data.");
             return "/WEB-INF/common/login.jsp?dataInvalid=true";
         }
@@ -51,11 +52,7 @@ public class LoginCommand implements Command {
 
             final User.ROLE role = userService.getRoleByEmailAndPass(email, password);
 
-
-            //todo in service and logout too
-            request.getSession().setAttribute("password", password);
-            request.getSession().setAttribute("email", email);
-            request.getSession().setAttribute("role", role);
+            CommandUtility.logUser(request, email, password, role);
             logger.info("User [" + email + "] role [" + role + "] signed in successfully.");
 
         } else {
@@ -63,11 +60,13 @@ public class LoginCommand implements Command {
             request.getSession().setAttribute("role", User.ROLE.UNKNOWN);
         }
 
-//  return "/WEB-INF/common/login.jsp?dataaa=true";
-        Command personalCabinet = new PersonalCabinetCommand();
-        return personalCabinet.execute(request, response);
+        String path = request.getServletContext().getContextPath();
+        return "redirect@" + path + "/app/personal-cabinet";
     }
-    //todo redirect
 }
 
 
+
+
+//        Command personalCabinet = new PersonalCabinet();
+//        return personalCabinet.execute(request, response);

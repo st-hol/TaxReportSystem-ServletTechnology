@@ -23,11 +23,11 @@ import java.util.List;
  *
  * @author Stanislav Holovachuk
  */
-public class ShowReportsCommand implements Command {
+public class ShowReports implements Command {
 
     private ReportService reportService;
 
-    public ShowReportsCommand(ReportService reportService) {
+    public ShowReports(ReportService reportService) {
         this.reportService = reportService;
     }
 

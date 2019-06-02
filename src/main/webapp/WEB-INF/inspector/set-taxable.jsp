@@ -10,7 +10,7 @@
 <html lang="${sessionScope.lang}">
 <head>
     <title>
-        <fmt:message key="check.reports"/>
+        <fmt:message key="set.taxable"/>
     </title>
 
     <meta name="viewport" content="width=device-width"/>
@@ -26,73 +26,57 @@
 
 <!-- Row start -->
 <div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12 offset-lg-4 col-lg-7">
-        <div class="panel panel-default">
+    <div class="container align-items-center align-self-center col-lg-3">
+
+        <div class="form-title">
+            <h3 class="panel-title">
+                <fmt:message key="reg.prop"/>
+            </h3>
+        </div>
+
+        <form method="POST" class="form-horizontal" action="${pageContext.request.contextPath}/app/submit-set-taxable">
+
+            <div class="form-group">
+                <select class="soflow-color" name="idPerson" required>
+                    <option value=""><fmt:message key="placeholder.choose.person"/></option>
+                    <c:forEach var="person" items="${persons}">
+                        <option value="${person.id}">${person.firstName} ${person.lastName}
+                        </option>
+                    </c:forEach>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <select class="soflow-color" name="idItem" required>
+                    <option value=""><fmt:message key="placeholder.choose.item"/></option>
+                    <c:forEach var="item" items="${items}">
+                        <option value="${item.id}">${item.name}
+                        </option>
+                    </c:forEach>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <div class="">
+                    <input maxlength="10" minlength="1" min="0" name="quantity" type="number"
+                           placeholder="<fmt:message key="placeholder.quantity"/>" class="col-12" required>
+                </div>
+            </div>
 
             <br>
 
-            <div class="panel-heading clearfix">
-                <i class="icon-calendar"></i>
-                <h3 class="panel-title offset-2">
-                    <fmt:message key="reg.prop"/>
-                </h3>
+            <div class="form-group">
+                <div class="">
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        <fmt:message key="label.submit"/>
+                    </button>
+                </div>
             </div>
 
-            <form method="POST" class="" action="${pageContext.request.contextPath}/app/submit-set-taxable">
-
-                <%--<div class="panel-body">--%>
-                    <div class="container">
-
-                        <div class="row align-items-center">
-                            <select class="soflow-color" name="idPerson" required>
-                                <option value=""><fmt:message key="placeholder.choose.person"/></option>
-                                <c:forEach var="person" items="${persons}">
-                                    <option value="${person.id}">${person.firstName} ${person.lastName}
-                                    </option>
-                                </c:forEach>
-                            </select>
-                        </div>
-
-                        <br>
-
-                        <div class="row align-items-center">
-                            <select class="soflow-color" name="idItem" required>
-                                <option value=""><fmt:message key="placeholder.choose.item"/></option>
-                                <c:forEach var="item" items="${items}">
-                                    <option value="${item.id}">${item.name}
-                                    </option>
-                                </c:forEach>
-                            </select>
-                        </div>
-
-                        <br>
-
-                        <div  class="row align-items-center">
-                            <div class="input-group">
-                             <span class="input-group-addon">
-                                <input maxlength="10" minlength="1" min="0" name="quantity" type="number"
-                                       placeholder="<fmt:message key="placeholder.quantity"/>"  required>
-                             </span>
-                            </div>
-                        </div>
-
-                        <br>
-
-                        <div  class="row align-items-center">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-primary btn-sm">
-                                    <fmt:message key="label.submit"/>
-                                </button>
-                            </div>
-                        </div>
-
-                    </div>
-                <%--</div>--%>
-            </form>
-            <a class="" href="${pageContext.request.contextPath}/app/personal-cabinet">
-                <fmt:message key="label.submit"/>
-            </a>
-        </div>
+        </form>
+        <a class="" href="${pageContext.request.contextPath}/app/personal-cabinet">
+            <fmt:message key="back.to.cabinet"/>
+        </a>
     </div>
 </div>
 

@@ -17,7 +17,7 @@ import java.io.IOException;
  *
  * @author Stanislav Holovachuk
  */
-public class PersonalCabinetCommand implements Command {
+public class PersonalCabinet implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -25,30 +25,15 @@ public class PersonalCabinetCommand implements Command {
         final HttpSession session = request.getSession();
         final User.ROLE role = (User.ROLE) session.getAttribute("role");
 
-
-
         if ( session.getAttribute("role") != User.ROLE.UNKNOWN) {
             //to prevent user coming back to cached pages after logout by clicking "back arrow" in browser
             CommandUtility.disallowBackToCached(request, response);
         }
 
-
         if (role.equals(User.ROLE.INSPECTOR) || role.equals(User.ROLE.CLIENT)) {
-            //todo set param role
             return "/WEB-INF/common/base.jsp";
         } else {
             return "/WEB-INF/common/login.jsp?userExist=false";
         }
     }
 }
-
-
-
-//
-//        if (role.equals(User.ROLE.INSPECTOR)) {
-//                return "/WEB-INF/inspector/base.jsp";
-//                } else if (role.equals(User.ROLE.CLIENT)) {
-//                return "/WEB-INF/client/base.jsp";
-//                } else {
-//                return "/WEB-INF/common/login.jsp?userExist=false";
-//                }

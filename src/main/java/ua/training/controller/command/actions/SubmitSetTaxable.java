@@ -18,14 +18,14 @@ import java.io.IOException;
  *
  * @author Stanislav Holovachuk
  */
-public class SubmitSetTaxableCommand implements Command {
+public class SubmitSetTaxable implements Command {
 
-    private static final Logger logger = LogManager.getLogger(SubmitSetTaxableCommand.class);
+    private static final Logger logger = LogManager.getLogger(SubmitSetTaxable.class);
 
 
     private TaxableItemService taxableItemService;
 
-    public SubmitSetTaxableCommand(TaxableItemService taxableItemService) {
+    public SubmitSetTaxable(TaxableItemService taxableItemService) {
         this.taxableItemService = taxableItemService;
     }
 

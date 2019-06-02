@@ -3,10 +3,10 @@ package ua.training.controller;
 
 
 import ua.training.controller.command.Command;
-import ua.training.controller.command.account.LoginCommand;
-import ua.training.controller.command.account.LogoutCommand;
-import ua.training.controller.command.account.PersonalCabinetCommand;
-import ua.training.controller.command.account.RegistrationCommand;
+import ua.training.controller.command.account.Login;
+import ua.training.controller.command.account.Logout;
+import ua.training.controller.command.account.PersonalCabinet;
+import ua.training.controller.command.account.Registration;
 import ua.training.controller.command.actions.*;
 import ua.training.controller.command.directions.*;
 import ua.training.model.service.ComplaintService;
@@ -53,49 +53,49 @@ public class Servlet extends HttpServlet {
 
         //account
         commands.put("registration",
-                new RegistrationCommand(new UserService()));
+                new Registration(new UserService()));
         commands.put("login",
-                new LoginCommand(new UserService()));
+                new Login(new UserService()));
         commands.put("logout",
-                new LogoutCommand());
+                new Logout());
         commands.put("personal-cabinet",
-                new PersonalCabinetCommand());
+                new PersonalCabinet());
 
 
         //directions
         commands.put("home",
-                new HomeCommand());
+                new Home());
         commands.put("reg-me",
-                new RegMeCommand());
+                new RegMe());
         commands.put("log-me",
-                new LogMeCommand());
+                new LogMe());
         commands.put("make-complaint",
-                new MakeComplaintCommand());
+                new MakeComplaint());
         commands.put("make-report",
-                new MakeReportCommand());
+                new MakeReport());
         commands.put("check-report",
-                new CheckReportCommand());
+                new CheckReport());
         commands.put("set-taxable",
-                new SetTaxableCommand());
+                new SetTaxable());
         commands.put("edit-report",
-                new EditReportCommand());
+                new EditReport());
 
 
         //actions
         commands.put("submit-report",
-                new SubmitApplyingReportCommand(new ReportService(), new UserService()));
+                new SubmitApplyingReport(new ReportService(), new UserService()));
         commands.put("submit-complaint",
-                new SubmitComplaintCommand(new ComplaintService()));
+                new SubmitComplaint(new ComplaintService()));
         commands.put("show-reports",
-                new ShowReportsCommand(new ReportService()));
+                new ShowReports(new ReportService()));
         commands.put("submit-edit-report",
-                new SubmitEditReportCommand(new ReportService()));
+                new SubmitEditReport(new ReportService()));
 
 
         commands.put("submit-checking-report",
-                new SubmitCheckingReportCommand(new ReportService()));
+                new SubmitCheckingReport(new ReportService()));
         commands.put("submit-set-taxable",
-                new SubmitSetTaxableCommand(new TaxableItemService()));
+                new SubmitSetTaxable(new TaxableItemService()));
     }
 
 

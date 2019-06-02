@@ -3,6 +3,7 @@ package ua.training.controller.command.directions;
 
 
 import ua.training.controller.command.Command;
+import ua.training.controller.command.CommandUtility;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -11,15 +12,17 @@ import java.io.IOException;
 
 /**
  * This class is responsible for forwarding
- * to logging page from home page.
+ * to setting taxable items per person page.
  *
  * @author Stanislav Holovachuk
  */
 
-public class LogMeCommand implements Command {
+public class SetTaxable implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        return "/WEB-INF/common/login.jsp";
+        CommandUtility.defineTaxableItemsAttribute(request);
+        CommandUtility.defineUsersAssignedToInspectorAttribute(request);
+        return "/WEB-INF/inspector/set-taxable.jsp";
     }
 }

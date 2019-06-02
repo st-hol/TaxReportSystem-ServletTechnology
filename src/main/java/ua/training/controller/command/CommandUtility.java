@@ -65,6 +65,11 @@ public class CommandUtility {
     }
 
 
+    public static void logUser(HttpServletRequest request, String email, String password, User.ROLE role){
+        request.getSession().setAttribute("password", password);
+        request.getSession().setAttribute("email", email);
+        request.getSession().setAttribute("role", role);
+    }
 
     public static void unlogUser(HttpServletRequest request, String email) {
 
@@ -151,7 +156,7 @@ public class CommandUtility {
     }
 
     /**
-     * Uses to set attribute on client:EditReportCommand.
+     * Uses to set attribute on client:EditReport.
      * Get all (made by this person) reports that marked as should be changed.
      *
      * @param request HttpServletRequest.
@@ -163,7 +168,7 @@ public class CommandUtility {
     }
 
     /**
-     * Uses to set attribute on inspector:SetTaxableCommand.
+     * Uses to set attribute on inspector:SetTaxable.
      * Get all taxable items.
      *
      * @param request HttpServletRequest.
@@ -175,7 +180,7 @@ public class CommandUtility {
 
 
     /**
-     * Uses to set attribute on inspector:SetTaxableCommand.
+     * Uses to set attribute on inspector:SetTaxable.
      * Get all users who are assigned to this inspector.
      *
      * @param request HttpServletRequest.

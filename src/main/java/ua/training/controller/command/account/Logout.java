@@ -16,8 +16,8 @@ import java.io.IOException;
  * Processes logging out.
  * @author Stanislav Holovachuk
  */
-public class LogoutCommand implements Command {
-    private static final Logger logger = LogManager.getLogger(LogoutCommand.class);
+public class Logout implements Command {
+    private static final Logger logger = LogManager.getLogger(Logout.class);
 
 
     @Override
@@ -29,6 +29,7 @@ public class LogoutCommand implements Command {
         logger.info("User [" + email + "] " + "logged out." );
 
         String path = request.getServletContext().getContextPath();
+
 //        return "redirect@" + path ;
 //        return "redirect@" + path + "/WEB-INF/common/welcome.jsp";
 //        return "redirect@" + "/app/home";

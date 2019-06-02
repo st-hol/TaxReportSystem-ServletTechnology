@@ -16,7 +16,7 @@ import java.io.IOException;
  *
  * @author Stanislav Holovachuk
  */
-public class RegMeCommand implements Command {
+public class RegMe implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

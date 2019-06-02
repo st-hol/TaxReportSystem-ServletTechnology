@@ -16,10 +16,10 @@ import java.io.IOException;
  * @author Stanislav Holovachuk
  */
 
-public class MakeReportCommand implements Command {
+public class LogMe implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        return "/WEB-INF/client/submit-report.jsp";
+        return "/WEB-INF/common/login.jsp";
     }
 }

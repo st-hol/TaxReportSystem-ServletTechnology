@@ -20,13 +20,13 @@ import javax.servlet.http.HttpServletResponse;
  * @author Stanislav Holovachuk
  */
 
-public class RegistrationCommand implements Command {
-    private static final Logger logger = LogManager.getLogger(RegistrationCommand.class);
+public class Registration implements Command {
+    private static final Logger logger = LogManager.getLogger(Registration.class);
 
     private UserService userService;
 
 
-    public RegistrationCommand(UserService studentService) {
+    public Registration(UserService studentService) {
         this.userService = studentService;
     }
 
@@ -65,9 +65,10 @@ public class RegistrationCommand implements Command {
         } catch (AlreadyExistingDBRecordException e) {
             e.printStackTrace();
             logger.info(e.getMessage());
-            return "/WEB-INF/common/registration.jsp?success=false";
+            return "/WEB-INF/common/registration.jsp?alreadyExist=true";
         }
 
+        //assigning random inspector to new user
         if (userRole.equals(User.ROLE.CLIENT)) {
             userService.assignRandomInspectorToClient(user);
         }

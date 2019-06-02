@@ -23,7 +23,7 @@
                 <li class="nav-item">
                     <a href="${pageContext.request.contextPath}/app/set-taxable" class="nav-link active">
                         <i class="fa fa-home"></i>
-                        <fmt:message key="reg.prop"/>
+                        <fmt:message key="set.taxable"/>
                     </a>
                 </li>
             </ul>

@@ -7,7 +7,6 @@ import ua.training.controller.command.CommandUtility;
 import ua.training.model.entity.Complaint;
 import ua.training.model.entity.User;
 import ua.training.model.service.ComplaintService;
-import ua.training.model.service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -22,13 +21,13 @@ import java.time.Instant;
  *
  * @author Stanislav Holovachuk
  */
-public class SubmitComplaintCommand implements Command {
+public class SubmitComplaint implements Command {
 
-    private static final Logger logger = LogManager.getLogger(SubmitComplaintCommand.class);
+    private static final Logger logger = LogManager.getLogger(SubmitComplaint.class);
 
     private ComplaintService complaintService;
 
-    public SubmitComplaintCommand(ComplaintService complaintService) {
+    public SubmitComplaint(ComplaintService complaintService) {
         this.complaintService = complaintService;
     }
 

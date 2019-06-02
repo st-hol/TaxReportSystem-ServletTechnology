@@ -32,48 +32,38 @@
 
 <!-- Row start -->
 <div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="panel panel-default">
-            <div class="panel-heading clearfix">
-                <i class="icon-calendar"></i>
-                <h3 class="panel-title">
-                    <fmt:message key="make.complaint"/>
-                </h3>
+    <div class="container col-lg-3 offset-4">
+
+        <div class="panel-heading clearfix">
+            <i class="icon-calendar"></i>
+            <h3 class="panel-title">
+                <fmt:message key="make.complaint"/>
+            </h3>
+        </div>
+
+        <form method="POST" class="" action="${pageContext.request.contextPath}/app/submit-complaint">
+            <div class="form-group">
+                <div class="">
+                        <textarea maxlength="45" minlength="5" name="content"
+                                  placeholder="<fmt:message key="placeholder.write.charge"/>"
+                                  class="col-12" required>
+                        </textarea>
+                </div>
             </div>
 
-            <form method="POST" class="" action="${pageContext.request.contextPath}/app/submit-complaint">
-                <div class="panel-body">
-                    <div class="row">
-                        <br>
-
-                        <div class="col-md-3 col-sm-3">
-                            <div class="input-group">
-                             <span class="input-group-addon">
-                                 <textarea maxlength="45" minlength="5" name="content"
-                                           placeholder="<fmt:message key="placeholder.write.charge"/>" required></textarea>
-                             </span>
-                            </div>
-                        </div>
-
-                        <br>
-
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-primary btn-sm">
-                                    <fmt:message key="label.submit"/>
-                                </button>
-                            </div>
-                        </div>
-
-                    </div>
-
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        <fmt:message key="label.submit"/>
+                    </button>
                 </div>
-            </form>
+            </div>
 
-            <a class="" href="${pageContext.request.contextPath}/app/personal-cabinet">
-                <fmt:message key="back.to.cabinet"/>
-            </a>
-        </div>
+        </form>
+
+        <a class="" href="${pageContext.request.contextPath}/app/personal-cabinet">
+            <fmt:message key="back.to.cabinet"/>
+        </a>
     </div>
 </div>
 <!-- Row end -->

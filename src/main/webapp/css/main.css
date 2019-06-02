@@ -153,13 +153,23 @@ label.btn.success.active {
 
 
 
-
-
-
+/*lang*/
 .lang-icon {
     width: 30px !important;
 }
 
 .lang-icon:active {
     transform: rotate(-10deg);
+}
+
+
+.text-area{
+    width: 100% !important;
+}
+
+
+
+/*form*/
+.form-title{
+    width: 150%;
 }

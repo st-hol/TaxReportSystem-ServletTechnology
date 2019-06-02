@@ -17,7 +17,7 @@ import java.io.IOException;
  * @author Stanislav Holovachuk
  */
 
-public class HomeCommand implements Command {
+public class Home implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
