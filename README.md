@@ -31,7 +31,7 @@ The user can send a request to replace the Inspector in case of dissatisfaction.
   c) Instructions for launching the application:
   
       You should have installed Java and Maven on your local machine.
-      Then in command prompt you have to write:
+      Then you have to write in command prompt next lines :
       
         1)cd [the path to directory where you unpacked ZIP-archive]
         
