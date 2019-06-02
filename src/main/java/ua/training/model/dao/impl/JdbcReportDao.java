@@ -33,27 +33,31 @@ public class JdbcReportDao implements ReportDao {
      */
     @Override
     public void create(@NotNull final Report report) {
-        //transaction
-        try (PreparedStatement ps = connection.prepareStatement(ReportSQL.INSERT.getQUERY())) {
 
+        try (PreparedStatement reportPs = connection.prepareStatement(ReportSQL.INSERT.getQUERY());
+             PreparedStatement itemPs = connection.prepareStatement(TaxableItemSQL.GET_TOTAL_AMOUNT_OF_PROPERTY_FOR_CERTAIN_PERSON.getQUERY())) {
+
+            //transaction
             connection.setAutoCommit(false);
 
-            ps.setLong(1, report.getPerson().getId());
-            ps.setString(2, report.getCompanyName());
-            ps.setString(3, report.getTaxpayerCode());
-            ps.setTimestamp(4, report.getCompletionTime());
-            //ps.setLong(5, report.getTotalAmountOfProperty());
-            ps.setBoolean(6, report.getIsAccepted());
-            ps.setBoolean(7, report.getShouldBeChanged());
-            ps.setString(8, report.getInspectorComment());
+            reportPs.setLong(1, report.getPerson().getId());
+            reportPs.setString(2, report.getCompanyName());
+            reportPs.setString(3, report.getTaxpayerCode());
+            reportPs.setTimestamp(4, report.getCompletionTime());
+            //reportPs.setLong(5, report.getTotalAmountOfProperty());
+            reportPs.setBoolean(6, report.getIsAccepted());
+            reportPs.setBoolean(7, report.getShouldBeChanged());
+            reportPs.setString(8, report.getInspectorComment());
 
-            ResultSet rs = ps.executeQuery(TaxableItemSQL.GET_TOTAL_AMOUNT_OF_PROPERTY_FOR_CERTAIN_PERSON.getQUERY());
+
+            itemPs.setLong(1, report.getPerson().getId());
+            ResultSet rs = itemPs.executeQuery();
             if (rs.next()){
                 long totalAmountOfProperty = rs.getLong("total_amount");
-                ps.setLong(5, totalAmountOfProperty);
+                reportPs.setLong(5, totalAmountOfProperty);
             }
 
-            ps.execute();
+            reportPs.execute();
             connection.commit();
         } catch (SQLException e) {
             try {

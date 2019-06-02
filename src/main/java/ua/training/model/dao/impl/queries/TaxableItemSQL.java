@@ -20,7 +20,8 @@ public enum TaxableItemSQL {
             " left join persons_has_taxable_items " +
             " on taxable_items.id_item = persons_has_taxable_items.id_item " +
             " left join persons " +
-            " on persons_has_taxable_items.id_person = persons.id_person"),
+            " on persons_has_taxable_items.id_person = persons.id_person" +
+            " where persons.id_person=(?);"),
 
 
     ALREADY_EXISTING_TAXABLE("SELECT * FROM persons_has_taxable_items where id_person=(?) and id_item=(?);"),
