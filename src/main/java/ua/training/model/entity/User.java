@@ -1,6 +1,8 @@
 package ua.training.model.entity;
 
 
+import java.util.Objects;
+
 public class User {
 
     private long id;
@@ -10,9 +12,9 @@ public class User {
     private String password;
     private ROLE role;
     private User assignedInspector;
-    //todo optional
 
     private static User noInspector;
+
     static {
         noInspector = new User(0);
     }
@@ -21,8 +23,7 @@ public class User {
     public User() {
     }
 
-    // no inspector contr
-    //todo optional
+    // without assignedInspector constructor
     public User(long id, String firstName, String lastName, String email, String password, ROLE role) {
         this.id = id;
         this.firstName = firstName;
@@ -107,6 +108,24 @@ public class User {
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id &&
+                Objects.equals(firstName, user.firstName) &&
+                Objects.equals(lastName, user.lastName) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(password, user.password) &&
+                role == user.role &&
+                Objects.equals(assignedInspector, user.assignedInspector);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, email, password, role, assignedInspector);
+    }
 
     @Override
     public String toString() {
@@ -132,6 +151,7 @@ public class User {
             int index = id - 1;
             return values()[index];
         }
+
 
 
     }
