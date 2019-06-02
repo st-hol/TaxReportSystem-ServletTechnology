@@ -6,22 +6,15 @@ import org.junit.Test;
 import ua.training.model.entity.Report;
 import ua.training.model.service.ReportService;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
 public class JdbcReportDaoTest {
-
-    @Before
-    public void setUp() throws Exception {
-    }
-
-    @After
-    public void tearDown() throws Exception {
-    }
-
-
-
 
     /**
      * check the time for DESC
