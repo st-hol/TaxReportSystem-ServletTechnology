@@ -119,7 +119,6 @@ public class JdbcReportDao implements ReportDao {
             logger.fatal("Caught SQLException exception", e);
             e.printStackTrace();
             return null;
-            //todo optional
         }
     }
 
@@ -144,7 +143,6 @@ public class JdbcReportDao implements ReportDao {
             logger.fatal("Caught SQLException exception", e);
             e.printStackTrace();
             return null;
-            //todo optional
         }
     }
 
@@ -168,7 +166,6 @@ public class JdbcReportDao implements ReportDao {
             logger.fatal("Caught SQLException exception", e);
             e.printStackTrace();
             return null;
-            //todo optional
         }
     }
 

@@ -101,7 +101,6 @@ public class JdbcUserDao implements UserDao {
             logger.fatal("Caught SQLException exception", e);
             e.printStackTrace();
             return null;
-            //todo optional
         }
     }
 

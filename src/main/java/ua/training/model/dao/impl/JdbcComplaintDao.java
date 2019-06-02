@@ -93,15 +93,12 @@ public class JdbcComplaintDao implements ComplaintDao {
                 Complaint complaint = complaintMapper.extractFromResultSet(rs);
                 complaint = complaintMapper.makeUnique(complaints, complaint);
             }
-//            for (User u: complaints.values()) {
-//                System.out.println(u.getEmail());
-//            }
             return new ArrayList<>(complaints.values());
         } catch (SQLException e) {
             logger.fatal("Caught SQLException exception", e);
             e.printStackTrace();
             return null;
-            //todo optional
+
         }
     }
 

@@ -102,7 +102,6 @@ public class JdbcTaxableItemDao implements TaxableItemDao {
             logger.fatal("Caught SQLException exception", e);
             e.printStackTrace();
             return null;
-            //todo optional
         }
     }
 
