@@ -105,7 +105,7 @@
 
 
                 <a class="" href="${pageContext.request.contextPath}/app/home">
-                    <fmt:message key="label.submit"/>
+                    <fmt:message key="back.to.cabinet"/>
                 </a>
 
             </div>

@@ -38,7 +38,7 @@ public class SubmitEditReport implements Command {
         final String companyName = request.getParameter("companyName");
         final String taxpayerCode = request.getParameter("taxpayerCode");
 
-        Report report = new Report();
+        final Report report = new Report();
         report.setId(idReport);
         report.setCompanyName(companyName);
         report.setTaxpayerCode(taxpayerCode);
@@ -48,7 +48,8 @@ public class SubmitEditReport implements Command {
         logger.info("Report #"+idReport+" was edited.");
 
 
+//        String path = request.getServletContext().getContextPath();
+//        return "redirect@" + path + "/app/edit-report";
         return "/WEB-INF/client/edit-report.jsp";
     }
-
 }

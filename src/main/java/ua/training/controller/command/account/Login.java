@@ -43,11 +43,9 @@ public class Login implements Command {
 
 
         if (userService.isExistingUser(email, password)) {
-
-            //in order to prevent being logged into one account at the same time
+            //in order to prevent logging into one account at the same time
             if (CommandUtility.checkUserIsLogged(request, email)) {
-                String path = request.getServletContext().getContextPath();
-                return "redirect@" + path + "/WEB-INF/common/error/multilogin.jsp";
+                return "/WEB-INF/common/error/multilogin.jsp";
             }
 
             final User.ROLE role = userService.getRoleByEmailAndPass(email, password);

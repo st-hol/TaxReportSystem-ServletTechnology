@@ -61,10 +61,10 @@ public class SubmitApplyingReport implements Command {
         logger.info("User " + currentSessionUser.getFirstName() + " " + currentSessionUser.getLastName()
                 + " submitted report.");
 
-        //todo oo
-
 
         return "/WEB-INF/client/submit-report.jsp";
+//        String path = request.getServletContext().getContextPath();
+//        return "redirect@" + path + "/app/make-report";
     }
 
 }

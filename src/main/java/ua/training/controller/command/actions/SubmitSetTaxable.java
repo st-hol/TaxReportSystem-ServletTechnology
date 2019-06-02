@@ -38,10 +38,9 @@ public class SubmitSetTaxable implements Command {
 
         final long idItem = Long.parseLong(request.getParameter("idItem"));
         final long idPerson = Long.parseLong(request.getParameter("idPerson"));
-        //todo verif
         final int quantity = Integer.parseInt(request.getParameter("quantity"));
 
-        TaxableItem taxableItem = new TaxableItem();
+        final TaxableItem taxableItem = new TaxableItem();
         taxableItem.setId(idItem);
         taxableItem.setIdPerson(idPerson);
         taxableItem.setQuantity(quantity);
@@ -49,6 +48,9 @@ public class SubmitSetTaxable implements Command {
         taxableItemService.setTaxableItemsPerPerson(taxableItem);
         logger.info("Taxable Item id#" + idItem + " was updated to person id#" + idPerson);
 
+
+//        String path = request.getServletContext().getContextPath();
+//        return "redirect@" + path + "/app/set-taxable";
         return "/WEB-INF/inspector/set-taxable.jsp";
     }
 

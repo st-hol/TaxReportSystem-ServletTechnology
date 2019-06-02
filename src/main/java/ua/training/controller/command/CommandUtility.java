@@ -28,8 +28,7 @@ public class CommandUtility {
     private static ReportService reportService;
     private static TaxableItemService taxableItemService;
 
-    static
-    {
+    static {
         userService = new UserService();
         reportService = new ReportService();
         taxableItemService = new TaxableItemService();
@@ -71,14 +70,13 @@ public class CommandUtility {
         request.getSession().setAttribute("role", role);
     }
 
-    public static void unlogUser(HttpServletRequest request, String email) {
+    public static void logoutUser(HttpServletRequest request, String email) {
 
         @SuppressWarnings("unchecked")
         HashSet<String> loggedUsers = (HashSet<String>)
                 request.getSession().getServletContext().getAttribute("loggedUsers");
 
         loggedUsers.remove(email);
-
         request.getSession().getServletContext().setAttribute("loggedUsers", loggedUsers);
 
         final HttpSession session = request.getSession();
@@ -131,20 +129,8 @@ public class CommandUtility {
     }
 
 
-//    /**
-//     * Uses to set attribute on certain command.
-//     *
-//     * @param request HttpServletRequest.
-//     */
-//    public static void defineUsersAttribute(HttpServletRequest request) {
-//        List<User> users = userService.getAllUsers();
-//        request.setAttribute("persons", users);
-//    }
-
-
-
     /**
-     * Sets attribute to inspector:CheckReportsCommand.
+     * Sets attribute to inspectors command:CheckReports.
      * Get all reports made by users who are assigned to this inspector.
      *
      * @param request HttpServletRequest.
@@ -156,7 +142,7 @@ public class CommandUtility {
     }
 
     /**
-     * Uses to set attribute on client:EditReport.
+     * Uses to set attribute on clients command:EditReport.
      * Get all (made by this person) reports that marked as should be changed.
      *
      * @param request HttpServletRequest.
@@ -168,7 +154,7 @@ public class CommandUtility {
     }
 
     /**
-     * Uses to set attribute on inspector:SetTaxable.
+     * Uses to set attribute on inspectors command:SetTaxable.
      * Get all taxable items.
      *
      * @param request HttpServletRequest.
@@ -180,7 +166,7 @@ public class CommandUtility {
 
 
     /**
-     * Uses to set attribute on inspector:SetTaxable.
+     * Uses to set attribute on inspectors command:SetTaxable.
      * Get all users who are assigned to this inspector.
      *
      * @param request HttpServletRequest.

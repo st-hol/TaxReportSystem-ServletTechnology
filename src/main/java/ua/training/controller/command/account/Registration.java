@@ -12,6 +12,8 @@ import ua.training.model.validator.UserValidator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Objects;
+import java.util.Optional;
 
 
 /**
@@ -40,14 +42,15 @@ public class Registration implements Command {
         final String firstName = request.getParameter("firstName");
         final String lastName = request.getParameter("lastName");
 
-        if (!password.equals(confirmPassword)) {
-            logger.info("User [" + email + "]" + " password and its confirmation is not equal.");
-            return "/WEB-INF/common/registration.jsp?passwordsDifferent=true";
+        if (!(UserValidator.validateEmail(email) && UserValidator.validatePassword(password))) {
+            logger.info("User [" + email + "]" + " entered invalid data.");
+            return "/WEB-INF/common/registration.jsp?dataInvalid=true";
         }
 
-        if (!(UserValidator.validateEmail(email) && UserValidator.validatePassword(password))) {
-            logger.info("User [" + email + "]" + " entered wrong data.");
-            return "/WEB-INF/common/registration.jsp?dataInvalid=true";
+
+        if (!password.equals(confirmPassword)) {
+            logger.info("User [" + email + "]" + " password and its confirmation are not equal.");
+            return "/WEB-INF/common/registration.jsp?passwordsDifferent=true";
         }
 
         User.ROLE userRole = User.ROLE.valueOf(role);
@@ -58,7 +61,6 @@ public class Registration implements Command {
         user.setEmail(email);
         user.setFirstName(firstName);
         user.setLastName(lastName);
-//        user.setAssignedInspector(noInspector);
 
         try {
             userService.registerUserAccount(user);
@@ -77,7 +79,3 @@ public class Registration implements Command {
         return "/WEB-INF/common/registration.jsp?success=true";
     }
 }
-
-
-//            return "redirect@" + path + "/jsp/registration.jsp?dataInvalid=true";
-//return "redirect@" + path + "/jsp/registration.jsp?success=true";

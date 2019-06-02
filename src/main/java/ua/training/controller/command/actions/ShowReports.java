@@ -71,8 +71,6 @@ public class ShowReports implements Command {
         request.setAttribute("noOfPages", noOfPages);
         request.setAttribute("currentPage", page);
 
-
-        //todo make it pretty (.map)
         return "/WEB-INF/client/show-reports.jsp";
     }
 }

@@ -25,14 +25,10 @@ public class Logout implements Command {
             throws ServletException, IOException {
 
         final String email = (String)request.getSession().getAttribute("email");
-        CommandUtility.unlogUser(request, email);
+        CommandUtility.logoutUser(request, email);
         logger.info("User [" + email + "] " + "logged out." );
 
         String path = request.getServletContext().getContextPath();
-
-//        return "redirect@" + path ;
-//        return "redirect@" + path + "/WEB-INF/common/welcome.jsp";
-//        return "redirect@" + "/app/home";
         return "redirect@" + path + "/";
     }
 }
@@ -67,7 +63,7 @@ public class Logout implements Command {
 
 //login.ifPresent(lgn -> System.out.println(lgn.toString()));
 
-//login.ifPresent(lgn -> CommandUtility.unlogUser(request, lgn.toString()));
+//login.ifPresent(lgn -> CommandUtility.logoutUser(request, lgn.toString()));
 //        return "redirect:login";
 
 
@@ -79,7 +75,7 @@ public class Logout implements Command {
 //
 //        Optional<Object> email = Optional.ofNullable(request.getSession().getAttribute("email"));
 //
-//        email.ifPresent(e -> CommandUtility.unlogUser(request, e.toString()));
+//        email.ifPresent(e -> CommandUtility.logoutUser(request, e.toString()));
 //
 //        return "redirect:login";
 //    }

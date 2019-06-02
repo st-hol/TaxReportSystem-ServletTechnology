@@ -34,13 +34,12 @@ public class SubmitCheckingReport implements Command {
 
         CommandUtility.defineAssignedReportsAttribute(request);
 
-        //todo
         final long idReport = Long.parseLong(request.getParameter("idReport"));
         final int isAccepted = Integer.parseInt(request.getParameter("isAccepted"));
         final int shouldBeChanged = Integer.parseInt(request.getParameter("shouldBeChanged"));
         final String inspectorComment = request.getParameter("inspectorComment");
 
-        Report report = new Report();
+        final Report report = new Report();
 
         report.setId(idReport);
         report.setAcceptedFromInt(isAccepted);
@@ -52,6 +51,8 @@ public class SubmitCheckingReport implements Command {
 
 
         return "/WEB-INF/inspector/check-report.jsp";
+//        String path = request.getServletContext().getContextPath();
+//        return "redirect@" + path + "/app/check-report";
     }
 
 }

@@ -34,7 +34,7 @@ public class SubmitComplaint implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-        Complaint complaint = new Complaint();
+        final Complaint complaint = new Complaint();
 
         final User currentSessionUser = CommandUtility.getCurrentSessionUser(request);
         final User inspector = currentSessionUser.getAssignedInspector();
@@ -48,6 +48,7 @@ public class SubmitComplaint implements Command {
         logger.info("Complaint was charged on inspector #" + inspector.getId());
 
         return "/WEB-INF/client/submit-complaint.jsp";
+        //String path = request.getServletContext().getContextPath();
+        //return "redirect@" + path + "/app/make-complaint";
     }
-
 }
