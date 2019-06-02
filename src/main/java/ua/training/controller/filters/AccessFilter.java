@@ -64,6 +64,10 @@ public class AccessFilter implements Filter {
         if ( allowedRoutes.get(currentRole).contains(path)) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
+            //guest? then sign in
+            if(currentRole.equals(User.ROLE.UNKNOWN)){
+                request.getRequestDispatcher("/WEB-INF/common/login.jsp").forward(request,response);
+            }
             request.getRequestDispatcher("/WEB-INF/common/error/403.jsp").forward(request,response);
         }
     }

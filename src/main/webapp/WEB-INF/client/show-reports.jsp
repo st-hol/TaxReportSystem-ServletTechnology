@@ -10,8 +10,9 @@
 
 <html lang="${sessionScope.lang}">
 <head>
-    <title><fmt:message key="label.reports.list"/></title>
-
+    <title>
+        <fmt:message key="see.all.reports"/>
+    </title>
 
     <meta name="viewport" content="width=device-width"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -26,13 +27,13 @@
 <div class="table-cont">
     <table class="responstable" border="1" cellpadding="3" cellspacing="3">
         <tr>
-            <th><fmt:message key="label.company.name"/></th>
-            <th><fmt:message key="label.taxpayer.code"/></th>
-            <th><fmt:message key="label.completion.time"/></th>
-            <th><fmt:message key="label.total.amount"/></th>
-            <th><fmt:message key="label.is.accepted"/></th>
-            <th><fmt:message key="label.should.change"/></th>
-            <th><fmt:message key="label.insp.comment"/></th>
+            <th><fmt:message key="placeholder.company.name"/></th>
+            <th><fmt:message key="placeholder.taxpayer.code"/></th>
+            <th><fmt:message key="completion.time"/></th>
+            <th><fmt:message key="total.amount"/></th>
+            <th><fmt:message key="is.accepted"/></th>
+            <th><fmt:message key="should.change"/></th>
+            <th><fmt:message key="insp.comment"/></th>
         </tr>
 
         <c:forEach var="report" items="${reports}">
@@ -92,7 +93,9 @@
 
     <br>
     <div class="home">
-        <a class="" href="${pageContext.request.contextPath}/app/personal-cabinet">back to cabinet</a>
+        <a class="" href="${pageContext.request.contextPath}/app/personal-cabinet">
+            <fmt:message key="back.to.cabinet"/>
+        </a>
     </div>
 </div>
 

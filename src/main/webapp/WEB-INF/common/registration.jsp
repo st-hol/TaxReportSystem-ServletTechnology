@@ -8,7 +8,7 @@
 
 <html lang="${sessionScope.lang}">
 <head>
-    <title><fmt:message key="label.reg"/></title>
+    <title><fmt:message key="sign.up"/></title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width"/>
@@ -29,7 +29,9 @@
             <div class="col-12 col-md-8 col-lg-8 col-xl-6">
                 <div class="row">
                     <div class="col text-center">
-                        <h1>Register</h1>
+                        <h1>
+                            <fmt:message key="sign.up"/>
+                        </h1>
                     </div>
                 </div>
 
@@ -50,25 +52,30 @@
 
                     <div class="row align-items-center">
                         <div class="col mt-4">
-                            <input name="firstName" type="text" class="form-control" placeholder="Name">
+                            <input name="firstName" type="text" class="form-control"
+                                   placeholder="<fmt:message key="placeholder.name"/>">
                         </div>
                     </div>
                     <div class="row align-items-center">
                         <div class="col mt-4">
-                            <input name="lastName" type="text" class="form-control" placeholder="Surname">
+                            <input name="lastName" type="text" class="form-control"
+                                   placeholder="<fmt:message key="placeholder.surname"/>">
                         </div>
                     </div>
                     <div class="row align-items-center mt-4">
                         <div class="col">
-                            <input name="email" type="email" class="form-control" placeholder="e-mail@gmail.com">
+                            <input name="email" type="email" class="form-control"
+                                   placeholder="<fmt:message key="placeholder.email"/>">
                         </div>
                     </div>
                     <div class="row align-items-center mt-4">
                         <div class="col">
-                            <input name="password" type="password" class="form-control" placeholder="Password">
+                            <input name="password" type="password" class="form-control"
+                                   placeholder="<fmt:message key="placeholder.password"/>">
                         </div>
                         <div class="col">
-                            <input name="confirmPassword" type="password" class="form-control" placeholder="Confirm Password">
+                            <input name="confirmPassword" type="password" class="form-control"
+                                   placeholder="<fmt:message key="placeholder.confirm.password"/>">
                         </div>
                     </div>
 
@@ -85,18 +92,21 @@
                             <div class="form-check">
                                 <label class="form-check-label">
                                     <input type="checkbox" class="form-check-input">
-                                    I Read and Accept Terms and Conditions
+                                    <fmt:message key="label.accept.terms"/>
                                 </label>
                             </div>
 
-                            <button class="btn btn-primary mt-4">Submit</button>
+                            <button class="btn btn-primary mt-4">
+                                <fmt:message key="label.submit"/>
+                            </button>
                         </div>
                     </div>
                 </form>
 
 
-                <a class="" href="${pageContext.request.contextPath}/app/home">go home</a>
-
+                <a class="" href="${pageContext.request.contextPath}/app/home">
+                    <fmt:message key="label.submit"/>
+                </a>
 
             </div>
         </div>

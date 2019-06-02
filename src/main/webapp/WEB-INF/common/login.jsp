@@ -9,7 +9,9 @@
 
 <html lang="${sessionScope.lang}">
 <head>
-    <title>Index</title>
+    <title>
+        <fmt:message key="sign.in"/>
+    </title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width"/>
 
@@ -23,37 +25,47 @@
 <body>
 <div class="form">
 
-    <c:if test="${param.dataInvalid == true}">
-        <p style="color: orange"><fmt:message key="label.invalid.input"/></p>
-    </c:if>
-
-    <c:if test="${param.userExist == false}">
-        <p style="color: darkred"><fmt:message key="label.not.exist"/></p>
-    </c:if>
 
     <form class="form-horizontal" role="form" method="POST" action="${pageContext.request.contextPath}/app/login">
+
+
+        <c:if test="${param.dataInvalid == true}">
+            <p style="color: orange"><fmt:message key="invalid.input"/></p>
+        </c:if>
+
+        <c:if test="${param.userExist == false}">
+            <p style="color: darkred"><fmt:message key="user.not.found"/></p>
+        </c:if>
+
+
         <div class="form-group">
             <div class="form-group">
-                <label for="email" class="col-sm-2 control-label">Логин</label>
+                <label for="email" class="col-sm-2 control-label"></label>
                 <div class="col-sm-10">
-                    <input id="email" type="text" class="form-control" placeholder="Логин" name="email">
+                    <input id="email" type="text" class="form-control"
+                           placeholder="<fmt:message key="placeholder.email"/>" name="email">
                 </div>
             </div>
             <div class="form-group">
-                <label for="password" class="col-sm-2 control-label">Пароль</label>
+                <label for="password" class="col-sm-2 control-label"></label>
                 <div class="col-sm-10">
-                    <input id="password" type="password" class="form-control" placeholder="Пароль" name="password">
+                    <input id="password" type="password" class="form-control"
+                           placeholder="<fmt:message key="placeholder.password"/>" name="password">
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-primary btn-sm">Войти</button>
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        <fmt:message key="sign.in"/>
+                    </button>
                 </div>
             </div>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <a class="" href="${pageContext.request.contextPath}/app/home">go home</a>
+                <a class="" href="${pageContext.request.contextPath}/app/home">
+                    <fmt:message key="go.home"/>
+                </a>
             </div>
         </div>
     </form>

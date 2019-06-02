@@ -15,7 +15,9 @@
 
 <html lang="${sessionScope.lang}">
 <head>
-    <title>check report</title>
+    <title>
+        <fmt:message key="check.reports"/>
+    </title>
 
     <meta name="viewport" content="width=device-width"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -37,7 +39,9 @@
 
             <div class="panel-heading clearfix">
                 <i class="icon-calendar"></i>
-                <h3 class="panel-title offset-2">Check report</h3>
+                <h3 class="panel-title offset-2">
+                    <fmt:message key="check.reports"/>
+                </h3>
             </div>
 
             <form method="POST" class="" action="${pageContext.request.contextPath}/app/submit-checking-report">
@@ -57,7 +61,9 @@
 
                         <br>
 
-                        <span>Accept report?</span>
+                        <span>
+                            <fmt:message key="placeholder.accept"/>
+                        </span>
                         <div  class="row align-items-center">
                             <div class="md-radio">
                                 <input value="1" id="ac1" type="radio" name="isAccepted" checked>
@@ -71,7 +77,9 @@
                         <br><br>
 
 
-                        <span>Mark report as should be changed?</span>
+                        <span>
+                            <fmt:message key="should.change"/>
+                        </span>
                         <div  class="row align-items-center">
                             <div class="md-radio">
                                 <input value="1" id="s1" type="radio" name="shouldBeChanged" checked>
@@ -89,7 +97,8 @@
                             <div class="input-group">
                              <span class="input-group-addon">
                                 <textarea maxlength="100" minlength="1" name="inspectorComment"
-                                          placeholder="inspector comment" required></textarea>
+                                          placeholder="<fmt:message key="insp.comment"/>" required>
+                                </textarea>
                              </span>
                             </div>
                         </div>
@@ -98,14 +107,18 @@
 
                         <div  class="row align-items-center">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-primary btn-sm">submit</button>
+                                <button type="submit" class="btn btn-primary btn-sm">
+                                    <fmt:message key="label.submit"/>
+                                </button>
                             </div>
                         </div>
 
                     </div>
                 </div>
             </form>
-            <a class="" href="${pageContext.request.contextPath}/app/personal-cabinet">back to cabinet</a>
+            <a class="" href="${pageContext.request.contextPath}/app/personal-cabinet">
+                <fmt:message key="back.to.cabinet"/>
+            </a>
         </div>
     </div>
 </div>

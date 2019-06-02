@@ -14,7 +14,9 @@
 
 <html lang="${sessionScope.lang}">
 <head>
-    <title>subm</title>
+    <title>
+        <fmt:message key="submit.report"/>
+    </title>
 
     <meta name="viewport" content="width=device-width"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -36,7 +38,9 @@
 
             <div class="panel-heading clearfix">
                 <i class="icon-calendar"></i>
-                <h3 class="panel-title">Submit report</h3>
+                <h3 class="panel-title">
+                    <fmt:message key="submit.report"/>
+                </h3>
             </div>
 
             <form method="POST" class="" action="${pageContext.request.contextPath}/app/submit-report">
@@ -48,7 +52,7 @@
                             <div class="input-group">
                              <span class="input-group-addon">
                                 <input maxlength="45" minlength="1" name="companyName" type="text"
-                                       placeholder="company name" required>
+                                       placeholder="<fmt:message key="placeholder.company.name"/>" required>
                              </span>
                             </div>
                         </div>
@@ -59,7 +63,7 @@
                             <div class="input-group">
                              <span class="input-group-addon">
                                 <input maxlength="45" minlength="1" name="taxpayerCode" type="number"
-                                       placeholder="taxpayer code" required>
+                                       placeholder="<fmt:message key="placeholder.taxpayer.code"/>" required>
                              </span>
                             </div>
                         </div>
@@ -68,14 +72,18 @@
 
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-primary btn-sm">submit</button>
+                                <button type="submit" class="btn btn-primary btn-sm">
+                                    <fmt:message key="label.submit"/>
+                                </button>
                             </div>
                         </div>
 
                     </div>
                 </div>
             </form>
-            <a class="" href="${pageContext.request.contextPath}/app/personal-cabinet">back to cabinet</a>
+            <a class="" href="${pageContext.request.contextPath}/app/personal-cabinet">
+                <fmt:message key="back.to.cabinet"/>
+            </a>
         </div>
     </div>
 </div>

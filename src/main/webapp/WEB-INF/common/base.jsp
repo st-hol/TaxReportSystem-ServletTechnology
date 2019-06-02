@@ -5,6 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
 
+
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="messages"/>
 
@@ -31,12 +32,13 @@
     <jsp:include page="${pageContext.request.contextPath}/js/jquery.jsp"/>
     <jsp:include page="${pageContext.request.contextPath}/js/bootstrap_min.jsp"/>
 
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/main.css"/>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/personal-cabinet.css"/>
 </head>
 <body>
 
 <!--navbar-->
-<jsp:include page="navbar-cabinet.jsp"/>
+<jsp:include page="${pageContext.request.contextPath}/WEB-INF/common/navbar-cabinet.jsp"/>
 
 <!--our content goes here-->
 <div class="container content">
@@ -44,12 +46,12 @@
 
         <c:choose>
             <c:when test="${sessionScope.role == 'INSPECTOR'}">
-                <jsp:include page="../inspector/sidebar.jsp"/>
-                <jsp:include page="../inspector/default-content.jsp"/>
+                <jsp:include page="${pageContext.request.contextPath}/WEB-INF/inspector/sidebar.jsp"/>
+                <jsp:include page="${pageContext.request.contextPath}/WEB-INF/inspector/default-content.jsp"/>
             </c:when>
             <c:when test="${sessionScope.role == 'CLIENT'}">
-                <jsp:include page="../client/sidebar.jsp"/>
-                <jsp:include page="../client/default-content.jsp"/>
+                <jsp:include page="${pageContext.request.contextPath}/WEB-INF/client/sidebar.jsp"/>
+                <jsp:include page="${pageContext.request.contextPath}/WEB-INF/client/default-content.jsp"/>
             </c:when>
             <c:otherwise>
                 <jsp:forward page="app/home"/>

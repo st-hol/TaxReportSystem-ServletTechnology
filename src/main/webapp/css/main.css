@@ -150,3 +150,16 @@ label.btn.success.active {
     background: #337ab7;
 }
 
+
+
+
+
+
+
+.lang-icon {
+    width: 30px !important;
+}
+
+.lang-icon:active {
+    transform: rotate(-10deg);
+}

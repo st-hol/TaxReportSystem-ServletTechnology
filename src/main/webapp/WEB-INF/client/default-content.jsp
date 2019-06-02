@@ -1,11 +1,26 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page isELIgnored="false" %>
+
+
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="messages"/>
+
 <div class="col-md-9">
     <div class="profile-content">
-        As Client you can:
+        <fmt:message key="inspector.can"/>
         <ul class="list-group">
-            <li class="list-group-item">Submit report</li>
-            <li class="list-group-item">Edit report</li>
-            <li class="list-group-item">See all your reports</li>
-            <li class="list-group-item">Make a complaint</li>
+            <li class="list-group-item">
+                <fmt:message key="submit.report"/>
+            </li>
+            <li class="list-group-item">
+                <fmt:message key="edit.report"/>
+            </li>
+            <li class="list-group-item">
+                <fmt:message key="see.all.reports"/>
+            </li>
+            <li class="list-group-item">
+                <fmt:message key="make.complaint"/>
+            </li>
         </ul>
     </div>
 </div>

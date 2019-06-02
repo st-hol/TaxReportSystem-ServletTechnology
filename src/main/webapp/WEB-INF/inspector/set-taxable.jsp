@@ -9,7 +9,9 @@
 
 <html lang="${sessionScope.lang}">
 <head>
-    <title>check report</title>
+    <title>
+        <fmt:message key="check.reports"/>
+    </title>
 
     <meta name="viewport" content="width=device-width"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -31,7 +33,9 @@
 
             <div class="panel-heading clearfix">
                 <i class="icon-calendar"></i>
-                <h3 class="panel-title offset-2">Set Taxable</h3>
+                <h3 class="panel-title offset-2">
+                    <fmt:message key="reg.prop"/>
+                </h3>
             </div>
 
             <form method="POST" class="" action="${pageContext.request.contextPath}/app/submit-set-taxable">
@@ -67,7 +71,7 @@
                             <div class="input-group">
                              <span class="input-group-addon">
                                 <input maxlength="10" minlength="1" min="0" name="quantity" type="number"
-                                       placeholder="quantity"  required>
+                                       placeholder="<fmt:message key="placeholder.quantity"/>"  required>
                              </span>
                             </div>
                         </div>
@@ -76,14 +80,18 @@
 
                         <div  class="row align-items-center">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-primary btn-sm">submit</button>
+                                <button type="submit" class="btn btn-primary btn-sm">
+                                    <fmt:message key="label.submit"/>
+                                </button>
                             </div>
                         </div>
 
                     </div>
                 <%--</div>--%>
             </form>
-            <a class="" href="${pageContext.request.contextPath}/app/personal-cabinet">back to cabinet</a>
+            <a class="" href="${pageContext.request.contextPath}/app/personal-cabinet">
+                <fmt:message key="label.submit"/>
+            </a>
         </div>
     </div>
 </div>

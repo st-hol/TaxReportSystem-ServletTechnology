@@ -67,9 +67,7 @@ public class LoginCommand implements Command {
         Command personalCabinet = new PersonalCabinetCommand();
         return personalCabinet.execute(request, response);
     }
-
-
-
+    //todo redirect
 }
 
 

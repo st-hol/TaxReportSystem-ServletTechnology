@@ -9,7 +9,9 @@
 <html lang="${sessionScope.lang}">
 
 <head>
-    <title>Index</title>
+    <title>
+        <fmt:message key="tax.report"/>
+    </title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
@@ -22,19 +24,19 @@
 </head>
 <body>
 
-
-<jsp:include page="navbar-landing.jsp"/>
-
+<jsp:include page="${pageContext.request.contextPath}/WEB-INF/common/navbar-landing.jsp"/>
 
 <header class="header">
     <div class="overlay"></div>
     <div class="container offset-1">
         <div class="description text-left">
             <h3>
-                <span> ▍ Tax report system</span>
+                <span>
+                    <fmt:message key="tax.report"/>
+                </span>
                 <p>
-                    Hello guest! You can sign in if you already have account or sign up if you are new here.</p>
-                <%--<button class="btn btn-outline-secondary">See more</button>--%>
+                    <fmt:message key="landing.welcome"/>
+                </p>
             </h3>
         </div>
 

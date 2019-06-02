@@ -9,7 +9,9 @@
 
 <html lang="${sessionScope.lang}">
 <head>
-    <title>edit</title>
+    <title>
+        <fmt:message key="edit.report"/>
+    </title>
 
     <meta name="viewport" content="width=device-width"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -31,14 +33,15 @@
 
             <div class="panel-heading clearfix">
                 <i class="icon-calendar"></i>
-                <h3 class="panel-title">edit report</h3>
+                <h3 class="panel-title">
+                    <fmt:message key="edit.report"/>
+                </h3>
             </div>
 
             <form method="POST" class="" action="${pageContext.request.contextPath}/app/submit-edit-report">
 
                 <div class="panel-body">
                     <div class="row">
-
 
                         <div class="col-md-3 col-sm-3">
                             <div class="input-group">
@@ -58,7 +61,7 @@
                             <div class="input-group">
                              <span class="input-group-addon">
                                 <input maxlength="45" minlength="1" name="companyName" type="text"
-                                       placeholder="company name" required>
+                                       placeholder="<fmt:message key="placeholder.company.name"/>" required>
                              </span>
                             </div>
                         </div>
@@ -69,7 +72,7 @@
                             <div class="input-group">
                              <span class="input-group-addon">
                                 <input maxlength="45" minlength="1" name="taxpayerCode" type="number"
-                                       placeholder="taxpayer code" required>
+                                       placeholder="<fmt:message key="placeholder.taxpayer.code"/>" required>
                              </span>
                             </div>
                         </div>
@@ -78,14 +81,18 @@
 
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-primary btn-sm">submit</button>
+                                <button type="submit" class="btn btn-primary btn-sm">
+                                    <fmt:message key="label.submit"/>
+                                </button>
                             </div>
                         </div>
 
                     </div>
                 </div>
             </form>
-            <a class="" href="${pageContext.request.contextPath}/app/personal-cabinet">back to cabinet</a>
+            <a class="" href="${pageContext.request.contextPath}/app/personal-cabinet">
+                <fmt:message key="back.to.cabinet"/>
+            </a>
         </div>
     </div>
 </div>
