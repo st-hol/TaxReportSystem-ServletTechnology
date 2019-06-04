@@ -56,7 +56,7 @@
             <c:if test="${currentPage != 1}">
                 <li class="page-item">
                     <a class="in-table-link"
-                       href="${pageContext.request.contextPath}/app/show-reports?page=${currentPage - 1}">
+                       href="${pageContext.request.contextPath}/app/show-reports?currentPage=${currentPage - 1}">
                         <fmt:message key="label.prev"/>
                     </a>
                 </li>
@@ -74,7 +74,7 @@
                     <c:otherwise>
                         <li class="page-item">
                             <a class="in-table-link"
-                               href="${pageContext.request.contextPath}/app/show-reports?page=${i}">${i}</a>
+                               href="${pageContext.request.contextPath}/app/show-reports?currentPage=${i}">${i}</a>
                         </li>
                     </c:otherwise>
                 </c:choose>
@@ -83,7 +83,7 @@
 
             <c:if test="${currentPage lt noOfPages}">
                 <li class="page-item"><a class="in-table-link"
-                                         href="${pageContext.request.contextPath}/app/show-reports?page=${currentPage + 1}">
+                                         href="${pageContext.request.contextPath}/app/show-reports?currentPage=${currentPage + 1}">
                     <fmt:message key="label.next"/>
                 </a>
                 </li>

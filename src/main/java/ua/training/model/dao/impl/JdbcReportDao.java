@@ -8,6 +8,7 @@ import ua.training.model.dao.impl.queries.TaxableItemSQL;
 import ua.training.model.dao.mapper.ReportMapper;
 import ua.training.model.entity.Report;
 import ua.training.model.entity.User;
+import ua.training.model.service.ReportService;
 
 import javax.validation.constraints.NotNull;
 import java.sql.*;
@@ -234,9 +235,9 @@ public class JdbcReportDao implements ReportDao {
      * 2)number of records was read.
      */
     @Override
-    public PaginationResult findByPagination(int lowerBound, int upperBound, long idUser) {
+    public ReportService.PaginationResult findByPagination(int lowerBound, int upperBound, long idUser) {
 
-        PaginationResult paginationResult = new PaginationResult();
+        ReportService.PaginationResult paginationResult = new ReportService.PaginationResult();
 
         Map<Long, Report> reports = new HashMap<>();
         ReportMapper reportMapper = new ReportMapper();
@@ -266,29 +267,6 @@ public class JdbcReportDao implements ReportDao {
         return paginationResult;
     }
 
-    /**
-     * It is user-defined class just for returning result from findByPagination() method.
-     */
-    public class PaginationResult {
-        private int noOfRecords;
-        private List<Report> resultList;
-
-        public int getNoOfRecords() {
-            return noOfRecords;
-        }
-
-        public void setNoOfRecords(int noOfRecords) {
-            this.noOfRecords = noOfRecords;
-        }
-
-        public List<Report> getResultList() {
-            return resultList;
-        }
-
-        public void setResultList(List<Report> resultList) {
-            this.resultList = resultList;
-        }
-    }
 
 
 }

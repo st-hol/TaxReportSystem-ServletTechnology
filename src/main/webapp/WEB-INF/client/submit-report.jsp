@@ -38,12 +38,14 @@
                 <fmt:message key="submit.report"/>
             </h3>
         </div>
+        <%--action="${pageContext.request.contextPath}/app/submit-report"--%>
+        <form id="report-submit-ajax-form" class="" method="POST">
 
-        <form method="POST" class="" action="${pageContext.request.contextPath}/app/submit-report">
+            <div id="ajax-succeed"></div>
 
             <div class="form-group">
                <div class="">
-                    <input maxlength="45" minlength="1" name="companyName" type="text"
+                    <input maxlength="45" minlength="1" name="companyName" id="companyName" type="text"
                            placeholder="<fmt:message key="placeholder.company.name"/>" required>
                 </div>
             </div>
@@ -51,14 +53,14 @@
 
             <div class="form-group">
                 <div class="">
-                    <input maxlength="45" minlength="1" name="taxpayerCode" type="number"
+                    <input maxlength="45" minlength="1" name="taxpayerCode" id="taxpayerCode" type="number"
                            placeholder="<fmt:message key="placeholder.taxpayer.code"/>" required>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="">
-                    <button type="submit" class="btn btn-primary btn-sm">
+                    <button type="submit" class="btn btn-primary btn-sm" id="ajax-submit-btn">
                         <fmt:message key="label.submit"/>
                     </button>
                 </div>
@@ -72,6 +74,7 @@
 </div>
 
 
+<script src="${pageContext.request.contextPath}/js/ajax-submit-report.js"></script>
 <!-- Row end -->
 </body>
 </html>

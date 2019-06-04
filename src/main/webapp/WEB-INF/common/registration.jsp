@@ -17,7 +17,7 @@
     <jsp:include page="${pageContext.request.contextPath}/css/bootstrap_min.jsp"/>
     <jsp:include page="${pageContext.request.contextPath}/js/jquery.jsp"/>
     <jsp:include page="${pageContext.request.contextPath}/js/bootstrap_min.jsp"/>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/script.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/ajax-submit-report.js"></script>
 
 
 </head>
