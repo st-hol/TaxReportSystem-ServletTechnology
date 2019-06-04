@@ -8,6 +8,7 @@ import ua.training.model.dao.impl.JdbcUserDao;
 import ua.training.model.entity.Report;
 import ua.training.model.entity.User;
 import ua.training.model.service.ReportService;
+import static ua.training.model.service.ReportService.PaginationResult;
 import ua.training.model.service.UserService;
 
 import javax.servlet.ServletException;
@@ -26,6 +27,7 @@ import java.util.List;
 public class ShowReports implements Command {
 
     private ReportService reportService;
+ 
 
     public ShowReports(ReportService reportService) {
         this.reportService = reportService;
@@ -42,34 +44,31 @@ public class ShowReports implements Command {
      */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
+        int RECORDS_PER_PAGE = 3;
 
         final User currentSessionUser = CommandUtility.getCurrentSessionUser(request);
         final long currentUserId = currentSessionUser.getId();
 
         //to prevent user coming back to cached pages after logout
         CommandUtility.disallowBackToCached(request, response);
-
-
-        int page = 1;
-        int recordsPerPage = 3;
-        if (request.getParameter("page") != null) {
-            page = Integer.parseInt(request.getParameter("page"));
+        
+        int currentPage = 1;
+        if (request.getParameter("currentPage") != null) {
+            currentPage = Integer.parseInt(request.getParameter("currentPage"));
         }
 
-
-        JdbcReportDao.PaginationResult paginationResult =
-                reportService.getReportsByPagination(
-                        (page - 1) * recordsPerPage, recordsPerPage, currentUserId);
+        int lowerBound = (currentPage - 1) * RECORDS_PER_PAGE;
+        PaginationResult paginationResult =
+                reportService.getReportsByPagination(lowerBound, RECORDS_PER_PAGE, currentUserId);
 
 
         List<Report> reports = paginationResult.getResultList();
         int noOfRecords = paginationResult.getNoOfRecords();
-        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+        int noOfPages = paginationResult.calcNoOfPages(noOfRecords, RECORDS_PER_PAGE);
 
         request.setAttribute("reports", reports);
         request.setAttribute("noOfPages", noOfPages);
-        request.setAttribute("currentPage", page);
+        request.setAttribute("currentPage", currentPage);
 
         return "/WEB-INF/client/show-reports.jsp";
     }

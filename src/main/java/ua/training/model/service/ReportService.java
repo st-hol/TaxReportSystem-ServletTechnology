@@ -75,12 +75,41 @@ public class ReportService {
     /**
      * obtains List of certain quantity of enrolled students.
      */
-    public JdbcReportDao.PaginationResult getReportsByPagination(int lowerBound, int upperBound, long idUser) {
+    public PaginationResult getReportsByPagination(int lowerBound, int upperBound, long idUser) {
         try (ReportDao dao = daoFactory.createReportDao()) {
             return dao.findByPagination(lowerBound, upperBound, idUser);
         }
     }
 
+
+
+    /**
+     * It is user-defined class just for returning result from findByPagination() method.
+     */
+    public static class PaginationResult {
+        private int noOfRecords;
+        private List<Report> resultList;
+
+        public int getNoOfRecords() {
+            return noOfRecords;
+        }
+
+        public void setNoOfRecords(int noOfRecords) {
+            this.noOfRecords = noOfRecords;
+        }
+
+        public List<Report> getResultList() {
+            return resultList;
+        }
+
+        public void setResultList(List<Report> resultList) {
+            this.resultList = resultList;
+        }
+
+        public int calcNoOfPages(int noOfRecords, int recordsPerPage){
+            return (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+        }
+    }
 
 }
 
