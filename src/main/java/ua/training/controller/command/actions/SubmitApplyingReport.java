@@ -63,8 +63,6 @@ public class SubmitApplyingReport implements Command {
 
 
         return "/WEB-INF/client/submit-report.jsp";
-//        String path = request.getServletContext().getContextPath();
-//        return "redirect@" + path + "/app/make-report";
     }
 
 }

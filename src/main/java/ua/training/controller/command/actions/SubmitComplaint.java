@@ -48,7 +48,22 @@ public class SubmitComplaint implements Command {
         logger.info("Complaint was charged on inspector #" + inspector.getId());
 
         return "/WEB-INF/client/submit-complaint.jsp";
-        //String path = request.getServletContext().getContextPath();
-        //return "redirect@" + path + "/app/make-complaint";
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

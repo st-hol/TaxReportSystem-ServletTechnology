@@ -47,9 +47,18 @@ public class SubmitEditReport implements Command {
         reportService.editReport(report);
         logger.info("Report #"+idReport+" was edited.");
 
-
-//        String path = request.getServletContext().getContextPath();
-//        return "redirect@" + path + "/app/edit-report";
         return "/WEB-INF/client/edit-report.jsp";
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+

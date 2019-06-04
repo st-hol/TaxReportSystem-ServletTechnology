@@ -51,8 +51,21 @@ public class SubmitCheckingReport implements Command {
 
 
         return "/WEB-INF/inspector/check-report.jsp";
-//        String path = request.getServletContext().getContextPath();
-//        return "redirect@" + path + "/app/check-report";
     }
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

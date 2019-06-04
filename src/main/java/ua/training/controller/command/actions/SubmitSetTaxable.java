@@ -49,9 +49,38 @@ public class SubmitSetTaxable implements Command {
         logger.info("Taxable Item id#" + idItem + " was updated to person id#" + idPerson);
 
 
-//        String path = request.getServletContext().getContextPath();
-//        return "redirect@" + path + "/app/set-taxable";
         return "/WEB-INF/inspector/set-taxable.jsp";
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//        String path = request.getServletContext().getContextPath();
+//        return "redirect@" + path + "/app/set-taxable";
+
+

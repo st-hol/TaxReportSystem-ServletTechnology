@@ -74,23 +74,3 @@ public class ShowReports implements Command {
         return "/WEB-INF/client/show-reports.jsp";
     }
 }
-
-
-//
-//        StudentDao dao = studentService.getDaoFactory();
-//        List<Student> list = dao.findByPagination((page-1)*recordsPerPage,
-//                recordsPerPage);
-//        dao.close();
-
-
-//        System.out.println("records:" + noOfRecords);
-//        System.out.println("pages:" + noOfPages);
-//        System.out.println("cur:" + page);
-
-
-//     return "/WEB-INF/common/enrolledlist.jsp";
-
-//        System.out.println("students::");
-//        for (Student student: enrolledStudents ) {
-//            System.out.println(student.toString());
-//        }
