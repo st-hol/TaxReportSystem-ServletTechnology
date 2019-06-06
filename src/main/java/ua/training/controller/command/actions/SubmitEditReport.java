@@ -50,7 +50,8 @@ public class SubmitEditReport implements Command {
         reportService.editReport(report);
         logger.info("Report #"+idReport+" was edited.");
 
-        return TO_EDIT_REPORT;
+        String path = request.getServletContext().getContextPath();
+        return REDIRECT + path + REDIRECT_TO_EDIT_REPORT;
     }
 }
 

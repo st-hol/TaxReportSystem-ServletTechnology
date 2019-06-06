@@ -51,10 +51,12 @@ public interface TextConstants {
         String REGISTRATION_FAIL_USER_EXIST = "/WEB-INF/common/registration.jsp?alreadyExist=true";
         String REGISTRATION_SUCCESS = "/WEB-INF/common/registration.jsp?success=true";
 
+
         String TO_SHOW_REPORTS = "/WEB-INF/client/show-reports.jsp";
         String TO_SUBMIT_REPORT = "/WEB-INF/client/submit-report.jsp";
         String TO_CHECK_REPORT = "/WEB-INF/inspector/check-report.jsp";
         String TO_EDIT_REPORT = "/WEB-INF/client/edit-report.jsp";
+        String REDIRECT_TO_EDIT_REPORT = "/app/edit-report";
         String TO_SET_TAXABLE_ITEMS = "/WEB-INF/inspector/set-taxable.jsp";
         String TO_SUBMIT_COMPLAINT = "/WEB-INF/client/submit-complaint.jsp";
 
