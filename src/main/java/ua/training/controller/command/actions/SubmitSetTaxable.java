@@ -6,7 +6,8 @@ import ua.training.controller.command.Command;
 import ua.training.controller.command.CommandUtility;
 import ua.training.model.entity.TaxableItem;
 import ua.training.model.service.TaxableItemService;
-import static ua.training.controller.command.TextConstants.*;
+import static ua.training.controller.command.TextConstants.Parameters.*;
+import static ua.training.controller.command.TextConstants.Routes.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -49,7 +50,7 @@ public class SubmitSetTaxable implements Command {
         taxableItemService.setTaxableItemsPerPerson(taxableItem);
         logger.info("Taxable Item id#" + idItem + " was updated to person id#" + idPerson);
 
-        return SET_TAXABLE_ITEMS;
+        return TO_SET_TAXABLE_ITEMS;
     }
 
 }

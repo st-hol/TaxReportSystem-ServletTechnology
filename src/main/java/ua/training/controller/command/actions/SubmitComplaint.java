@@ -7,8 +7,8 @@ import ua.training.controller.command.CommandUtility;
 import ua.training.model.entity.Complaint;
 import ua.training.model.entity.User;
 import ua.training.model.service.ComplaintService;
-import static ua.training.controller.command.TextConstants.CONTENT;
-import static ua.training.controller.command.TextConstants.SUBMIT_COMPLAINT;
+import static ua.training.controller.command.TextConstants.Parameters.*;
+import static ua.training.controller.command.TextConstants.Routes.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -51,7 +51,7 @@ public class SubmitComplaint implements Command {
         complaintService.makeComplaintAction(complaint);
         logger.info("Complaint was charged on inspector #" + inspector.getId());
 
-        return SUBMIT_COMPLAINT;
+        return TO_SUBMIT_COMPLAINT;
     }
 }
 

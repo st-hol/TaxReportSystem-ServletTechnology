@@ -1,7 +1,5 @@
 package ua.training.controller;
 
-
-
 import ua.training.controller.command.Command;
 import ua.training.controller.command.account.Login;
 import ua.training.controller.command.account.Logout;
@@ -9,10 +7,6 @@ import ua.training.controller.command.account.PersonalCabinet;
 import ua.training.controller.command.account.Registration;
 import ua.training.controller.command.actions.*;
 import ua.training.controller.command.directions.*;
-import ua.training.model.service.ComplaintService;
-import ua.training.model.service.ReportService;
-import ua.training.model.service.TaxableItemService;
-import ua.training.model.service.UserService;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -22,6 +16,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+
+import static ua.training.controller.command.TextConstants.CommandPaths.*;
+import static ua.training.controller.command.TextConstants.CommandPaths.PERSONAL_CABINET;
+import static ua.training.controller.command.TextConstants.Routes.*;
 
 /**
  * <h1>Final project</h1>
@@ -52,49 +51,49 @@ public class Servlet extends HttpServlet {
     public void init(ServletConfig servletConfig){
 
         //account
-        commands.put("registration",
+        commands.put(REGISTRATION,
                 new Registration());
-        commands.put("login",
+        commands.put(LOGIN,
                 new Login());
-        commands.put("logout",
+        commands.put(LOGOUT,
                 new Logout());
-        commands.put("personal-cabinet",
+        commands.put(PERSONAL_CABINET,
                 new PersonalCabinet());
 
 
         //directions
-        commands.put("home",
+        commands.put(HOME,
                 new Home());
-        commands.put("reg-me",
+        commands.put(REG_ME,
                 new RegMe());
-        commands.put("log-me",
+        commands.put(LOG_ME,
                 new LogMe());
-        commands.put("make-complaint",
+        commands.put(MAKE_COMPLAINT,
                 new MakeComplaint());
-        commands.put("make-report",
+        commands.put(MAKE_REPORT,
                 new MakeReport());
-        commands.put("check-report",
+        commands.put(CHECK_REPORT,
                 new CheckReport());
-        commands.put("set-taxable",
+        commands.put(SET_TAXABLE,
                 new SetTaxable());
-        commands.put("edit-report",
+        commands.put(EDIT_REPORTS,
                 new EditReport());
 
 
         //actions
-        commands.put("submit-report",
+        commands.put(SUBMIT_REPORT,
                 new SubmitApplyingReport());
-        commands.put("submit-complaint",
+        commands.put(SUBMIT_COMPLAINT,
                 new SubmitComplaint());
-        commands.put("show-reports",
+        commands.put(SHOW_REPORTS,
                 new ShowReports());
-        commands.put("submit-edit-report",
+        commands.put(SUBMIT_EDIT_REPORT,
                 new SubmitEditReport());
 
 
-        commands.put("submit-checking-report",
+        commands.put(SUBMIT_CHECKING_REPORT,
                 new SubmitCheckingReport());
-        commands.put("submit-set-taxable",
+        commands.put(SUBMIT_SET_TAXABLE,
                 new SubmitSetTaxable());
     }
 
@@ -127,13 +126,13 @@ public class Servlet extends HttpServlet {
             throws ServletException, IOException {
 
         String path = request.getRequestURI();
-        path = path.replaceAll(".*/app/" , "");
+        path = path.replaceAll(APPLICATION_PATH_REGEX , EMPTY_STRING);
 
-        Command command = commands.getOrDefault(path, (req, resp)->"/welcome.jsp");
+        Command command = commands.getOrDefault(path, (req, resp)->DEFAULT_PATH);
         String page = command.execute(request, response);
 
-        if (page.contains("redirect")) {
-            response.sendRedirect(page.replace("redirect@", ""));
+        if (page.contains(REDIRECT)) {
+            response.sendRedirect(page.replace(REDIRECT, EMPTY_STRING));
         } else {
             request.getRequestDispatcher(page).forward(request,response);
         }

@@ -6,7 +6,8 @@ import ua.training.controller.command.Command;
 import ua.training.controller.command.CommandUtility;
 import ua.training.model.entity.Report;
 import ua.training.model.service.ReportService;
-import static ua.training.controller.command.TextConstants.*;
+import static ua.training.controller.command.TextConstants.Parameters.*;
+import static ua.training.controller.command.TextConstants.Routes.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -49,7 +50,7 @@ public class SubmitEditReport implements Command {
         reportService.editReport(report);
         logger.info("Report #"+idReport+" was edited.");
 
-        return EDIT_REPORT;
+        return TO_EDIT_REPORT;
     }
 }
 

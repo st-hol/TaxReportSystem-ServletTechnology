@@ -3,14 +3,12 @@ package ua.training.controller.command.actions;
 
 import ua.training.controller.command.Command;
 import ua.training.controller.command.CommandUtility;
-import ua.training.model.dao.impl.JdbcReportDao;
-import ua.training.model.dao.impl.JdbcUserDao;
 import ua.training.model.entity.Report;
 import ua.training.model.entity.User;
 import ua.training.model.service.ReportService;
 import static ua.training.model.service.ReportService.PaginationResult;
-import ua.training.model.service.UserService;
-import static ua.training.controller.command.TextConstants.*;
+import static ua.training.controller.command.TextConstants.Parameters.*;
+import static ua.training.controller.command.TextConstants.Routes.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -72,6 +70,6 @@ public class ShowReports implements Command {
         request.setAttribute(NO_OF_PAGES, noOfPages);
         request.setAttribute(CURRENT_PAGE, currentPage);
 
-        return SHOW_REPORTS;
+        return TO_SHOW_REPORTS;
     }
 }

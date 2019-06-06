@@ -12,6 +12,8 @@ import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toCollection;
+import static ua.training.controller.command.TextConstants.Parameters.*;
+import static ua.training.controller.command.TextConstants.Routes.*;
 
 
 public class AccessFilter implements Filter {
@@ -52,104 +54,26 @@ public class AccessFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         String path = request.getRequestURI()
-                .replace(request.getContextPath(), "")
-                .replace(request.getServletPath(), "");
+                .replace(request.getContextPath(), EMPTY_STRING)
+                .replace(request.getServletPath(), EMPTY_STRING);
 
-        if (request.getSession().getAttribute("role") == null) {
-            request.getSession().setAttribute("role", User.ROLE.UNKNOWN);
+        if (request.getSession().getAttribute(ROLE) == null) {
+            request.getSession().setAttribute(ROLE, User.ROLE.UNKNOWN);
         }
-        User.ROLE currentRole = ((User.ROLE)request.getSession().getAttribute("role"));
+        User.ROLE currentRole = ((User.ROLE)request.getSession().getAttribute(ROLE));
 
 
         if ( allowedRoutes.get(currentRole).contains(path)) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
-            //guest? then sign in
+            //user is guest? then sign in
             if(currentRole.equals(User.ROLE.UNKNOWN)){
-                request.getRequestDispatcher("/WEB-INF/common/login.jsp").forward(request,response);
+                request.getRequestDispatcher(TO_LOGIN).forward(request,response);
             }
-            request.getRequestDispatcher("/WEB-INF/common/error/403.jsp").forward(request,response);
+            request.getRequestDispatcher(ACCESS_FORBIDDEN_403).forward(request,response);
         }
     }
 
     @Override
     public void destroy() {}
 }
-
-
-
-
-
-
-
-////        if ( allowedRoutes.get(currentRole).contains(path)) {
-////            filterChain.doFilter(servletRequest, servletResponse);
-////        } else {
-////            request.getRequestDispatcher("/jsp/error/403.jsp").forward(request,response);
-////        }
-//
-//
-//
-////        if ( ! allowedRoutes.get(currentRole).contains(path)) {
-////            //response.sendRedirect("/jsp/error/403.jsp");
-////            request.getRequestDispatcher("/jsp/error/403.jsp").forward(request,response);
-//////            response.sendError(HttpServletResponse.SC_GONE);
-////        }
-////        filterChain.doFilter(servletRequest, servletResponse);
-//
-//
-//
-//
-//
-////public class AuthFilter implements Filter {
-////    @Override
-////    public void init(FilterConfig filterConfig) throws ServletException {
-////
-////    }
-////
-////    @Override
-////    public void doFilter(ServletRequest request,
-////                         ServletResponse response,
-////                         FilterChain filterChain)
-////            throws IOException, ServletException {
-////
-////
-////        final HttpServletRequest req = (HttpServletRequest) request;
-////        final HttpServletResponse res = (HttpServletResponse) response;
-////
-////
-//////        HttpSession session = req.getSession();
-//////        ServletContext context = request.getServletContext();
-////
-//////        System.out.println(session);
-//////        System.out.println(session.getAttribute("role"));
-//////        System.out.println(context.getAttribute("loggedUsers"));
-////
-/////*
-////
-////<works by utility.setuserrole
-////mb with sesssion getatr(role)
-////
-////if page contains "admin
-////    if check role "admin
-////        do filter
-////    else
-////        write access denied
-//// */
-////
-////
-////        filterChain.doFilter(request,response);
-////    }
-////
-////    @Override
-////    public void destroy() {
-////
-////    }
-////}
-////
-////
-//////role filter
-/////*
-////
-////allowedRoutes.put...
-//// */

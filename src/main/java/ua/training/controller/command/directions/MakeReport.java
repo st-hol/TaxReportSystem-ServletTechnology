@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static ua.training.controller.command.TextConstants.SUBMIT_REPORT;
+import static ua.training.controller.command.TextConstants.Routes.TO_SUBMIT_REPORT;
 
 /**
  * This class is responsible for forwarding
@@ -25,6 +25,6 @@ public class MakeReport implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         //to prevent user coming back to cached pages after logout
         CommandUtility.disallowBackToCached(request, response);
-        return SUBMIT_REPORT;
+        return TO_SUBMIT_REPORT;
     }
 }

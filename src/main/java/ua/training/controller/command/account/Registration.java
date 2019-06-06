@@ -15,7 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Objects;
 import java.util.Optional;
 
-import static ua.training.controller.command.TextConstants.*;
+import static ua.training.controller.command.TextConstants.Parameters.*;
+import static ua.training.controller.command.TextConstants.Routes.*;
 
 
 /**

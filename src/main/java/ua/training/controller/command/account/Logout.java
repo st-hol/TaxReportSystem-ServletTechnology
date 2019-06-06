@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static ua.training.controller.command.TextConstants.REDIRECT;
+import static ua.training.controller.command.TextConstants.Routes.REDIRECT;
 
 
 /**

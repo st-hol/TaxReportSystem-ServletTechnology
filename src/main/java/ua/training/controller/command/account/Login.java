@@ -15,7 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static ua.training.controller.command.TextConstants.*;
+import static ua.training.controller.command.TextConstants.Parameters.*;
+import static ua.training.controller.command.TextConstants.Routes.*;
 
 /**
  * Processes logging in.
@@ -61,7 +62,7 @@ public class Login implements Command {
         }
 
         String path = request.getServletContext().getContextPath();
-        return REDIRECT + path + PERSONAL_CABINET;
+        return REDIRECT + path + TO_PERSONAL_CABINET;
     }
 
 }

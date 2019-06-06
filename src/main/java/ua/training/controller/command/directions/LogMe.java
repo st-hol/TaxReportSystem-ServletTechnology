@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static ua.training.controller.command.TextConstants.TO_LOGIN;
+import static ua.training.controller.command.TextConstants.Routes.TO_LOGIN;
 
 /**
  * This class is responsible for forwarding

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static ua.training.controller.command.TextConstants.CHECK_REPORT;
+import static ua.training.controller.command.TextConstants.Routes.TO_CHECK_REPORT;
 
 /**
  * This class is responsible for forwarding
@@ -24,6 +24,6 @@ public class CheckReport implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         CommandUtility.populateAssignedReportsAttribute(request);
-        return CHECK_REPORT;
+        return TO_CHECK_REPORT;
     }
 }

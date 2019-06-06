@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static ua.training.controller.command.TextConstants.SUBMIT_COMPLAINT;
+import static ua.training.controller.command.TextConstants.Routes.TO_SUBMIT_COMPLAINT;
 
 /**
  * This class is responsible for forwarding
@@ -27,6 +27,6 @@ public class MakeComplaint implements Command {
         //to prevent user coming back to cached pages after logout
         CommandUtility.disallowBackToCached(request, response);
 
-        return SUBMIT_COMPLAINT;
+        return TO_SUBMIT_COMPLAINT;
     }
 }

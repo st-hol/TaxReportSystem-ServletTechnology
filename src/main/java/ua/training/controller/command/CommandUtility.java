@@ -15,7 +15,8 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 
-import static ua.training.controller.command.TextConstants.*;
+import static ua.training.controller.command.TextConstants.Routes.*;
+import static ua.training.controller.command.TextConstants.Parameters.*;
 
 
 /**

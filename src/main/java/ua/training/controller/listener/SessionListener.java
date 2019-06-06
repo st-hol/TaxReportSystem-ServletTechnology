@@ -7,6 +7,8 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 import java.util.HashSet;
 
+import static ua.training.controller.command.TextConstants.Parameters.*;
+
 
 public class SessionListener implements HttpSessionListener {
 
@@ -20,17 +22,17 @@ public class SessionListener implements HttpSessionListener {
         HashSet<String> loggedUsers = (HashSet<String>) httpSessionEvent
                 .getSession()
                 .getServletContext()
-                .getAttribute("loggedUsers");
+                .getAttribute(LOGGED_USERS);
 
         String email = (String) httpSessionEvent.getSession()
-                .getAttribute("email");
+                .getAttribute(EMAIL);
 
         loggedUsers.remove(email);
 
         httpSessionEvent.getSession()
-                .setAttribute("loggedUsers", loggedUsers);
+                .setAttribute(LOGGED_USERS, loggedUsers);
 
         httpSessionEvent.getSession()
-                .setAttribute("role", User.ROLE.UNKNOWN);
+                .setAttribute(ROLE, User.ROLE.UNKNOWN);
     }
 }

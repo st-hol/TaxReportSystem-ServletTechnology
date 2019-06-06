@@ -9,7 +9,8 @@ import ua.training.model.entity.Report;
 import ua.training.model.entity.User;
 import ua.training.model.service.ReportService;
 import ua.training.model.service.UserService;
-import static ua.training.controller.command.TextConstants.*;
+import static ua.training.controller.command.TextConstants.Parameters.*;
+import static ua.training.controller.command.TextConstants.Routes.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -66,7 +67,7 @@ public class SubmitApplyingReport implements Command {
                 + " submitted report.");
 
 
-        return SUBMIT_REPORT;
+        return TO_SUBMIT_REPORT;
     }
 
 }

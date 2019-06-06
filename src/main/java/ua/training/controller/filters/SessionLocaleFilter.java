@@ -5,6 +5,9 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+import static ua.training.controller.command.TextConstants.Parameters.LANG_PARAMETER;
+import static ua.training.controller.command.TextConstants.Parameters.SESSION_LOCALE_PARAMETER;
+
 
 public class SessionLocaleFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -12,8 +15,8 @@ public class SessionLocaleFilter implements Filter {
 
         HttpServletRequest req = (HttpServletRequest) request;
 
-        if (req.getParameter("sessionLocale") != null) {
-            req.getSession().setAttribute("lang", req.getParameter("sessionLocale"));
+        if (req.getParameter(SESSION_LOCALE_PARAMETER) != null) {
+            req.getSession().setAttribute(LANG_PARAMETER, req.getParameter(SESSION_LOCALE_PARAMETER));
         }
         chain.doFilter(request, response);
     }

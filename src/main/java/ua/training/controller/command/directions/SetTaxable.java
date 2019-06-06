@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static ua.training.controller.command.TextConstants.SET_TAXABLE_ITEMS;
+import static ua.training.controller.command.TextConstants.Routes.TO_SET_TAXABLE_ITEMS;
 
 /**
  * This class is responsible for forwarding
@@ -29,6 +29,6 @@ public class SetTaxable implements Command {
 
         CommandUtility.populateTaxableItemsAttribute(request);
         CommandUtility.populateUsersAssignedToInspectorAttribute(request);
-        return SET_TAXABLE_ITEMS;
+        return TO_SET_TAXABLE_ITEMS;
     }
 }
