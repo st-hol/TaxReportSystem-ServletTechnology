@@ -19,7 +19,6 @@ import java.util.Map;
 
 
 import static ua.training.controller.command.TextConstants.CommandPaths.*;
-import static ua.training.controller.command.TextConstants.CommandPaths.PERSONAL_CABINET;
 import static ua.training.controller.command.TextConstants.Routes.*;
 
 /**
