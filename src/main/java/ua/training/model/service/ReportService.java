@@ -28,10 +28,10 @@ public class ReportService {
         daoFactory = DaoFactory.getInstance();
     }
 
-    public static ReportService getInstance(){
-        if(instance == null){
-            synchronized (ReportService.class){
-                if (instance == null){
+    public static ReportService getInstance() {
+        if (instance == null) {
+            synchronized (ReportService.class) {
+                if (instance == null) {
                     instance = new ReportService();
                 }
             }
@@ -44,17 +44,17 @@ public class ReportService {
      *
      * @param report Report.
      */
-    public void submitReportAction(Report report)  {
-        try (ReportDao reportDao  = daoFactory.createReportDao()) {
-            reportDao.create(report);
-        }
+    public void submitReportAction(Report report) {
+        ReportDao reportDao = daoFactory.createReportDao();
+        reportDao.create(report);
+
     }
 
 
-    public void editReport(Report report){
-        try (ReportDao reportDao  = daoFactory.createReportDao()) {
-            reportDao.editReport(report);
-        }
+    public void editReport(Report report) {
+        ReportDao reportDao = daoFactory.createReportDao();
+        reportDao.editReport(report);
+
     }
 
     /**
@@ -62,19 +62,19 @@ public class ReportService {
      *
      * @param report Report.
      */
-    public void concludeCheckingReport(Report report){
-        try (ReportDao reportDao  = daoFactory.createReportDao()) {
-            reportDao.update(report);
-        }
+    public void concludeCheckingReport(Report report) {
+        ReportDao reportDao = daoFactory.createReportDao();
+        reportDao.update(report);
+
     }
 
     /**
      * obtains List of all reports that are made by users who are assigned to this inspector.
      */
     public List<Report> getAllReports(User inspector) {
-        try (ReportDao dao = daoFactory.createReportDao()) {
-            return dao.findAllAssignedClients(inspector);
-        }
+        ReportDao dao = daoFactory.createReportDao();
+        return dao.findAllAssignedClients(inspector);
+
     }
 
 
@@ -82,9 +82,9 @@ public class ReportService {
      * obtains List of all reports that marked as should be changed.
      */
     public List<Report> getReportsToChange(User client) {
-        try (ReportDao dao = daoFactory.createReportDao()) {
-            return dao.findReportsToChange(client);
-        }
+        ReportDao dao = daoFactory.createReportDao();
+        return dao.findReportsToChange(client);
+
     }
 
 
@@ -92,11 +92,9 @@ public class ReportService {
      * obtains List of certain quantity of enrolled students.
      */
     public PaginationResult getReportsByPagination(int lowerBound, int upperBound, long idUser) {
-        try (ReportDao dao = daoFactory.createReportDao()) {
-            return dao.findByPagination(lowerBound, upperBound, idUser);
-        }
+        ReportDao dao = daoFactory.createReportDao();
+        return dao.findByPagination(lowerBound, upperBound, idUser);
     }
-
 
 
     /**
@@ -122,7 +120,7 @@ public class ReportService {
             this.resultList = resultList;
         }
 
-        public int calcNoOfPages(int noOfRecords, int recordsPerPage){
+        public int calcNoOfPages(int noOfRecords, int recordsPerPage) {
             return (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
         }
     }

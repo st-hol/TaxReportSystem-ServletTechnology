@@ -38,9 +38,9 @@ public class ComplaintService {
      * @param complaint Complaint.
      */
     public void makeComplaintAction(Complaint complaint)  {
-        try (ComplaintDao complaintDao  = daoFactory.createComplaintDao()) {
+        ComplaintDao complaintDao  = daoFactory.createComplaintDao();
             complaintDao.create(complaint);
-        }
+
     }
 
 }

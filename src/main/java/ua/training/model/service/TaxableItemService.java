@@ -29,10 +29,10 @@ public class TaxableItemService {
         daoFactory = DaoFactory.getInstance();
     }
 
-    public static TaxableItemService getInstance(){
-        if(instance == null){
-            synchronized (TaxableItemService.class){
-                if (instance == null){
+    public static TaxableItemService getInstance() {
+        if (instance == null) {
+            synchronized (TaxableItemService.class) {
+                if (instance == null) {
                     instance = new TaxableItemService();
                 }
             }
@@ -46,36 +46,32 @@ public class TaxableItemService {
      *
      * @param id long.
      */
-    public TaxableItem getTaxableItemById(long id){
-        try (TaxableItemDao dao = daoFactory.createTaxableItemDao()) {
-            return dao.findById(id);
-        }
+    public TaxableItem getTaxableItemById(long id) {
+        TaxableItemDao dao = daoFactory.createTaxableItemDao();
+        return dao.findById(id);
     }
 
     /**
      * obtains List of all students.
      */
     public List<TaxableItem> getAllTaxableItems() {
-        try (TaxableItemDao dao = daoFactory.createTaxableItemDao()) {
-            return dao.findAll();
+        TaxableItemDao dao = daoFactory.createTaxableItemDao();
+        return dao.findAll();
+    }
+
+    public void setTaxableItemsPerPerson(TaxableItem taxableItem) {
+        TaxableItemDao dao = daoFactory.createTaxableItemDao();
+        if (alreadyExist(taxableItem)) {
+            dao.update(taxableItem);
+        } else {
+            dao.regTaxableToPerson(taxableItem);
         }
     }
 
-    public void setTaxableItemsPerPerson(TaxableItem taxableItem){
-        try (TaxableItemDao dao  = daoFactory.createTaxableItemDao()) {
-            if (alreadyExist(taxableItem)) {
-                dao.update(taxableItem);
-            }else {
-                dao.regTaxableToPerson(taxableItem);
-            }
-        }
-    }
 
-
-    public boolean alreadyExist(TaxableItem taxableItem){
-        try (TaxableItemDao dao = daoFactory.createTaxableItemDao()) {
-            return dao.isAlreadyExisting(taxableItem);
-        }
+    public boolean alreadyExist(TaxableItem taxableItem) {
+        TaxableItemDao dao = daoFactory.createTaxableItemDao();
+        return dao.isAlreadyExisting(taxableItem);
     }
 
 }

@@ -22,11 +22,34 @@ public class JdbcTaxableItemDao implements TaxableItemDao {
 
     private Connection connection;
     private static final Logger logger = LogManager.getLogger(JdbcTaxableItemDao.class);
+    private static JdbcTaxableItemDao instance;
 
-    public JdbcTaxableItemDao(Connection connection) {
+    private JdbcTaxableItemDao() {
+
+    }
+
+    public static JdbcTaxableItemDao getInstance() {
+        if (instance == null) {
+            synchronized (JdbcTaxableItemDao.class) {
+                if (instance == null) {
+                    instance = new JdbcTaxableItemDao();
+                }
+            }
+        }
+        return instance;
+    }
+
+    public void setConnection(Connection connection) {
         this.connection = connection;
     }
 
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public void initConnection(Connection connection) {
+        instance.setConnection(connection);
+    }
 
     /**
      * Create record in database.

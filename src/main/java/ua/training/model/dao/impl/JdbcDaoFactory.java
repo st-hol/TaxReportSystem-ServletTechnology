@@ -11,24 +11,34 @@ public class JdbcDaoFactory extends DaoFactory {
 
     private DataSource dataSource = ConnectionPoolHolder.getDataSource();
 
+    private Connection connection = getConnection();
+
     @Override
     public ReportDao createReportDao() {
-        return new JdbcReportDao(getConnection());
+        JdbcReportDao jdbcReportDao = JdbcReportDao.getInstance();
+        jdbcReportDao.initConnection(connection);
+        return jdbcReportDao;
     }
 
     @Override
     public ComplaintDao createComplaintDao() {
-        return new JdbcComplaintDao(getConnection());
+        JdbcComplaintDao jdbcComplaintDao = JdbcComplaintDao.getInstance();
+        jdbcComplaintDao.initConnection(connection);
+        return jdbcComplaintDao;
     }
 
     @Override
     public UserDao createUserDao() {
-        return new JdbcUserDao(getConnection());
+        JdbcUserDao jdbcUserDao = JdbcUserDao.getInstance();
+        jdbcUserDao.initConnection(connection);
+        return jdbcUserDao;
     }
 
     @Override
     public TaxableItemDao createTaxableItemDao() {
-        return new JdbcTaxableItemDao(getConnection());
+        JdbcTaxableItemDao jdbcTaxableItemDao = JdbcTaxableItemDao.getInstance();
+        jdbcTaxableItemDao.initConnection(connection);
+        return jdbcTaxableItemDao;
     }
 
     private Connection getConnection() {

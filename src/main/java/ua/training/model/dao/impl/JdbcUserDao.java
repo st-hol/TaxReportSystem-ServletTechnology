@@ -18,10 +18,35 @@ public class JdbcUserDao implements UserDao {
     private Connection connection;
     private static final Logger logger = LogManager.getLogger(JdbcUserDao.class);
 
-    public JdbcUserDao(Connection connection) {
+    private static JdbcUserDao instance;
+
+    private JdbcUserDao() {
+
+    }
+
+    public static JdbcUserDao getInstance() {
+        if (instance == null) {
+            synchronized (JdbcUserDao.class) {
+                if (instance == null) {
+                    instance = new JdbcUserDao();
+                }
+            }
+        }
+        return instance;
+    }
+
+
+    public void setConnection(Connection connection) {
         this.connection = connection;
     }
 
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public void initConnection(Connection connection) {
+        instance.setConnection(connection);
+    }
 
     /**
      * Create User(user/admin) in database.
@@ -79,7 +104,6 @@ public class JdbcUserDao implements UserDao {
 
     /**
      * obtains all Students from database.
-     *
      */
     @Override
     public List<User> findAll() {
@@ -152,7 +176,7 @@ public class JdbcUserDao implements UserDao {
     }
 
     @Override
-    public void assignInspector(User client, User inspector){
+    public void assignInspector(User client, User inspector) {
         try (PreparedStatement ps = connection.prepareStatement(UserSQL.ASSIGN_INSPECTOR_TO_CLIENT.getQUERY())) {
 
             ps.setLong(1, inspector.getId());
@@ -168,12 +192,12 @@ public class JdbcUserDao implements UserDao {
 
     @Override
     public void update(User user) {
-        throw new UnsupportedOperationException ("This action has not yet been developed.");
+        throw new UnsupportedOperationException("This action has not yet been developed.");
     }
 
     @Override
     public void delete(long id) {
-        throw new UnsupportedOperationException ("This action has not yet been developed.");
+        throw new UnsupportedOperationException("This action has not yet been developed.");
     }
 
 
@@ -190,8 +214,8 @@ public class JdbcUserDao implements UserDao {
     /**
      * Uses for obtaining user's role.
      *
-     * @param email String
-     * @param  password String
+     * @param email    String
+     * @param password String
      * @return User.ROLE
      */
     @Override
@@ -218,7 +242,7 @@ public class JdbcUserDao implements UserDao {
     /**
      * searches User in database by email and password
      *
-     * @param email String
+     * @param email    String
      * @param password String
      * @return boolean
      */

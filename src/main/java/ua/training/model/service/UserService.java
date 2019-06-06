@@ -26,10 +26,10 @@ public class UserService {
         daoFactory = DaoFactory.getInstance();
     }
 
-    public static UserService getInstance(){
-        if(instance == null){
-            synchronized (UserService.class){
-                if (instance == null){
+    public static UserService getInstance() {
+        if (instance == null) {
+            synchronized (UserService.class) {
+                if (instance == null) {
                     instance = new UserService();
                 }
             }
@@ -44,15 +44,15 @@ public class UserService {
      * @param user User.
      */
     public void registerUserAccount(User user) throws AlreadyExistingDBRecordException {
-        try (UserDao userDao = daoFactory.createUserDao()) {
+        UserDao userDao = daoFactory.createUserDao();
 
-            if ( userDao.emailIsAlreadyTaken(user.getEmail()) ){
-                throw new AlreadyExistingDBRecordException("Failed registering already existing user email "+
-                        user.getEmail());
-            }
-
-            userDao.create(user);
+        if (userDao.emailIsAlreadyTaken(user.getEmail())) {
+            throw new AlreadyExistingDBRecordException("Failed registering already existing user email " +
+                    user.getEmail());
         }
+
+        userDao.create(user);
+
     }
 
 
@@ -74,24 +74,26 @@ public class UserService {
 
     /**
      * checks if such user exist in db.
+     *
      * @param email String.
      */
-    public boolean isExistingUser(String email, String password){
-        try (UserDao dao = daoFactory.createUserDao()) {
-            return dao.userIsExist(email, password);
-        }
+    public boolean isExistingUser(String email, String password) {
+        UserDao dao = daoFactory.createUserDao();
+        return dao.userIsExist(email, password);
+
     }
 
 
     /**
      * obtain role by email and password.
-     * @param email String.
+     *
+     * @param email    String.
      * @param password String.
      */
-    public User.ROLE getRoleByEmailAndPass(String email, String password){
-        try (UserDao dao = daoFactory.createUserDao()) {
-            return dao.getRoleByEmailPassword(email, password);
-        }
+    public User.ROLE getRoleByEmailAndPass(String email, String password) {
+        UserDao dao = daoFactory.createUserDao();
+        return dao.getRoleByEmailPassword(email, password);
+
     }
 
 
@@ -100,40 +102,39 @@ public class UserService {
      *
      * @param id long.
      */
-    public User getUserById(long id){
-        try (UserDao dao = daoFactory.createUserDao()) {
-            return dao.findById(id);
-        }
+    public User getUserById(long id) {
+        UserDao dao = daoFactory.createUserDao();
+        return dao.findById(id);
+
     }
 
     /**
      * obtains List of all students.
      */
     public List<User> getAllUsers() {
-        try (UserDao dao = daoFactory.createUserDao()) {
-            return dao.findAll();
-        }
+        UserDao dao = daoFactory.createUserDao();
+        return dao.findAll();
+
     }
 
 
-    public List<User> getAllAssignedToInspector(long idInspector){
-        try (UserDao dao = daoFactory.createUserDao()) {
-            return dao.findAssignedByInspector(idInspector);
-        }
+    public List<User> getAllAssignedToInspector(long idInspector) {
+        UserDao dao = daoFactory.createUserDao();
+        return dao.findAssignedByInspector(idInspector);
     }
 
 
-    public void assignRandomInspectorToClient(User client){
-        try(UserDao userDao = daoFactory.createUserDao()) {
-            List<User> allInspectors = userDao.findAllInspectors();
+    public void assignRandomInspectorToClient(User client) {
+        UserDao userDao = daoFactory.createUserDao();
+        List<User> allInspectors = userDao.findAllInspectors();
 
-            Random random = new Random();
-            int randomInspectorIndex = random.nextInt(allInspectors.size());
-            User inspector = allInspectors.get(randomInspectorIndex);
+        Random random = new Random();
+        int randomInspectorIndex = random.nextInt(allInspectors.size());
+        User inspector = allInspectors.get(randomInspectorIndex);
 
-            client = getUserByEmail(client.getEmail());
-            userDao.assignInspector(client, inspector);
-        }
+        client = getUserByEmail(client.getEmail());
+        userDao.assignInspector(client, inspector);
     }
+
 
 }

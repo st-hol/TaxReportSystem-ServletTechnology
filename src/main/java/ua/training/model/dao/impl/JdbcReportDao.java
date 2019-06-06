@@ -21,11 +21,35 @@ public class JdbcReportDao implements ReportDao {
 
     private Connection connection;
     private static final Logger logger = LogManager.getLogger(JdbcReportDao.class);
+    private static JdbcReportDao instance;
 
-    public JdbcReportDao(Connection connection) {
+    private JdbcReportDao() {
+
+    }
+
+    public static JdbcReportDao getInstance() {
+        if (instance == null) {
+            synchronized (JdbcReportDao.class) {
+                if (instance == null) {
+                    instance = new JdbcReportDao();
+                }
+            }
+        }
+        return instance;
+    }
+
+
+    public void setConnection(Connection connection) {
         this.connection = connection;
     }
 
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public void initConnection(Connection connection) {
+        instance.setConnection(connection);
+    }
 
     /**
      * Create User(report/admin) in database.
@@ -53,7 +77,7 @@ public class JdbcReportDao implements ReportDao {
 
             itemPs.setLong(1, report.getPerson().getId());
             ResultSet rs = itemPs.executeQuery();
-            if (rs.next()){
+            if (rs.next()) {
                 long totalAmountOfProperty = rs.getLong("total_amount");
                 reportPs.setLong(5, totalAmountOfProperty);
             }
@@ -63,7 +87,7 @@ public class JdbcReportDao implements ReportDao {
         } catch (SQLException e) {
             try {
                 connection.rollback();
-            } catch (SQLException ex){
+            } catch (SQLException ex) {
                 logger.fatal("Caught SQLException exception while doing rollback", e);
                 e.printStackTrace();
             }
@@ -102,7 +126,6 @@ public class JdbcReportDao implements ReportDao {
 
     /**
      * obtains all Students from database.
-     *
      */
     @Override
     public List<Report> findAll() {
@@ -196,7 +219,7 @@ public class JdbcReportDao implements ReportDao {
         try (PreparedStatement ps = connection.prepareStatement(ReportSQL.UPDATE.getQUERY())) {
 
             ps.setInt(1, report.getIsAccepted() ? 1 : 0);
-            ps.setInt(2, report.getShouldBeChanged()  ? 1 : 0);
+            ps.setInt(2, report.getShouldBeChanged() ? 1 : 0);
             ps.setString(3, report.getInspectorComment());
             ps.setLong(4, report.getId());
 
@@ -210,7 +233,7 @@ public class JdbcReportDao implements ReportDao {
 
     @Override
     public void delete(long id) {
-        throw new UnsupportedOperationException ("This action has not yet been developed.");
+        throw new UnsupportedOperationException("This action has not yet been developed.");
     }
 
 
@@ -242,19 +265,22 @@ public class JdbcReportDao implements ReportDao {
         Map<Long, Report> reports = new HashMap<>();
         ReportMapper reportMapper = new ReportMapper();
 
-        try (PreparedStatement ps = connection.prepareStatement(ReportSQL.GET_REPORTS_BY_PAGINATION.getQUERY())) {
-            ps.setLong(1, idUser);
-            ps.setInt(2, lowerBound);
-            ps.setInt(3, upperBound);
+        try (PreparedStatement reportsPS = connection.prepareStatement(ReportSQL.GET_REPORTS_BY_PAGINATION.getQUERY());
+             PreparedStatement countRowsPS = connection.prepareStatement(ReportSQL.CALC_REPORTS_BY_PERSON_ID.getQUERY())) {
+            reportsPS.setLong(1, idUser);
+            reportsPS.setInt(2, lowerBound);
+            reportsPS.setInt(3, upperBound);
 
-            ResultSet rs = ps.executeQuery();
+            ResultSet rs = reportsPS.executeQuery();
             while (rs.next()) {
                 Report report = reportMapper.extractFromResultSet(rs);
                 report = reportMapper.makeUnique(reports, report);
             }
             rs.close();
 
-            rs = ps.executeQuery("SELECT FOUND_ROWS()");
+
+            countRowsPS.setLong(1, idUser);
+            rs = countRowsPS.executeQuery();
             if (rs.next()) {
                 paginationResult.setNoOfRecords(rs.getInt(1));
             }
@@ -266,7 +292,6 @@ public class JdbcReportDao implements ReportDao {
         paginationResult.setResultList(new ArrayList<>(reports.values()));
         return paginationResult;
     }
-
 
 
 }

@@ -19,10 +19,34 @@ public class JdbcComplaintDao implements ComplaintDao {
     private Connection connection;
     private static final Logger logger = LogManager.getLogger(JdbcComplaintDao.class);
 
-    public JdbcComplaintDao(Connection connection) {
+    private static JdbcComplaintDao instance;
+
+    private JdbcComplaintDao() {
+
+    }
+
+    public static JdbcComplaintDao getInstance() {
+        if (instance == null) {
+            synchronized (JdbcComplaintDao.class) {
+                if (instance == null) {
+                    instance = new JdbcComplaintDao();
+                }
+            }
+        }
+        return instance;
+    }
+
+    public void setConnection(Connection connection) {
         this.connection = connection;
     }
 
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public void initConnection(Connection connection) {
+        instance.setConnection(connection);
+    }
 
     /**
      * Create User(inspector/client) in database.
@@ -76,7 +100,6 @@ public class JdbcComplaintDao implements ComplaintDao {
 
     /**
      * obtains all Students from database.
-     *
      */
     @Override
     public List<Complaint> findAll() {
@@ -104,12 +127,12 @@ public class JdbcComplaintDao implements ComplaintDao {
 
     @Override
     public void update(Complaint complaint) {
-        throw new UnsupportedOperationException ("This action has not yet been developed.");
+        throw new UnsupportedOperationException("This action has not yet been developed.");
     }
 
     @Override
     public void delete(long id) {
-        throw new UnsupportedOperationException ("This action has not yet been developed.");
+        throw new UnsupportedOperationException("This action has not yet been developed.");
     }
 
 

@@ -31,7 +31,9 @@ public enum ReportSQL {
     GET_REPORTS_BY_PAGINATION("SELECT SQL_CALC_FOUND_ROWS * FROM reports " +
             " where id_person=(?) " +
             " order by completion_time DESC " +
-            " limit ?, ?;");
+            " limit ?, ?;"),
+
+    CALC_REPORTS_BY_PERSON_ID("SELECT count(*) from reports where id_person=(?)");
 
     String QUERY;
 
