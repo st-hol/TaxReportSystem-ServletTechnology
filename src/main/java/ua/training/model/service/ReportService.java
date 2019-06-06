@@ -20,8 +20,24 @@ import java.util.List;
  */
 public class ReportService {
 
-    private DaoFactory daoFactory = DaoFactory.getInstance();
+    private DaoFactory daoFactory;
 
+    private static ReportService instance;
+
+    private ReportService() {
+        daoFactory = DaoFactory.getInstance();
+    }
+
+    public static ReportService getInstance(){
+        if(instance == null){
+            synchronized (ReportService.class){
+                if (instance == null){
+                    instance = new ReportService();
+                }
+            }
+        }
+        return instance;
+    }
 
     /**
      * Submits user's report.

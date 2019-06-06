@@ -19,10 +19,24 @@ import java.util.*;
  */
 public class UserService {
 
-    private DaoFactory daoFactory = DaoFactory.getInstance();
+    private DaoFactory daoFactory;
+    private static UserService instance;
 
+    private UserService() {
+        daoFactory = DaoFactory.getInstance();
+    }
 
+    public static UserService getInstance(){
+        if(instance == null){
+            synchronized (UserService.class){
+                if (instance == null){
+                    instance = new UserService();
+                }
+            }
+        }
 
+        return instance;
+    }
 
     /**
      * Registers user's account if such not exist yet.
@@ -107,9 +121,6 @@ public class UserService {
             return dao.findAssignedByInspector(idInspector);
         }
     }
-
-
-
 
 
     public void assignRandomInspectorToClient(User client){

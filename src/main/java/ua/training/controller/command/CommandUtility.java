@@ -29,9 +29,9 @@ public class CommandUtility {
     private static TaxableItemService taxableItemService;
 
     static {
-        userService = new UserService();
-        reportService = new ReportService();
-        taxableItemService = new TaxableItemService();
+        userService = UserService.getInstance();
+        reportService = ReportService.getInstance();
+        taxableItemService = TaxableItemService.getInstance();
     }
 
 
@@ -96,7 +96,7 @@ public class CommandUtility {
         final HttpSession session = request.getSession();
         String email = session.getAttribute("email").toString();
 
-        UserService userService = new UserService();
+        UserService userService = UserService.getInstance();
         return userService.getUserByEmail(email);
     }
 

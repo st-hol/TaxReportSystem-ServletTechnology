@@ -25,7 +25,7 @@ public class JdbcComplaintDao implements ComplaintDao {
 
 
     /**
-     * Create User(complaint/admin) in database.
+     * Create User(inspector/client) in database.
      *
      * @param complaint for create.
      */
@@ -121,8 +121,6 @@ public class JdbcComplaintDao implements ComplaintDao {
             throw new RuntimeException(e);
         }
     }
-
-
 
 
 }

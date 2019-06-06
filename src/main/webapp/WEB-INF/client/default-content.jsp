@@ -7,7 +7,7 @@
 
 <div class="col-md-9">
     <div class="profile-content">
-        <fmt:message key="inspector.can"/>
+        <fmt:message key="client.can"/>
         <ul class="list-group">
             <li class="list-group-item">
                 <fmt:message key="submit.report"/>

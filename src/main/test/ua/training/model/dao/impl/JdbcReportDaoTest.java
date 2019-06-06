@@ -21,7 +21,7 @@ public class JdbcReportDaoTest {
      */
     @Test
     public void findByPagination() {
-        ReportService reportService = new ReportService();
+        ReportService reportService = ReportService.getInstance();
         List<Report> reports = reportService.getReportsByPagination(0, 3, 2)
                 .getResultList();
 

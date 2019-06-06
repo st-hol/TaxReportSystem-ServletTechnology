@@ -27,9 +27,8 @@ public class Registration implements Command {
 
     private UserService userService;
 
-
-    public Registration(UserService studentService) {
-        this.userService = studentService;
+    public Registration() {
+        this.userService = UserService.getInstance();
     }
 
     @Override

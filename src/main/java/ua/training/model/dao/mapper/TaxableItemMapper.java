@@ -12,15 +12,19 @@ import java.util.Map;
 
 public class TaxableItemMapper implements ObjectMapper<TaxableItem> {
 
+    private static final String ID_ITEM = "id_item";
+    private static final String NAME_ITEM = "name_item";
+    private static final String PRICE = "price";
+
+
     @Override
     public TaxableItem extractFromResultSet(ResultSet rs) throws SQLException {
-        TaxableItemService taxableItemService = new TaxableItemService();
 
         TaxableItem taxableItem = new TaxableItem();
 
-        taxableItem.setId(rs.getInt("id_item"));
-        taxableItem.setName(rs.getString("name_item"));
-        taxableItem.setPrice(rs.getLong("price"));
+        taxableItem.setId(rs.getInt(ID_ITEM));
+        taxableItem.setName(rs.getString(NAME_ITEM));
+        taxableItem.setPrice(rs.getLong(PRICE));
 
         return taxableItem;
     }

@@ -53,9 +53,9 @@ public class Servlet extends HttpServlet {
 
         //account
         commands.put("registration",
-                new Registration(new UserService()));
+                new Registration());
         commands.put("login",
-                new Login(new UserService()));
+                new Login());
         commands.put("logout",
                 new Logout());
         commands.put("personal-cabinet",
@@ -83,19 +83,19 @@ public class Servlet extends HttpServlet {
 
         //actions
         commands.put("submit-report",
-                new SubmitApplyingReport(new ReportService(), new UserService()));
+                new SubmitApplyingReport());
         commands.put("submit-complaint",
-                new SubmitComplaint(new ComplaintService()));
+                new SubmitComplaint());
         commands.put("show-reports",
-                new ShowReports(new ReportService()));
+                new ShowReports());
         commands.put("submit-edit-report",
-                new SubmitEditReport(new ReportService()));
+                new SubmitEditReport());
 
 
         commands.put("submit-checking-report",
-                new SubmitCheckingReport(new ReportService()));
+                new SubmitCheckingReport());
         commands.put("submit-set-taxable",
-                new SubmitSetTaxable(new TaxableItemService()));
+                new SubmitSetTaxable());
     }
 
 

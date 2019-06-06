@@ -25,8 +25,8 @@ public class SubmitEditReport implements Command {
 
     private ReportService reportService;
 
-    public SubmitEditReport(ReportService reportService) {
-        this.reportService = reportService;
+    public SubmitEditReport() {
+        this.reportService = ReportService.getInstance();
     }
 
     @Override

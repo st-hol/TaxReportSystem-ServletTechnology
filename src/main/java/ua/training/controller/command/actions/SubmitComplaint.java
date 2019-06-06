@@ -27,8 +27,8 @@ public class SubmitComplaint implements Command {
 
     private ComplaintService complaintService;
 
-    public SubmitComplaint(ComplaintService complaintService) {
-        this.complaintService = complaintService;
+    public SubmitComplaint() {
+        this.complaintService = ComplaintService.getInstance();
     }
 
     @Override

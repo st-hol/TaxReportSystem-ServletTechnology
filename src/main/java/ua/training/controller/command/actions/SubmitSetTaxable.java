@@ -21,12 +21,10 @@ import java.io.IOException;
 public class SubmitSetTaxable implements Command {
 
     private static final Logger logger = LogManager.getLogger(SubmitSetTaxable.class);
-
-
     private TaxableItemService taxableItemService;
 
-    public SubmitSetTaxable(TaxableItemService taxableItemService) {
-        this.taxableItemService = taxableItemService;
+    public SubmitSetTaxable() {
+        this.taxableItemService = TaxableItemService.getInstance();
     }
 
     @Override

@@ -12,16 +12,24 @@ import java.util.Properties;
 
 public class ConnectionPoolHolder {
 
+    private static final String PROPERTIES_FILE_NAME = "db.properties";
+    private static final String CONNECTION_DRIVER = "db.connection.driver";
+    private static final String CONNECTION_URL = "db.connection.url";
+    private static final String CONNECTION_USERNAME = "db.connection.username";
+    private static final String CONNECTION_PASSWORD = "db.connection.password";
+    private static final int MIN_IDLE = 5;
+    private static final int MAX_IDLE = 10;
+    private static final int MAX_OPEN_PREPARED_STATEMENTS = 100;
+
     private static volatile DataSource dataSource;
     private static final Logger logger = LogManager.getLogger(ConnectionPoolHolder.class);
-
 
     public static DataSource getDataSource() {
         if (dataSource == null) {
             synchronized (ConnectionPoolHolder.class) {
                 if (dataSource == null) {
                     Properties properties = new Properties();
-                    String propFileName = "db.properties";
+                    String propFileName = PROPERTIES_FILE_NAME;
 
                     try(InputStream inputStream = Thread.currentThread()
                             .getContextClassLoader()
@@ -34,20 +42,16 @@ public class ConnectionPoolHolder {
                             throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
                         }
 
-                        //properties.load(new FileInputStream(
-                        //      "E:\\Java\\epam courses\\IntroductoryCampaign\\src\\main\\resources\\db.properties"));
-
-
-                        Class.forName(properties.getProperty("db.connection.driver"));
+                        Class.forName(properties.getProperty(CONNECTION_DRIVER));
 
                         BasicDataSource ds = new BasicDataSource();
-                        ds.setUrl(properties.getProperty("db.connection.url"));
-                        ds.setUsername(properties.getProperty("db.connection.username"));
-                        ds.setPassword(properties.getProperty("db.connection.password"));
+                        ds.setUrl(properties.getProperty(CONNECTION_URL));
+                        ds.setUsername(properties.getProperty(CONNECTION_USERNAME));
+                        ds.setPassword(properties.getProperty(CONNECTION_PASSWORD));
 
-                        ds.setMinIdle(5);
-                        ds.setMaxIdle(10);
-                        ds.setMaxOpenPreparedStatements(100);
+                        ds.setMinIdle(MIN_IDLE);
+                        ds.setMaxIdle(MAX_IDLE);
+                        ds.setMaxOpenPreparedStatements(MAX_OPEN_PREPARED_STATEMENTS);
 
                         dataSource = ds;
 

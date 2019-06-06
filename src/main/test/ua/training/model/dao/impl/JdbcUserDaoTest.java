@@ -57,30 +57,30 @@ public class JdbcUserDaoTest {
     @Test
     public void getRoleByEmailPassword() {
 
-        UserService UserService = new UserService();
-        User User = UserService.getUserById(id);
-        User.ROLE role = UserService.getRoleByEmailAndPass(User.getEmail(), User.getPassword());
+        UserService userService = UserService.getInstance();
+        User user = userService.getUserById(id);
+        User.ROLE role = userService.getRoleByEmailAndPass(user.getEmail(), user.getPassword());
 
-        assertEquals(User.getRole().getRoleID(), role.getRoleID());
+        assertEquals(user.getRole().getRoleID(), role.getRoleID());
     }
 
     @Test
     public void userIsExist() {
-        UserService UserService = new UserService();
-        User User = UserService.getUserById(id);
-        boolean isExistingUser = UserService.isExistingUser(User.getEmail(), User.getPassword());
+        UserService userService = UserService.getInstance();
+        User User = userService.getUserById(id);
+        boolean isExistingUser = userService.isExistingUser(User.getEmail(), User.getPassword());
 
         assertTrue(isExistingUser);
     }
 
     @Test
     public void emailAlreadyTaken() {
-        final UserService UserService = new UserService();
-        final User User = UserService.getUserById(id);
+        UserService userService = UserService.getInstance();
+        final User user = userService.getUserById(id);
 
         DaoFactory daoFactory = DaoFactory.getInstance();
         UserDao UserDao = daoFactory.createUserDao();
-        boolean isAlreadyTakenEmail = UserDao.emailIsAlreadyTaken(User.getEmail());
+        boolean isAlreadyTakenEmail = UserDao.emailIsAlreadyTaken(user.getEmail());
 
         assertTrue(isAlreadyTakenEmail);
     }
@@ -89,7 +89,7 @@ public class JdbcUserDaoTest {
     @Test
     public void whenUserExistThenReturnUserById() {
 
-        final UserService userService = new UserService();
+        final UserService userService = UserService.getInstance();
         final User result = userService.getUserById(id);
 
         final User expected = new User(id, "test", "test", "test", "1", User.ROLE.INSPECTOR, new User(id_inspector));

@@ -12,27 +12,36 @@ import static ua.training.model.entity.User.ROLE.getRoleById;
 
 public class UserMapper implements ObjectMapper<User>{
 
-    //new User.Role(rs.getInt("rol_id")
+    private static final String ID_PERSON = "id_person";
+    private static final String FIRST_NAME = "first_name";
+    private static final String LAST_NAME = "last_name";
+    private static final String EMAIL = "email";
+    private static final String PASSWORD = "password";
+    private static final String ID_ROLE = "id_role";
+    private static final String ID_INSPECTOR = "id_inspector";
+
+
+
     @Override
     public User extractFromResultSet(ResultSet rs) throws SQLException {
         User user = new User();
-        UserService userService = new UserService();
+        UserService userService = UserService.getInstance();
 
-        user.setId(rs.getInt("id_person"));
+        user.setId(rs.getInt(ID_PERSON));
 
-        user.setFirstName(rs.getString("first_name"));
-        user.setLastName(rs.getString("last_name"));
+        user.setFirstName(rs.getString(FIRST_NAME));
+        user.setLastName(rs.getString(LAST_NAME));
 
 
-        user.setEmail(rs.getString("email"));
-        user.setPassword(rs.getString("password"));
+        user.setEmail(rs.getString(EMAIL));
+        user.setPassword(rs.getString(PASSWORD));
         user.setRole(getRoleById(
-                rs.getInt("id_role")));
+                rs.getInt(ID_ROLE)));
 
-        if (rs.getInt("id_person") == rs.getLong("id_inspector")){
+        if (rs.getInt(ID_PERSON) == rs.getLong(ID_INSPECTOR)){
             user.setAssignedInspector(user);
         }else {
-            user.setAssignedInspector(userService.getUserById(rs.getLong("id_inspector")));
+            user.setAssignedInspector(userService.getUserById(rs.getLong(ID_INSPECTOR)));
         }
 
         return user;

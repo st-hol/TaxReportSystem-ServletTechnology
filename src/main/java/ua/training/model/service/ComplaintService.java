@@ -14,8 +14,24 @@ import ua.training.model.entity.Complaint;
  */
 public class ComplaintService {
 
-    private DaoFactory daoFactory = DaoFactory.getInstance();
+    private DaoFactory daoFactory;
 
+    private static ComplaintService instance;
+
+    private ComplaintService() {
+        daoFactory = DaoFactory.getInstance();
+    }
+
+    public static ComplaintService getInstance(){
+        if(instance == null){
+            synchronized (ComplaintService.class){
+                if (instance == null){
+                    instance = new ComplaintService();
+                }
+            }
+        }
+        return instance;
+    }
     /**
      * Makes user's complaint.
      *
@@ -28,6 +44,3 @@ public class ComplaintService {
     }
 
 }
-
-
-//todo Optional

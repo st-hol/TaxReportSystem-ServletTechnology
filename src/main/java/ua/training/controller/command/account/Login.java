@@ -25,8 +25,8 @@ public class Login implements Command {
     private static final Logger logger = LogManager.getLogger(Login.class);
     private UserService userService;
 
-    public Login(UserService studentService) {
-        this.userService = studentService;
+    public Login() {
+        this.userService = UserService.getInstance();
     }
 
 

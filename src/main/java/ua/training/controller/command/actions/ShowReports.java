@@ -27,10 +27,9 @@ import java.util.List;
 public class ShowReports implements Command {
 
     private ReportService reportService;
- 
 
-    public ShowReports(ReportService reportService) {
-        this.reportService = reportService;
+    public ShowReports() {
+        this.reportService = ReportService.getInstance();
     }
 
     /**

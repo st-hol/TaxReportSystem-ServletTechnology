@@ -21,12 +21,10 @@ import java.io.IOException;
 public class SubmitCheckingReport implements Command {
 
     private static final Logger logger = LogManager.getLogger(SubmitCheckingReport.class);
-
-
     private ReportService reportService;
 
-    public SubmitCheckingReport(ReportService reportService) {
-        this.reportService = reportService;
+    public SubmitCheckingReport() {
+        this.reportService = ReportService.getInstance();
     }
 
     @Override

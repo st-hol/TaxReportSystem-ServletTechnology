@@ -21,7 +21,24 @@ import java.util.Random;
  */
 public class TaxableItemService {
 
-    private DaoFactory daoFactory = DaoFactory.getInstance();
+    private DaoFactory daoFactory;
+
+    private static TaxableItemService instance;
+
+    private TaxableItemService() {
+        daoFactory = DaoFactory.getInstance();
+    }
+
+    public static TaxableItemService getInstance(){
+        if(instance == null){
+            synchronized (TaxableItemService.class){
+                if (instance == null){
+                    instance = new TaxableItemService();
+                }
+            }
+        }
+        return instance;
+    }
 
 
     /**

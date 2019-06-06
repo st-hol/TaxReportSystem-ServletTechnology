@@ -32,9 +32,9 @@ public class SubmitApplyingReport implements Command {
     private UserService userService;
 
 
-    public SubmitApplyingReport(ReportService reportService, UserService userService) {
-        this.reportService = reportService;
-        this.userService = userService;
+    public SubmitApplyingReport() {
+        this.reportService = ReportService.getInstance();
+        this.userService = UserService.getInstance();
     }
 
     @Override

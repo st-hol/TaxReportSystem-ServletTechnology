@@ -57,8 +57,8 @@ public class JdbcTaxableItemDaoTest {
     }
 
     public void makeReport() {
-        UserService userService = new UserService();
-        ReportService reportService = new ReportService();
+        UserService userService = UserService.getInstance();
+        ReportService reportService = ReportService.getInstance();
 
         Report report = new Report();
         report.setPerson(userService.getUserById(-1));
