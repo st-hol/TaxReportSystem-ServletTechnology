@@ -10,6 +10,7 @@ import ua.training.model.entity.User;
 import ua.training.model.service.ReportService;
 import static ua.training.model.service.ReportService.PaginationResult;
 import ua.training.model.service.UserService;
+import static ua.training.controller.command.TextConstants.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +29,7 @@ public class ShowReports implements Command {
 
     private ReportService reportService;
 
+
     public ShowReports() {
         this.reportService = ReportService.getInstance();
     }
@@ -43,17 +45,18 @@ public class ShowReports implements Command {
      */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        int RECORDS_PER_PAGE = 3;
-
-        final User currentSessionUser = CommandUtility.getCurrentSessionUser(request);
-        final long currentUserId = currentSessionUser.getId();
 
         //to prevent user coming back to cached pages after logout
         CommandUtility.disallowBackToCached(request, response);
-        
+
+        int RECORDS_PER_PAGE = 3;
+        final User currentSessionUser = CommandUtility.getCurrentSessionUser(request);
+        final long currentUserId = currentSessionUser.getId();
+
+
         int currentPage = 1;
-        if (request.getParameter("currentPage") != null) {
-            currentPage = Integer.parseInt(request.getParameter("currentPage"));
+        if (request.getParameter(CURRENT_PAGE) != null) {
+            currentPage = Integer.parseInt(request.getParameter(CURRENT_PAGE));
         }
 
         int lowerBound = (currentPage - 1) * RECORDS_PER_PAGE;
@@ -65,10 +68,10 @@ public class ShowReports implements Command {
         int noOfRecords = paginationResult.getNoOfRecords();
         int noOfPages = paginationResult.calcNoOfPages(noOfRecords, RECORDS_PER_PAGE);
 
-        request.setAttribute("reports", reports);
-        request.setAttribute("noOfPages", noOfPages);
-        request.setAttribute("currentPage", currentPage);
+        request.setAttribute(REPORTS, reports);
+        request.setAttribute(NO_OF_PAGES, noOfPages);
+        request.setAttribute(CURRENT_PAGE, currentPage);
 
-        return "/WEB-INF/client/show-reports.jsp";
+        return SHOW_REPORTS;
     }
 }

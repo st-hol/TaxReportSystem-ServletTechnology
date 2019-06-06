@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import static ua.training.controller.command.TextConstants.*;
+
 /**
  * Move user to menu.
  * If access 'admin' move to admin menu.
@@ -23,17 +25,17 @@ public class PersonalCabinet implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         final HttpSession session = request.getSession();
-        final User.ROLE role = (User.ROLE) session.getAttribute("role");
+        final User.ROLE role = (User.ROLE) session.getAttribute(ROLE);
 
-        if ( session.getAttribute("role") != User.ROLE.UNKNOWN) {
+        if ( session.getAttribute(ROLE) != User.ROLE.UNKNOWN) {
             //to prevent user coming back to cached pages after logout by clicking "back arrow" in browser
             CommandUtility.disallowBackToCached(request, response);
         }
 
         if (role.equals(User.ROLE.INSPECTOR) || role.equals(User.ROLE.CLIENT)) {
-            return "/WEB-INF/common/base.jsp";
+            return BASE;
         } else {
-            return "/WEB-INF/common/login.jsp?userExist=false";
+            return USER_NOT_EXIST;
         }
     }
 }

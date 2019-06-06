@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static ua.training.controller.command.TextConstants.TO_REGISTRATION;
+
 /**
  * This class is responsible for forwarding
  * to registering account page
@@ -20,6 +22,6 @@ public class RegMe implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        return "/WEB-INF/common/registration.jsp";
+        return TO_REGISTRATION;
     }
 }

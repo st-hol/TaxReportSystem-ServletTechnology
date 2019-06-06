@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 
+import static ua.training.controller.command.TextConstants.*;
+
 
 /**
  * This class realize some utility logic
@@ -49,7 +51,7 @@ public class CommandUtility {
         @SuppressWarnings("unchecked")
         HashSet<String> loggedUsers = (HashSet<String>) request.getSession()
                 .getServletContext()
-                .getAttribute("loggedUsers");
+                .getAttribute(LOGGED_USERS);
 
 
         if(loggedUsers.stream().anyMatch(email::equals)) {
@@ -59,30 +61,30 @@ public class CommandUtility {
         loggedUsers.add(email);
         request.getSession()
                 .getServletContext()
-                .setAttribute("loggedUsers", loggedUsers);
+                .setAttribute(LOGGED_USERS, loggedUsers);
         return false;
     }
 
 
     public static void logUser(HttpServletRequest request, String email, String password, User.ROLE role){
-        request.getSession().setAttribute("password", password);
-        request.getSession().setAttribute("email", email);
-        request.getSession().setAttribute("role", role);
+        request.getSession().setAttribute(PASSWORD, password);
+        request.getSession().setAttribute(EMAIL, email);
+        request.getSession().setAttribute(ROLE, role);
     }
 
     public static void logoutUser(HttpServletRequest request, String email) {
 
         @SuppressWarnings("unchecked")
         HashSet<String> loggedUsers = (HashSet<String>)
-                request.getSession().getServletContext().getAttribute("loggedUsers");
+                request.getSession().getServletContext().getAttribute(LOGGED_USERS);
 
         loggedUsers.remove(email);
-        request.getSession().getServletContext().setAttribute("loggedUsers", loggedUsers);
+        request.getSession().getServletContext().setAttribute(LOGGED_USERS, loggedUsers);
 
         final HttpSession session = request.getSession();
-        session.removeAttribute("email");
-        session.removeAttribute("password");
-        session.removeAttribute("role");
+        session.removeAttribute(EMAIL);
+        session.removeAttribute(PASSWORD);
+        session.removeAttribute(ROLE);
     }
 
 
@@ -94,7 +96,7 @@ public class CommandUtility {
     public static User getCurrentSessionUser(HttpServletRequest request){
 
         final HttpSession session = request.getSession();
-        String email = session.getAttribute("email").toString();
+        String email = session.getAttribute(EMAIL).toString();
 
         UserService userService = UserService.getInstance();
         return userService.getUserByEmail(email);
@@ -121,10 +123,9 @@ public class CommandUtility {
         response.addHeader("Cache-Control", "post-check=0, pre-check=0");
         response.setHeader("Pragma","no-cache");
         response.setDateHeader ("Expires", 0);
-        if (session.getAttribute("email") == null || session.getAttribute("password") == null
-                || session.getAttribute("role") == null) {
-            response.sendRedirect(path +  "/WEB-INF/common/error/invalidSession.jsp");
-            //return  "redirect@" + path + "/jsp/error/invalidSession.jsp";
+        if (session.getAttribute(EMAIL) == null || session.getAttribute(PASSWORD) == null
+                || session.getAttribute(ROLE) == null) {
+            response.sendRedirect(path +  INVALID_SESSION_ERROR);
         }
     }
 
@@ -135,10 +136,10 @@ public class CommandUtility {
      *
      * @param request HttpServletRequest.
      */
-    public static void defineAssignedReportsAttribute(HttpServletRequest request) {
+    public static void populateAssignedReportsAttribute(HttpServletRequest request) {
         final User inspector = getCurrentSessionUser(request);
         List<Report> reports = reportService.getAllReports(inspector);
-        request.setAttribute("reports", reports);
+        request.setAttribute(REPORTS, reports);
     }
 
     /**
@@ -147,10 +148,10 @@ public class CommandUtility {
      *
      * @param request HttpServletRequest.
      */
-    public static void defineReportToEditAttribute(HttpServletRequest request){
+    public static void populateReportToEditAttribute(HttpServletRequest request){
         final User client = getCurrentSessionUser(request);
         List<Report> reports = reportService.getReportsToChange(client);
-        request.setAttribute("reportsToChange", reports);
+        request.setAttribute(REPORTS_TO_CHANGE, reports);
     }
 
     /**
@@ -159,9 +160,9 @@ public class CommandUtility {
      *
      * @param request HttpServletRequest.
      */
-    public static void defineTaxableItemsAttribute(HttpServletRequest request) {
+    public static void populateTaxableItemsAttribute(HttpServletRequest request) {
         List<TaxableItem> items = taxableItemService.getAllTaxableItems();
-        request.setAttribute("items", items);
+        request.setAttribute(ITEMS, items);
     }
 
 
@@ -171,13 +172,13 @@ public class CommandUtility {
      *
      * @param request HttpServletRequest.
      */
-    public static void defineUsersAssignedToInspectorAttribute(HttpServletRequest request) {
+    public static void populateUsersAssignedToInspectorAttribute(HttpServletRequest request) {
 
         final User currentSessionUser = CommandUtility.getCurrentSessionUser(request);
         final long currentInspector = currentSessionUser.getId();
 
         List<User> users = userService.getAllAssignedToInspector(currentInspector);
-        request.setAttribute("persons", users);
+        request.setAttribute(PERSONS, users);
     }
 
 }

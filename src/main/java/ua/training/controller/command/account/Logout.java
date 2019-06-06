@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static ua.training.controller.command.TextConstants.REDIRECT;
+
 
 /**
  * Processes logging out.
@@ -29,7 +31,7 @@ public class Logout implements Command {
         logger.info("User [" + email + "] " + "logged out." );
 
         String path = request.getServletContext().getContextPath();
-        return "redirect@" + path + "/";
+        return REDIRECT + path + "/";
     }
 }
 

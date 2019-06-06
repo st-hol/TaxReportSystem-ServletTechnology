@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static ua.training.controller.command.TextConstants.SET_TAXABLE_ITEMS;
+
 /**
  * This class is responsible for forwarding
  * to setting taxable items per person page.
@@ -21,8 +23,12 @@ public class SetTaxable implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        CommandUtility.defineTaxableItemsAttribute(request);
-        CommandUtility.defineUsersAssignedToInspectorAttribute(request);
-        return "/WEB-INF/inspector/set-taxable.jsp";
+
+        //to prevent user coming back to cached pages after logout
+        CommandUtility.disallowBackToCached(request, response);
+
+        CommandUtility.populateTaxableItemsAttribute(request);
+        CommandUtility.populateUsersAssignedToInspectorAttribute(request);
+        return SET_TAXABLE_ITEMS;
     }
 }

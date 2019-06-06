@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static ua.training.controller.command.TextConstants.TO_LOGIN;
+
 /**
  * This class is responsible for forwarding
  * to logging page from home page.
@@ -20,6 +22,6 @@ public class LogMe implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        return "/WEB-INF/common/login.jsp";
+        return TO_LOGIN;
     }
 }

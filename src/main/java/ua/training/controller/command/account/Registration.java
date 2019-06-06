@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Objects;
 import java.util.Optional;
 
+import static ua.training.controller.command.TextConstants.*;
+
 
 /**
  * Processes registration.
@@ -34,22 +36,22 @@ public class Registration implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
-        final String email = request.getParameter("email");
-        final String role = request.getParameter("role");
-        final String password = request.getParameter("password");
-        final String confirmPassword = request.getParameter("confirmPassword");
-        final String firstName = request.getParameter("firstName");
-        final String lastName = request.getParameter("lastName");
+        final String email = request.getParameter(EMAIL);
+        final String role = request.getParameter(ROLE);
+        final String password = request.getParameter(PASSWORD);
+        final String confirmPassword = request.getParameter(CONFIRM_PASSWORD);
+        final String firstName = request.getParameter(FIRST_NAME);
+        final String lastName = request.getParameter(LAST_NAME);
 
         if (!(UserValidator.validateEmail(email) && UserValidator.validatePassword(password))) {
             logger.info("User [" + email + "]" + " entered invalid data.");
-            return "/WEB-INF/common/registration.jsp?dataInvalid=true";
+            return REGISTRATION_FAIL_INVALID_DATA;
         }
 
 
         if (!password.equals(confirmPassword)) {
             logger.info("User [" + email + "]" + " password and its confirmation are not equal.");
-            return "/WEB-INF/common/registration.jsp?passwordsDifferent=true";
+            return REGISTRATION_FAIL_PASSWORDS_DIFFERENT;
         }
 
         User.ROLE userRole = User.ROLE.valueOf(role);
@@ -66,7 +68,7 @@ public class Registration implements Command {
         } catch (AlreadyExistingDBRecordException e) {
             e.printStackTrace();
             logger.info(e.getMessage());
-            return "/WEB-INF/common/registration.jsp?alreadyExist=true";
+            return REGISTRATION_FAIL_USER_EXIST;
         }
 
         //assigning random inspector to new user
@@ -75,6 +77,6 @@ public class Registration implements Command {
         }
 
         logger.info("User [" + email + "]" + " role[" + role + "]" + " successfully registered.");
-        return "/WEB-INF/common/registration.jsp?success=true";
+        return REGISTRATION_SUCCESS;
     }
 }

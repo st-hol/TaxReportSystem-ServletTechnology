@@ -7,6 +7,8 @@ import ua.training.controller.command.CommandUtility;
 import ua.training.model.entity.Complaint;
 import ua.training.model.entity.User;
 import ua.training.model.service.ComplaintService;
+import static ua.training.controller.command.TextConstants.CONTENT;
+import static ua.training.controller.command.TextConstants.SUBMIT_COMPLAINT;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -34,11 +36,13 @@ public class SubmitComplaint implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-        final Complaint complaint = new Complaint();
+        //to prevent user coming back to cached pages after logout
+        CommandUtility.disallowBackToCached(request, response);
 
+        final Complaint complaint = new Complaint();
         final User currentSessionUser = CommandUtility.getCurrentSessionUser(request);
         final User inspector = currentSessionUser.getAssignedInspector();
-        final String content = request.getParameter("content");
+        final String content = request.getParameter(CONTENT);
 
         complaint.setUser(inspector);
         complaint.setCompletionTime(Timestamp.from(Instant.now()));
@@ -47,7 +51,7 @@ public class SubmitComplaint implements Command {
         complaintService.makeComplaintAction(complaint);
         logger.info("Complaint was charged on inspector #" + inspector.getId());
 
-        return "/WEB-INF/client/submit-complaint.jsp";
+        return SUBMIT_COMPLAINT;
     }
 }
 

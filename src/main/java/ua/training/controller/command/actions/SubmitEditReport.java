@@ -6,6 +6,7 @@ import ua.training.controller.command.Command;
 import ua.training.controller.command.CommandUtility;
 import ua.training.model.entity.Report;
 import ua.training.model.service.ReportService;
+import static ua.training.controller.command.TextConstants.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,8 +22,6 @@ import java.io.IOException;
 public class SubmitEditReport implements Command {
 
     private static final Logger logger = LogManager.getLogger(SubmitEditReport.class);
-
-
     private ReportService reportService;
 
     public SubmitEditReport() {
@@ -32,11 +31,14 @@ public class SubmitEditReport implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-        CommandUtility.defineReportToEditAttribute(request);
+        //to prevent user coming back to cached pages after logout
+        CommandUtility.disallowBackToCached(request, response);
 
-        final long idReport = Long.parseLong(request.getParameter("idReportToChange"));
-        final String companyName = request.getParameter("companyName");
-        final String taxpayerCode = request.getParameter("taxpayerCode");
+        CommandUtility.populateReportToEditAttribute(request);
+
+        final long idReport = Long.parseLong(request.getParameter(ID_REPORT_TO_CHANGE));
+        final String companyName = request.getParameter(COMPANY_NAME);
+        final String taxpayerCode = request.getParameter(TAXPAYER_CODE);
 
         final Report report = new Report();
         report.setId(idReport);
@@ -47,7 +49,7 @@ public class SubmitEditReport implements Command {
         reportService.editReport(report);
         logger.info("Report #"+idReport+" was edited.");
 
-        return "/WEB-INF/client/edit-report.jsp";
+        return EDIT_REPORT;
     }
 }
 

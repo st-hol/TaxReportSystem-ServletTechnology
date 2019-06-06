@@ -6,6 +6,8 @@ import ua.training.controller.command.Command;
 import ua.training.controller.command.CommandUtility;
 import ua.training.model.entity.Report;
 import ua.training.model.service.ReportService;
+import static ua.training.controller.command.TextConstants.*;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -30,12 +32,12 @@ public class SubmitCheckingReport implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-        CommandUtility.defineAssignedReportsAttribute(request);
+        CommandUtility.populateAssignedReportsAttribute(request);
 
-        final long idReport = Long.parseLong(request.getParameter("idReport"));
-        final int isAccepted = Integer.parseInt(request.getParameter("isAccepted"));
-        final int shouldBeChanged = Integer.parseInt(request.getParameter("shouldBeChanged"));
-        final String inspectorComment = request.getParameter("inspectorComment");
+        final long idReport = Long.parseLong(request.getParameter(ID_REPORT));
+        final int isAccepted = Integer.parseInt(request.getParameter(IS_ACCEPTED));
+        final int shouldBeChanged = Integer.parseInt(request.getParameter(SHOULD_BE_CHANGED));
+        final String inspectorComment = request.getParameter(INSPECTOR_COMMENT);
 
         final Report report = new Report();
 
@@ -47,8 +49,7 @@ public class SubmitCheckingReport implements Command {
         reportService.concludeCheckingReport(report);
         logger.info("Report #"+idReport+" was reviewed by inspector.");
 
-
-        return "/WEB-INF/inspector/check-report.jsp";
+        return CHECK_REPORT;
     }
 }
 

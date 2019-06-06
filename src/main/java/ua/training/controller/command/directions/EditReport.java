@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static ua.training.controller.command.TextConstants.EDIT_REPORT;
+
 /**
  * This class is responsible for forwarding
  * to check report page.
@@ -21,7 +23,11 @@ public class EditReport implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        CommandUtility.defineReportToEditAttribute(request);
-        return "/WEB-INF/client/edit-report.jsp";
+
+        //to prevent user coming back to cached pages after logout
+        CommandUtility.disallowBackToCached(request, response);
+
+        CommandUtility.populateReportToEditAttribute(request);
+        return EDIT_REPORT;
     }
 }

@@ -6,6 +6,7 @@ import ua.training.controller.command.Command;
 import ua.training.controller.command.CommandUtility;
 import ua.training.model.entity.TaxableItem;
 import ua.training.model.service.TaxableItemService;
+import static ua.training.controller.command.TextConstants.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -30,13 +31,15 @@ public class SubmitSetTaxable implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-        CommandUtility.defineTaxableItemsAttribute(request);
-        CommandUtility.defineUsersAssignedToInspectorAttribute(request);
+        //to prevent user coming back to cached pages after logout
+        CommandUtility.disallowBackToCached(request, response);
 
+        CommandUtility.populateTaxableItemsAttribute(request);
+        CommandUtility.populateUsersAssignedToInspectorAttribute(request);
 
-        final long idItem = Long.parseLong(request.getParameter("idItem"));
-        final long idPerson = Long.parseLong(request.getParameter("idPerson"));
-        final int quantity = Integer.parseInt(request.getParameter("quantity"));
+        final long idItem = Long.parseLong(request.getParameter(ID_ITEM));
+        final long idPerson = Long.parseLong(request.getParameter(ID_PERSON));
+        final int quantity = Integer.parseInt(request.getParameter(QUANTITY));
 
         final TaxableItem taxableItem = new TaxableItem();
         taxableItem.setId(idItem);
@@ -46,8 +49,7 @@ public class SubmitSetTaxable implements Command {
         taxableItemService.setTaxableItemsPerPerson(taxableItem);
         logger.info("Taxable Item id#" + idItem + " was updated to person id#" + idPerson);
 
-
-        return "/WEB-INF/inspector/set-taxable.jsp";
+        return SET_TAXABLE_ITEMS;
     }
 
 }

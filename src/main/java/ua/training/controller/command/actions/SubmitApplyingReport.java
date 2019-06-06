@@ -9,6 +9,7 @@ import ua.training.model.entity.Report;
 import ua.training.model.entity.User;
 import ua.training.model.service.ReportService;
 import ua.training.model.service.UserService;
+import static ua.training.controller.command.TextConstants.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -40,12 +41,15 @@ public class SubmitApplyingReport implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
+        //to prevent user coming back to cached pages after logout
+        CommandUtility.disallowBackToCached(request, response);
+
         final User currentSessionUser = CommandUtility.getCurrentSessionUser(request);
         final long currentUserId = currentSessionUser.getId();
 
 
-        final String companyName = request.getParameter("companyName");
-        final String taxpayerCode = request.getParameter("taxpayerCode");
+        final String companyName = request.getParameter(COMPANY_NAME);
+        final String taxpayerCode = request.getParameter(TAXPAYER_CODE);
 
 
         Report report = new Report();
@@ -62,7 +66,7 @@ public class SubmitApplyingReport implements Command {
                 + " submitted report.");
 
 
-        return "/WEB-INF/client/submit-report.jsp";
+        return SUBMIT_REPORT;
     }
 
 }

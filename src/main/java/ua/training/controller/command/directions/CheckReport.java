@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static ua.training.controller.command.TextConstants.CHECK_REPORT;
+
 /**
  * This class is responsible for forwarding
  * to check report page.
@@ -21,7 +23,7 @@ public class CheckReport implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        CommandUtility.defineAssignedReportsAttribute(request);
-        return "/WEB-INF/inspector/check-report.jsp";
+        CommandUtility.populateAssignedReportsAttribute(request);
+        return CHECK_REPORT;
     }
 }

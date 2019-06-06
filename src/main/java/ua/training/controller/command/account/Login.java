@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static ua.training.controller.command.TextConstants.*;
+
 /**
  * Processes logging in.
  *
@@ -33,19 +35,19 @@ public class Login implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-        final String email = request.getParameter("email");
-        final String password = request.getParameter("password");
+        final String email = request.getParameter(EMAIL);
+        final String password = request.getParameter(PASSWORD);
 
         if (!(UserValidator.validateEmail(email) && UserValidator.validatePassword(password))) {
             logger.info("User [" + email + "]" + " entered wrong data.");
-            return "/WEB-INF/common/login.jsp?dataInvalid=true";
+            return LOGIN_FAIL_INVALID_INPUT;
         }
 
 
         if (userService.isExistingUser(email, password)) {
             //in order to prevent logging into one account at the same time
             if (CommandUtility.checkUserIsLogged(request, email)) {
-                return "/WEB-INF/common/error/multilogin.jsp";
+                return MULTILOGIN_ERROR;
             }
 
             final User.ROLE role = userService.getRoleByEmailAndPass(email, password);
@@ -55,12 +57,13 @@ public class Login implements Command {
 
         } else {
             logger.info("Invalid attempt of login user: [" + email + "]");
-            request.getSession().setAttribute("role", User.ROLE.UNKNOWN);
+            request.getSession().setAttribute(ROLE, User.ROLE.UNKNOWN);
         }
 
         String path = request.getServletContext().getContextPath();
-        return "redirect@" + path + "/app/personal-cabinet";
+        return REDIRECT + path + PERSONAL_CABINET;
     }
+
 }
 
 
