@@ -35,7 +35,6 @@ public interface TextConstants {
 
 
     interface Routes {
-        //routes
         String REDIRECT = "redirect@";
         String EMPTY_STRING = "";
         String LOGIN_FAIL_INVALID_INPUT = "/WEB-INF/common/login.jsp?dataInvalid=true";
@@ -65,7 +64,6 @@ public interface TextConstants {
     }
 
     interface CommandPaths {
-
         //account
         String REGISTRATION = "registration";
         String LOGIN = "login";
