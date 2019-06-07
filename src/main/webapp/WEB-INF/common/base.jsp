@@ -33,6 +33,7 @@
     <jsp:include page="${pageContext.request.contextPath}/js/bootstrap_min.jsp"/>
 
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/navbar.css"/>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/personal-cabinet.css"/>
 </head>
 <body>

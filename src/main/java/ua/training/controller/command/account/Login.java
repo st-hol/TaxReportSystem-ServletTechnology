@@ -44,7 +44,6 @@ public class Login implements Command {
             return LOGIN_FAIL_INVALID_INPUT;
         }
 
-
         if (userService.isExistingUser(email, password)) {
             //in order to prevent logging into one account at the same time
             if (CommandUtility.checkUserIsLogged(request, email)) {
@@ -52,13 +51,12 @@ public class Login implements Command {
             }
 
             final User.ROLE role = userService.getRoleByEmailAndPass(email, password);
-
             CommandUtility.logUser(request, email, password, role);
             logger.info("User [" + email + "] role [" + role + "] signed in successfully.");
-
         } else {
             logger.info("Invalid attempt of login user: [" + email + "]");
             request.getSession().setAttribute(ROLE, User.ROLE.UNKNOWN);
+            return USER_NOT_EXIST;
         }
 
         String path = request.getServletContext().getContextPath();
@@ -68,7 +66,3 @@ public class Login implements Command {
 }
 
 
-
-
-//        Command personalCabinet = new PersonalCabinet();
-//        return personalCabinet.execute(request, response);

@@ -14,6 +14,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.time.Instant;
 
 /**
  * This class is responsible for acception/rejection of report.
@@ -40,6 +42,14 @@ public class SubmitCheckingReport implements Command {
         final int shouldBeChanged = Integer.parseInt(request.getParameter(SHOULD_BE_CHANGED));
         final String inspectorComment = request.getParameter(INSPECTOR_COMMENT);
 
+        final Report report = accomplishNewReport(idReport, isAccepted, shouldBeChanged, inspectorComment);
+        reportService.concludeCheckingReport(report);
+        logger.info("Report #"+idReport+" was reviewed by inspector.");
+
+        return TO_CHECK_REPORT;
+    }
+
+    private Report accomplishNewReport(long idReport, int isAccepted, int shouldBeChanged, String inspectorComment){
         final Report report = new Report();
 
         report.setId(idReport);
@@ -47,10 +57,7 @@ public class SubmitCheckingReport implements Command {
         report.setShouldChangeFromInt(shouldBeChanged);
         report.setInspectorComment(inspectorComment);
 
-        reportService.concludeCheckingReport(report);
-        logger.info("Report #"+idReport+" was reviewed by inspector.");
-
-        return TO_CHECK_REPORT;
+        return report;
     }
 }
 

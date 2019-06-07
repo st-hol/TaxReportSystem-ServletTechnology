@@ -49,20 +49,13 @@ public class Registration implements Command {
             return REGISTRATION_FAIL_INVALID_DATA;
         }
 
-
         if (!password.equals(confirmPassword)) {
             logger.info("User [" + email + "]" + " password and its confirmation are not equal.");
             return REGISTRATION_FAIL_PASSWORDS_DIFFERENT;
         }
 
         User.ROLE userRole = User.ROLE.valueOf(role);
-
-        final User user = new User();
-        user.setRole(userRole);
-        user.setPassword(password);
-        user.setEmail(email);
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
+        User user = accomplishNewUser(userRole, email, password, firstName, lastName);
 
         try {
             userService.registerUserAccount(user);
@@ -80,4 +73,18 @@ public class Registration implements Command {
         logger.info("User [" + email + "]" + " role[" + role + "]" + " successfully registered.");
         return REGISTRATION_SUCCESS;
     }
+
+
+
+    private User accomplishNewUser(User.ROLE  userRole, String email, String password, String firstName, String lastName){
+        final User user = new User();
+        user.setRole(userRole);
+        user.setPassword(password);
+        user.setEmail(email);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+
+        return user;
+    }
+
 }

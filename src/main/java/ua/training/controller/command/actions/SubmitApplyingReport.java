@@ -42,32 +42,32 @@ public class SubmitApplyingReport implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-        //to prevent user coming back to cached pages after logout
         CommandUtility.disallowBackToCached(request, response);
 
         final User currentSessionUser = CommandUtility.getCurrentSessionUser(request);
         final long currentUserId = currentSessionUser.getId();
-
-
         final String companyName = request.getParameter(COMPANY_NAME);
         final String taxpayerCode = request.getParameter(TAXPAYER_CODE);
 
-
-        Report report = new Report();
-
-        report.setPerson(
-                userService.getUserById(currentUserId));
-        report.setCompletionTime(Timestamp.from(Instant.now()));
-        report.setCompanyName(companyName);
-        report.setTaxpayerCode(taxpayerCode);
-
-
+        Report report = accomplishNewReport(currentUserId, companyName, taxpayerCode);
         reportService.submitReportAction(report);
         logger.info("User " + currentSessionUser.getFirstName() + " " + currentSessionUser.getLastName()
                 + " submitted report.");
 
-
         return TO_SUBMIT_REPORT;
+    }
+
+
+    private Report accomplishNewReport(long userId, String companyName, String taxpayerCode){
+        Report report = new Report();
+
+        report.setPerson(
+                userService.getUserById(userId));
+        report.setCompletionTime(Timestamp.from(Instant.now()));
+        report.setCompanyName(companyName);
+        report.setTaxpayerCode(taxpayerCode);
+
+        return report;
     }
 
 }

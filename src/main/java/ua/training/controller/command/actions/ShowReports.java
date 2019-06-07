@@ -48,28 +48,38 @@ public class ShowReports implements Command {
         CommandUtility.disallowBackToCached(request, response);
 
         int RECORDS_PER_PAGE = 3;
-        final User currentSessionUser = CommandUtility.getCurrentSessionUser(request);
-        final long currentUserId = currentSessionUser.getId();
-
-
         int currentPage = 1;
         if (request.getParameter(CURRENT_PAGE) != null) {
             currentPage = Integer.parseInt(request.getParameter(CURRENT_PAGE));
         }
 
-        int lowerBound = (currentPage - 1) * RECORDS_PER_PAGE;
-        PaginationResult paginationResult =
-                reportService.getReportsByPagination(lowerBound, RECORDS_PER_PAGE, currentUserId);
+        performPagination(request, currentPage, RECORDS_PER_PAGE);
+        return TO_SHOW_REPORTS;
+    }
 
+    private void performPagination(HttpServletRequest request, int currentPage, int recordsPerPage){
+        final User currentSessionUser = CommandUtility.getCurrentSessionUser(request);
+        final long currentUserId = currentSessionUser.getId();
+
+        int lowerBound = calcLowerBound(currentPage, recordsPerPage);
+
+        PaginationResult paginationResult =
+                reportService.getReportsByPagination(lowerBound, recordsPerPage, currentUserId);
 
         List<Report> reports = paginationResult.getResultList();
         int noOfRecords = paginationResult.getNoOfRecords();
-        int noOfPages = paginationResult.calcNoOfPages(noOfRecords, RECORDS_PER_PAGE);
+        int noOfPages = calcNoOfPages(noOfRecords, recordsPerPage);
 
         request.setAttribute(REPORTS, reports);
         request.setAttribute(NO_OF_PAGES, noOfPages);
         request.setAttribute(CURRENT_PAGE, currentPage);
+    }
 
-        return TO_SHOW_REPORTS;
+    private int calcLowerBound(int currentPage, int recordsPerPage){
+        return  (currentPage - 1) * recordsPerPage;
+    }
+
+    private int calcNoOfPages(int noOfRecords, int recordsPerPage) {
+        return (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
     }
 }

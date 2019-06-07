@@ -28,30 +28,3 @@ public class Home implements Command {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-//        String path = request.getServletContext().getContextPath();
-//        //System.out.println(path);
-//        return "redirect@" + path + "/jsp/welcome.jsp";
-
-
-
-
-
-//            Optional<Object> role = Optional.ofNullable(request.getSession().getAttribute("role"));
-//            return role.map(o -> "redirect@" + o.toString().toLowerCase())
-//                    .orElse("redirect@login");
-
-
-
-//servlet jss - routes

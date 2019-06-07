@@ -23,12 +23,10 @@ public class SetTaxable implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
-        //to prevent user coming back to cached pages after logout
         CommandUtility.disallowBackToCached(request, response);
-
         CommandUtility.populateTaxableItemsAttribute(request);
         CommandUtility.populateUsersAssignedToInspectorAttribute(request);
+
         return TO_SET_TAXABLE_ITEMS;
     }
 }

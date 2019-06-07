@@ -23,11 +23,9 @@ public class EditReport implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
-        //to prevent user coming back to cached pages after logout
         CommandUtility.disallowBackToCached(request, response);
-
         CommandUtility.populateReportToEditAttribute(request);
+
         return TO_EDIT_REPORT;
     }
 }

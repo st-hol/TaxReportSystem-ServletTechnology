@@ -8,16 +8,45 @@
 <fmt:setBundle basename="messages"/>
 
 
-
 <nav class="navbar navbar-expand-lg fixed-top bg-dark ">
     <a class="navbar-brand" href="${pageContext.request.contextPath}/app/home">
         <fmt:message key="go.home"/>
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+    <a class="navbar-brand en-icon" href="?sessionLocale=en">
+        <img class="lang-icon" src="${pageContext.request.contextPath}/image/eng.png"
+             alt="<fmt:message key="lang.en"/>">
+    </a>
+
+    <a class="navbar-brand ua-icon" href="?sessionLocale=ua">
+        <img class="lang-icon" src="${pageContext.request.contextPath}/image/ukr.png"
+             alt="<fmt:message key="lang.ua"/>">
+    </a>
+
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse " id="navbarSupportedContent">
         <ul class="navbar-nav mr-4">
+
+            <%--<li class="nav-item en-icon">--%>
+            <%--<a class="nav-link" href="?sessionLocale=en">--%>
+            <%--<img class="lang-icon" src="${pageContext.request.contextPath}/image/eng.png"--%>
+            <%--alt="<fmt:message key="lang.en"/>">--%>
+            <%--&lt;%&ndash;<span class="flag-icon flag-icon-us"></span><fmt:message key="lang.en"/>&ndash;%&gt;--%>
+            <%--</a>--%>
+            <%--</li>--%>
+
+            <%--<li class="nav-item ua-icon">--%>
+            <%--<a class="nav-link" href="?sessionLocale=ua">--%>
+            <%--<img class="lang-icon" src="${pageContext.request.contextPath}/image/ukr.png"--%>
+            <%--alt="<fmt:message key="lang.ua"/>">--%>
+            <%--&lt;%&ndash;<span class="flag-icon flag-icon-mx"></span><fmt:message key="lang.ua"/>&ndash;%&gt;--%>
+            <%--</a>--%>
+            <%--</li>--%>
+
 
             <li class="nav-item">
                 <a class="nav-link " href="${pageContext.request.contextPath}/app/personal-cabinet">
@@ -35,21 +64,6 @@
                 </a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="?sessionLocale=en">
-                    <img class="lang-icon" src="${pageContext.request.contextPath}/image/eng.png"
-                         alt="<fmt:message key="lang.en"/>" >
-                    <%--<span class="flag-icon flag-icon-us"></span><fmt:message key="lang.en"/>--%>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="?sessionLocale=ua">
-                    <img class="lang-icon" src="${pageContext.request.contextPath}/image/ukr.png"
-                         alt="<fmt:message key="lang.ua"/>" >
-                    <%--<span class="flag-icon flag-icon-mx"></span><fmt:message key="lang.ua"/>--%>
-                </a>
-            </li>
 
         </ul>
 

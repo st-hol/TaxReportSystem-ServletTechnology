@@ -120,9 +120,6 @@ public class ReportService {
             this.resultList = resultList;
         }
 
-        public int calcNoOfPages(int noOfRecords, int recordsPerPage) {
-            return (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
-        }
     }
 
 }

@@ -23,8 +23,6 @@ public class MakeComplaint implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
-        //to prevent user coming back to cached pages after logout
         CommandUtility.disallowBackToCached(request, response);
 
         return TO_SUBMIT_COMPLAINT;
