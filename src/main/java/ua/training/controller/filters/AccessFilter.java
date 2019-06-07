@@ -29,7 +29,6 @@ public class AccessFilter implements Filter {
                                 toCollection(HashSet::new), Collections::unmodifiableSet)));
 
 
-
         allowedRoutes.put(User.ROLE.CLIENT,
                 Stream.of(EMPTY_STRING, LOGOUT, HOME, LOGIN, REGISTRATION, SHOW_REPORTS, PERSONAL_CABINET,
                         MAKE_REPORT, EDIT_REPORTS, MAKE_COMPLAINT,
@@ -62,20 +61,22 @@ public class AccessFilter implements Filter {
         if (request.getSession().getAttribute(ROLE) == null) {
             request.getSession().setAttribute(ROLE, User.ROLE.UNKNOWN);
         }
-        User.ROLE currentRole = ((User.ROLE)request.getSession().getAttribute(ROLE));
+        User.ROLE currentRole = ((User.ROLE) request.getSession().getAttribute(ROLE));
 
 
-        if ( allowedRoutes.get(currentRole).contains(path)) {
+        if (allowedRoutes.get(currentRole).contains(path)) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
             //user is guest? then sign in
-            if(currentRole.equals(User.ROLE.UNKNOWN)){
-                request.getRequestDispatcher(TO_LOGIN).forward(request,response);
+            if (currentRole.equals(User.ROLE.UNKNOWN)) {
+                request.getRequestDispatcher(TO_LOGIN).forward(request, response);
+            } else {
+                request.getRequestDispatcher(ACCESS_FORBIDDEN_403).forward(request, response);
             }
-            request.getRequestDispatcher(ACCESS_FORBIDDEN_403).forward(request,response);
         }
     }
 
     @Override
-    public void destroy() {}
+    public void destroy() {
+    }
 }
