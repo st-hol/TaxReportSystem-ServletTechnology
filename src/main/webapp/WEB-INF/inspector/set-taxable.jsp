@@ -40,7 +40,8 @@
                 <select class="soflow-color" name="idPerson" required>
                     <option value=""><fmt:message key="placeholder.choose.person"/></option>
                     <c:forEach var="person" items="${persons}">
-                        <option value="${person.id}">${person.firstName} ${person.lastName}
+                        <option value="${person.id}">
+                            <c:out value="${person.firstName} ${person.lastName}"/>
                         </option>
                     </c:forEach>
                 </select>
@@ -50,7 +51,8 @@
                 <select class="soflow-color" name="idItem" required>
                     <option value=""><fmt:message key="placeholder.choose.item"/></option>
                     <c:forEach var="item" items="${items}">
-                        <option value="${item.id}">${item.name}
+                        <option value="${item.id}">
+                            <c:out value="${item.name}"/>
                         </option>
                     </c:forEach>
                 </select>

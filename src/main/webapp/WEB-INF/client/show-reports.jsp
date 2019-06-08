@@ -13,14 +13,9 @@
     <title>
         <fmt:message key="see.all.reports"/>
     </title>
-
     <meta name="viewport" content="width=device-width"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-    <%--<jsp:include page="${pageContext.request.contextPath}/css/bootstrap_min.jsp"/>--%>
-    <%--<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/personal-cabinet.css"/>--%>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/report-list.css"/>
-
 </head>
 <body>
 
@@ -38,13 +33,13 @@
 
         <c:forEach var="report" items="${reports}">
             <tr>
-                <td>${report.companyName}</td>
-                <td>${report.taxpayerCode}</td>
-                <td>${report.completionTime}</td>
-                <td>${report.totalAmountOfProperty}</td>
-                <td>${report.isAccepted}</td>
-                <td>${report.shouldBeChanged}</td>
-                <td>${report.inspectorComment}</td>
+                <td><c:out value="${report.companyName}"/></td>
+                <td><c:out value="${report.taxpayerCode}"/></td>
+                <td><c:out value="${report.completionTime}"/></td>
+                <td><c:out value="${report.totalAmountOfProperty}"/></td>
+                <td><c:out value="${report.isAccepted}"/></td>
+                <td><c:out value="${report.shouldBeChanged}"/></td>
+                <td><c:out value="${report.inspectorComment}"/></td>
             </tr>
         </c:forEach>
     </table>

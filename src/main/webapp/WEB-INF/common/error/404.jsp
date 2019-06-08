@@ -11,7 +11,7 @@
     <title>Title</title>
 </head>
 <body>
-<a href="${pageContext.request.contextPath}/introductory-campaign/home">
+<a href="${pageContext.request.contextPath}/app/home">
     <svg height="0.8em" width="0.8em" viewBox="0 0 2 1" preserveAspectRatio="none">
         <polyline
                 fill="none"

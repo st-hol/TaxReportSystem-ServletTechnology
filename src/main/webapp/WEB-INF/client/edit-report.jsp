@@ -41,7 +41,9 @@
                     <select class="soflow-color" name="idReportToChange" required>
                         <option value=""><fmt:message key="placeholder.choose.report"/></option>
                         <c:forEach var="report" items="${reportsToChange}">
-                            <option value="${report.id}">id: ${report.id} | company: ${report.companyName}
+                            <option value="${report.id}">
+                                id: <c:out value="${report.id}"/> |
+                                company: <c:out value="${report.companyName}"/>
                             </option>
                         </c:forEach>
                     </select>
