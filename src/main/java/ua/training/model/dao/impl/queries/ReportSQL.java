@@ -11,9 +11,10 @@ public enum ReportSQL {
     READ_ALL_REPORTS_MADE_BY_ASSIGNED_CLIENTS("select * from reports " +
             " join persons " +
             " on reports.id_person = persons.id_person" +
-            " and persons.id_inspector=(?);"),
+            " and persons.id_inspector=(?) order by reports.id_report DESC;"),
 
-    READ_ALL_REPORTS_TO_CHANGE_BY_ID_CLIENT("select * from reports where id_person=(?) and should_be_changed=1;"),
+    READ_ALL_REPORTS_TO_CHANGE_BY_ID_CLIENT("select * from reports where id_person=(?) and should_be_changed=1 " +
+            " order by reports.id_report DESC;"),
 
     INSERT("INSERT INTO reports " +
             "(id_person, company_name, taxpayer_code, completion_time, total_amount_of_property, is_accepted, should_be_changed, inspector_comment) " +

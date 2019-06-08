@@ -84,6 +84,7 @@ public class JdbcReportDao implements ReportDao {
 
             reportPs.execute();
             connection.commit();
+            connection.setAutoCommit(true);
         } catch (SQLException e) {
             try {
                 connection.rollback();
@@ -99,11 +100,11 @@ public class JdbcReportDao implements ReportDao {
     /**
      * finds User in database.
      *
-     * @param id student id.
+     * @param id person id.
      */
     @Override
     public Report findById(long id) {
-        ReportMapper complaintMapper = new ReportMapper();
+        ReportMapper reportMapper = new ReportMapper();
 
         Report result = new Report();
         result.setId(-1);
@@ -115,7 +116,7 @@ public class JdbcReportDao implements ReportDao {
             final ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                result = complaintMapper.extractFromResultSet(rs);
+                result = reportMapper.extractFromResultSet(rs);
             }
         } catch (SQLException e) {
             logger.fatal("Caught SQLException exception", e);
@@ -125,7 +126,7 @@ public class JdbcReportDao implements ReportDao {
     }
 
     /**
-     * obtains all Students from database.
+     * obtains all persons from database.
      */
     @Override
     public List<Report> findAll() {
@@ -134,15 +135,8 @@ public class JdbcReportDao implements ReportDao {
         final String query = ReportSQL.READ_ALL.getQUERY();
 
         try (Statement st = connection.createStatement()) {
-
             ResultSet rs = st.executeQuery(query);
-            ReportMapper reportMapper = new ReportMapper();
-
-            while (rs.next()) {
-                Report report = reportMapper.extractFromResultSet(rs);
-                report = reportMapper.makeUnique(reports, report);
-            }
-            return new ArrayList<>(reports.values());
+            return mapFindManyResultSet(rs, reports);
         } catch (SQLException e) {
             logger.fatal("Caught SQLException exception", e);
             e.printStackTrace();
@@ -150,23 +144,14 @@ public class JdbcReportDao implements ReportDao {
         }
     }
 
-
     @Override
     public List<Report> findAllAssignedClients(User inspector) {
         Map<Long, Report> reports = new HashMap<>();
 
         try (PreparedStatement ps = connection.prepareStatement(ReportSQL.READ_ALL_REPORTS_MADE_BY_ASSIGNED_CLIENTS.getQUERY())) {
-
             ps.setLong(1, inspector.getId());
-
             ResultSet rs = ps.executeQuery();
-            ReportMapper reportMapper = new ReportMapper();
-
-            while (rs.next()) {
-                Report report = reportMapper.extractFromResultSet(rs);
-                report = reportMapper.makeUnique(reports, report);
-            }
-            return new ArrayList<>(reports.values());
+            return mapFindManyResultSet(rs, reports);
         } catch (SQLException e) {
             logger.fatal("Caught SQLException exception", e);
             e.printStackTrace();
@@ -179,22 +164,25 @@ public class JdbcReportDao implements ReportDao {
         Map<Long, Report> reports = new HashMap<>();
 
         try (PreparedStatement ps = connection.prepareStatement(ReportSQL.READ_ALL_REPORTS_TO_CHANGE_BY_ID_CLIENT.getQUERY())) {
-
             ps.setLong(1, client.getId());
-
             ResultSet rs = ps.executeQuery();
-            ReportMapper reportMapper = new ReportMapper();
-
-            while (rs.next()) {
-                Report report = reportMapper.extractFromResultSet(rs);
-                report = reportMapper.makeUnique(reports, report);
-            }
-            return new ArrayList<>(reports.values());
+            return mapFindManyResultSet(rs, reports);
         } catch (SQLException e) {
             logger.fatal("Caught SQLException exception", e);
             e.printStackTrace();
             return null;
         }
+    }
+
+
+    //utility method. created in order not to duplicate code below
+    private List<Report> mapFindManyResultSet(ResultSet rs, Map<Long, Report> reports) throws SQLException{
+        ReportMapper reportMapper = new ReportMapper();
+        while (rs.next()) {
+            Report report = reportMapper.extractFromResultSet(rs);
+            report = reportMapper.makeUnique(reports, report);
+        }
+        return new ArrayList<>(reports.values());
     }
 
     @Override

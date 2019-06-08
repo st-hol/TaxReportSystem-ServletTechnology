@@ -22,25 +22,25 @@ public class ComplaintService {
         daoFactory = DaoFactory.getInstance();
     }
 
-    public static ComplaintService getInstance(){
-        if(instance == null){
-            synchronized (ComplaintService.class){
-                if (instance == null){
+    public static ComplaintService getInstance() {
+        if (instance == null) {
+            synchronized (ComplaintService.class) {
+                if (instance == null) {
                     instance = new ComplaintService();
                 }
             }
         }
         return instance;
     }
+
     /**
      * Makes user's complaint.
      *
      * @param complaint Complaint.
      */
-    public void makeComplaintAction(Complaint complaint)  {
-        ComplaintDao complaintDao  = daoFactory.createComplaintDao();
-            complaintDao.create(complaint);
-
+    public void makeComplaintAction(Complaint complaint) {
+        ComplaintDao complaintDao = daoFactory.createComplaintDao();
+        complaintDao.create(complaint);
     }
 
 }

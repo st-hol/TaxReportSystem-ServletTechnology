@@ -71,7 +71,7 @@ public class JdbcComplaintDao implements ComplaintDao {
     }
 
     /**
-     * finds User in database.
+     * finds complaint in database.
      *
      * @param id student id.
      */
@@ -99,7 +99,7 @@ public class JdbcComplaintDao implements ComplaintDao {
     }
 
     /**
-     * obtains all Students from database.
+     * obtains all complaints from database.
      */
     @Override
     public List<Complaint> findAll() {

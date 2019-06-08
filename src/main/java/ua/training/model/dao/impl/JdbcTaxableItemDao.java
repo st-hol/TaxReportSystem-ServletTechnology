@@ -74,7 +74,7 @@ public class JdbcTaxableItemDao implements TaxableItemDao {
     }
 
     /**
-     * finds User in database.
+     * finds item in database.
      *
      * @param id student id.
      */
@@ -102,7 +102,7 @@ public class JdbcTaxableItemDao implements TaxableItemDao {
     }
 
     /**
-     * obtains all Students from database.
+     * obtains all items from database.
      */
     @Override
     public List<TaxableItem> findAll() {

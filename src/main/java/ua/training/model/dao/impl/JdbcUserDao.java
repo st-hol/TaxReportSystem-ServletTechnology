@@ -103,7 +103,7 @@ public class JdbcUserDao implements UserDao {
     }
 
     /**
-     * obtains all Students from database.
+     * obtains all users from database.
      */
     @Override
     public List<User> findAll() {
@@ -112,15 +112,8 @@ public class JdbcUserDao implements UserDao {
         final String query = UserSQL.READ_ALL.getQUERY();
 
         try (Statement st = connection.createStatement()) {
-
             final ResultSet rs = st.executeQuery(query);
-            final UserMapper userMapper = new UserMapper();
-
-            while (rs.next()) {
-                User user = userMapper.extractFromResultSet(rs);
-                user = userMapper.makeUnique(users, user);
-            }
-            return new ArrayList<>(users.values());
+            return mapFindManyResultSet(rs, users);
         } catch (SQLException e) {
             logger.fatal("Caught SQLException exception", e);
             e.printStackTrace();
@@ -135,17 +128,10 @@ public class JdbcUserDao implements UserDao {
         final String query = UserSQL.READ_ALL_INSPECTORS.getQUERY();
 
         try (Statement st = connection.createStatement()) {
-
             final ResultSet rs = st.executeQuery(query);
-            final UserMapper userMapper = new UserMapper();
-
-            while (rs.next()) {
-                User user = userMapper.extractFromResultSet(rs);
-                user = userMapper.makeUnique(users, user);
-            }
-            return new ArrayList<>(users.values());
+            return mapFindManyResultSet(rs, users);
         } catch (SQLException e) {
-            logger.fatal("Caught SQLException exception", e);
+            logger.fatal("Caught SQLException exception:", e);
             e.printStackTrace();
             return null;
         }
@@ -156,24 +142,28 @@ public class JdbcUserDao implements UserDao {
     public List<User> findAssignedByInspector(final long idInspector) {
         Map<Long, User> users = new HashMap<>();
 
-
         try (PreparedStatement ps = connection.prepareStatement(UserSQL.READ_ALL_BY_INSPECTOR_ID.getQUERY())) {
-
             ps.setLong(1, idInspector);
             final ResultSet rs = ps.executeQuery();
-
-            final UserMapper userMapper = new UserMapper();
-            while (rs.next()) {
-                User user = userMapper.extractFromResultSet(rs);
-                user = userMapper.makeUnique(users, user);
-            }
-            return new ArrayList<>(users.values());
+            return mapFindManyResultSet(rs, users);
         } catch (SQLException e) {
             logger.fatal("Caught SQLException exception", e);
             e.printStackTrace();
             return null;
         }
     }
+
+
+    //utility method. created in order not to duplicate code below
+    private List<User> mapFindManyResultSet(ResultSet rs, Map<Long, User> users) throws SQLException {
+        final UserMapper userMapper = new UserMapper();
+        while (rs.next()) {
+            User user = userMapper.extractFromResultSet(rs);
+            user = userMapper.makeUnique(users, user);
+        }
+        return new ArrayList<>(users.values());
+    }
+
 
     @Override
     public void assignInspector(User client, User inspector) {
